@@ -1,8 +1,14 @@
 import Button from "react-bootstrap/Button";
 
 function IconButton(props) {
-  const { btnClick, rightIcon, leftIcon, variant, variants, btnText, theme } =
-    props;
+  const {
+    btnClick,
+    rightIcon,
+    leftIcon,
+    //  variant, variants,
+    btnText,
+    theme,
+  } = props;
   return (
     <>
       <Button

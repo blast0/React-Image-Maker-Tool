@@ -22,7 +22,7 @@ import {
   handleOutsideClick,
   handleRightPanelUpdates,
   createCanvasElementsDropdownData,
-  resetPage,
+  // resetPage,
 } from "./helper-functions";
 
 // STYLE

@@ -30,10 +30,7 @@ class HorizontalLoader extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.active ? (
-          <div className="horizontal-spinner">
-          </div>
-        ) : null}
+        {this.state.active ? <div className="horizontal-spinner"></div> : null}
       </React.Fragment>
     );
   }
