@@ -1,0 +1,63 @@
+.page {
+  display: block; // margin does not work with default inline-block
+  margin: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgb(14 19 24 / 7%);
+  position: relative;
+
+  /* Context menu [starts] */
+  .contextMenu {
+    position: absolute;
+    display: none;
+    .menu {
+      // in mobile screen make Context menu menu scrollable beyond 500px
+      // - to handle too many items
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .menu .section-title {
+      padding-top: 0.4rem;
+      padding-bottom: 0.4rem;
+      font-size: 12px;
+      color: var(--textColorAlt);
+    }
+
+    .menu .menu-item + .menu-item {
+      margin-top: 0;
+    }
+
+    .menu .menu-item.selected > a,
+    .menu .menu-item > a:hover {
+      color: var(--tint);
+      background-color: #f7fafc;
+      font-weight: 500;
+    }
+
+    .menu .menu-item > a {
+      text-align: left;
+      padding: 4px 8px;
+      font-size: 14px;
+      color: var(--textColor);
+      &:focus {
+        background-color: #f7fafc; // override spectre menu-item a:focus
+        box-shadow: none; // override spectre a:focus
+      }
+    }
+
+    .menu .menu-item .menu-item-icon {
+      color: var(--secondaryColorText);
+      padding-right: 5px;
+    }
+  }
+  /* Context menu [ends] */
+  .upper-canvas{
+    // height: 0 !important;
+    // width: 0 !important;
+    position: relative !important;
+  }
+  .canvas-container {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAHUlEQVQ4jWNgYGAQIYAJglEDhoUBg9+FowbQ2gAARjwKARjtnN8AAAAASUVORK5CYII=");
+    background-size: 30px 30px;    
+  }
+}

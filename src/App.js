@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import "./App.css";
+import Designer from "./Components/ImageEditor/imageEditor";
+import NavbarApp from "./Components/navbar/navbar";
+import Spinner from "./Components/spinner/spinner";
 function App() {
+  const [theme, setTheme] = useState("light");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      className="App"
+      id="popmenu-container"
+      style={{
+        zIndex: 100,
+        position: "fixed",
+      }}
+    >
+      <NavbarApp
+        onThemeChange={(theme) => {
+          setTheme(theme);
+        }}
+      />
+      <Designer theme={theme} />
+      <Spinner id="root" overlayProps={{ position: "fixed" }} />
     </div>
   );
 }
