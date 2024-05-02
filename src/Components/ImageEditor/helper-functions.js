@@ -1838,17 +1838,17 @@ export const handleVerticalSpace = (activeObjects, bounding) => {
 
 export const uploadTemplateModal = async (self) => {
   // const modalConfig = Object.assign(MODAL_INTERFACE);
-  let fileName = "";
+  // let fileName = "";
   const { asset } = self.props;
   const parentNodeId = asset.reservedNodes.coverImages;
   let allNames = [];
   let imgNodes = [];
   let JsonNodes = [];
-  const canvasRef = Object.values(self.state.canvases)[0];
-  const fileSVGData = canvasRef.toDataURL({
-    format: "jpeg",
-    quality: 0.8,
-  });
+  // const canvasRef = Object.values(self.state.canvases)[0];
+  // const fileSVGData = canvasRef.toDataURL({
+  //   format: "jpeg",
+  //   quality: 0.8,
+  // });
   try {
     // const reqConfig = cloneDeep(REQ_CONFIG);
     // reqConfig.cacheInvalidate = true;
