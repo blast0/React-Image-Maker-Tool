@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { fabric } from "fabric";
-import TextInput, { NumericInput } from "../text-input";
+import { NumericInput } from "../text-input";
 // CONSTANTS
 import {
   ACTIONS,
@@ -267,8 +267,8 @@ class Canvastools extends Component {
       showStyleEditor,
       onChange,
       // elementIds,
-      canvas,
-      selectedElementName,
+      // canvas,
+      // selectedElementName,
       elementsDropDownData,
       jsonRef,
       // siteColorsSettings,
@@ -277,8 +277,8 @@ class Canvastools extends Component {
       theme,
     } = this.props;
     console.log(theme);
-    const activeElementType = canvas?.getActiveObject()?.type;
-    const activeElem = canvas.getActiveObject();
+    // const activeElementType = canvas?.getActiveObject()?.type;
+    // const activeElem = canvas.getActiveObject();
     return (
       <div className="DesignerConfigPanel">
         <div className="outlined-buttons btn-fixed-right-panel">
