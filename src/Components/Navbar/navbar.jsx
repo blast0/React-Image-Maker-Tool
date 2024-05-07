@@ -47,7 +47,7 @@ function NavbarApp({ themed, themes, onThemeChange }) {
         >
           <IconButton
             variant={theme === "light" ? "light" : "dark"}
-            leftIcon={"icon-star-outline"}
+            leftIcon={theme === "light" ? "icon-moon" : "icon-sun"}
           />
         </div>
       </Navbar>
