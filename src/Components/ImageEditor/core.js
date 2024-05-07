@@ -7,7 +7,7 @@ import {
   // loadGoogleFont,
 } from "./helper-functions";
 import { INITIAL_PATH, svg } from "./constants";
-import Spinner from "../spinner/manager";
+import Spinner from "../Spinner/manager";
 
 class CanvasCore {
   constructor() {
@@ -33,6 +33,19 @@ class CanvasCore {
     };
     // finally create the canvas
     const _canvas = this.createCanvas(canvasId, _canvasProps);
+    const _original_initHiddenTextarea =
+      fabric.IText.prototype.initHiddenTextarea;
+    fabric.util.object.extend(
+      fabric.IText.prototype,
+      /** @lends fabric.IText.prototype */ {
+        //fix for : IText not editable when canvas is in a fullscreen element on chrome
+        // https://github.com/fabricjs/fabric.js/issues/5126
+        initHiddenTextarea: function () {
+          _original_initHiddenTextarea.call(this);
+          this.canvas.wrapperEl.appendChild(this.hiddenTextarea);
+        },
+      }
+    );
     return _canvas;
   }
 
@@ -49,6 +62,7 @@ class CanvasCore {
     if (!this.__canvas) return;
     const textElement = new fabric.IText(text, {
       ...options,
+      isEditable: true,
       id: getNewID(),
     });
     if (!options?.fontFamily) return textElement;

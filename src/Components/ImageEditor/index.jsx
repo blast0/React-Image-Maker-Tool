@@ -1,21 +1,22 @@
 import React, { Component } from "react";
 
-// EXTERNAL PACKAGES
-// import { withTranslation } from "react-i18next";
-
 // LOCAL COMPONENTS / METHODS
 import Page from "./Canvas/canvas";
 
 // CONSTANTS
-import { FONT_PROPS_DEFAULT } from "./constants";
+import {
+  ACTIONS,
+  ADD_SHAPE_OPTIONS,
+  // DELETE_OPTIONS,
+  SAVE_OPTIONS,
+  FONT_PROPS_DEFAULT,
+} from "./constants";
 
 // HELPERS
 import {
   onSelectSvg,
   onSelectImage,
   handleJsonData,
-  // updatePageBreadcrumb,
-  // addSavedImageFromLibrary,
   setActiveObject,
   onAddImageFromFile,
   initializeApp,
@@ -26,13 +27,13 @@ import {
 } from "./helper-functions";
 
 // STYLE
-import "./imageEditor.css";
-import "./googlefonts.css";
-import Canvastools from "./Canvastools";
-import { Panel } from "../panel/Panel";
-import ModalApp from "../modal/modal";
-import IconButton from "../buttons/ButtonIcon";
-// import SpinnerB from "../spinner";
+import "./index.css";
+import "./fontfamilys.css";
+import Canvastools from "./Controls/Canvastools";
+import { Panel } from "../SidePanel/Panel";
+import ModalApp from "../Modal/modal";
+import IconButton from "../Buttons/IconButton";
+import DropdownButton from "../Buttons/DropdownBtn";
 
 class Designer extends Component {
   constructor(props) {
@@ -232,7 +233,6 @@ class Designer extends Component {
                     }
                   />
                 </div>
-                <IconButton />
               </div>
             );
           })}
@@ -273,7 +273,60 @@ class Designer extends Component {
               theme={this.props.theme}
               direction="end"
               name="Tools"
-              children={
+              headerChildren={
+                <>
+                  <div
+                    className="outlined-buttons btn-fixed-right-panel"
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      gap: "5px",
+                    }}
+                  >
+                    <DropdownButton
+                      leftIcon={"icon-add"}
+                      variant="light"
+                      btnText={""}
+                      buttons={ADD_SHAPE_OPTIONS}
+                      onDropBtnClick={(option) => {
+                        console.log(option);
+                        handleRightPanelUpdates(option.value, {}, this);
+                      }}
+                    />
+                    <IconButton
+                      leftIcon="icon-undo"
+                      btnText={""}
+                      btnClick={() => {
+                        handleRightPanelUpdates(ACTIONS.UNDO_ACTION, {}, this);
+                      }}
+                    />
+                    <IconButton
+                      leftIcon="icon-redo"
+                      btnText={""}
+                      btnClick={() => {
+                        handleRightPanelUpdates(ACTIONS.REDO_ACTION, {}, this);
+                      }}
+                    />
+                    <DropdownButton
+                      leftIcon={"icon-save-new"}
+                      variant="light"
+                      btnText={""}
+                      buttons={SAVE_OPTIONS}
+                      onDropBtnClick={(option) => {
+                        handleRightPanelUpdates(option.value, {}, this);
+                      }}
+                    />
+                    <ModalApp
+                      leftIcon="icon-delete"
+                      onBtnClick={(e) => {
+                        handleRightPanelUpdates(ACTIONS.CLEAR_PAGE, {}, this);
+                      }}
+                      children={<>All item(s) in your page will be deleted.</>}
+                    />
+                  </div>
+                </>
+              }
+              bodyChildren={
                 <>
                   <Canvastools
                     theme={this.props.theme}

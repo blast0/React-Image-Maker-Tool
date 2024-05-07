@@ -114,32 +114,32 @@ export const ArrowDirection = [
 
 export const FLIP_OPTIONS = [
   {
-    title: "Flip Text Horizontally",
-    icon: "icon-flip-h",
-    bId: "x",
+    // btnText: "Flip Text Horizontally",
+    leftIcon: "icon-flip-h",
+    value: "x",
   },
   {
-    title: "Flip Text Vertically",
-    icon: "icon-flip-v",
-    bId: "y",
+    // btnText: "Flip Text Vertically",
+    leftIcon: "icon-flip-v",
+    value: "y",
   },
 ];
 
 export const TEXT_ALIGNMENT = [
   {
-    title: "Align Left",
-    icon: "icon-align-left",
-    bId: "left",
+    // btnText: "Align Left",
+    leftIcon: "icon-align-left",
+    value: "left",
   },
   {
-    title: "Align Center",
-    icon: "icon-align-center",
-    bId: "center",
+    // btnText: "Align Center",
+    leftIcon: "icon-align-center",
+    value: "center",
   },
   {
-    title: "Align Right",
-    icon: "icon-align-right",
-    bId: "right",
+    // btnText: "Align Right",
+    leftIcon: "icon-align-right",
+    value: "right",
   },
 ];
 
@@ -168,34 +168,34 @@ export const FONT_STYLES = [
 
 export const ALIGNMENT_OPTIONS = [
   {
-    title: "Align Left",
-    icon: "icon-align-object-left",
-    bId: "left",
+    // btnText: "Align Left",
+    leftIcon: "icon-align-object-left",
+    value: "left",
   },
   {
-    title: "Align Center",
-    icon: "icon-align-object-center",
-    bId: "center",
+    // btnText: "Align Center",
+    leftIcon: "icon-align-object-center",
+    value: "center",
   },
   {
-    title: "Align Right",
-    icon: "icon-align-object-right",
-    bId: "right",
+    // btnText: "Align Right",
+    leftIcon: "icon-align-object-right",
+    value: "right",
   },
   {
-    title: "Align Top",
-    icon: "icon-align-object-top",
-    bId: "top",
+    // btnText: "Align Top",
+    leftIcon: "icon-align-object-top",
+    value: "top",
   },
   {
-    title: "Align Middle",
-    icon: "icon-align-object-middle",
-    bId: "middle",
+    // btnText: "Align Middle",
+    leftIcon: "icon-align-object-middle",
+    value: "middle",
   },
   {
-    title: "Align Bottom",
-    icon: "icon-align-object-bottom",
-    bId: "bottom",
+    // btnText: "Align Bottom",
+    leftIcon: "icon-align-object-bottom",
+    value: "bottom",
   },
 ];
 
@@ -244,18 +244,18 @@ export const PAGE_CONFIG = Object.freeze({
 });
 
 export const SAVE_OPTIONS = [
-  {
-    btnText: "Save Design to Library",
-    tooltip: "Save raw design",
-    leftIcon: "icon-image-library",
-    value: ACTIONS.UPLOAD_JSON,
-  },
-  {
-    btnText: "Save Image to Library",
-    tooltip: "Export design as an image",
-    leftIcon: "icon-image",
-    value: ACTIONS.SAVE_PAGE_TO_LIBRARY,
-  },
+  // {
+  //   btnText: "Save Design to Library",
+  //   tooltip: "Save raw design",
+  //   leftIcon: "icon-image-library",
+  //   value: ACTIONS.UPLOAD_JSON,
+  // },
+  // {
+  //   btnText: "Save Image to Library",
+  //   tooltip: "Export design as an image",
+  //   leftIcon: "icon-image",
+  //   value: ACTIONS.SAVE_PAGE_TO_LIBRARY,
+  // },
   {
     btnText: "Save to File",
     tooltip: "Download raw design",
@@ -265,10 +265,10 @@ export const SAVE_OPTIONS = [
 ];
 
 export const ADD_OPTIONS = [
-  {
-    title: "From Library",
-    value: "lib",
-  },
+  // {
+  //   title: "From Library",
+  //   value: "lib",
+  // },
   {
     title: "From Desktop",
     value: "desktop",
@@ -276,24 +276,24 @@ export const ADD_OPTIONS = [
 ];
 
 export const OPEN_OPTIONS = [
-  {
-    title: "Choose New Design",
-    tooltip: "Choose from a variety of templates",
-    icon: "icon-manage-files",
-    value: "show-global-templates",
-  },
-  {
-    title: "Open Design From Library",
-    tooltip: "Open a previously saved cover image",
-    icon: "icon-file-library",
-    value: "show-saved-templates",
-  },
-  {
-    title: "Open Design From File",
-    tooltip: "Open a supported cover image from local file",
-    icon: "icon-fs-file",
-    value: "raw_data",
-  },
+  // {
+  //   title: "Choose New Design",
+  //   tooltip: "Choose from a variety of templates",
+  //   icon: "icon-manage-files",
+  //   value: "show-global-templates",
+  // },
+  // {
+  //   title: "Open Design From Library",
+  //   tooltip: "Open a previously saved cover image",
+  //   icon: "icon-file-library",
+  //   value: "show-saved-templates",
+  // },
+  // {
+  //   title: "Open Design From File",
+  //   tooltip: "Open a supported cover image from local file",
+  //   icon: "icon-fs-file",
+  //   value: "raw_data",
+  // },
   {
     title: "Open Image From File",
     tooltip: "Open a supported cover image from local file",
@@ -316,17 +316,17 @@ export const DELETE_OPTIONS = [
 ];
 
 export const ADD_SHAPE_OPTIONS = [
-  {
-    btnText: "Add Image from library",
-    leftIcon: "icon-image-library",
-    value: "add-from-library",
-  },
-  {
-    btnText: "Upload and Add from Library",
-    tooltip: "Upload Image to Library and Add",
-    leftIcon: "icon-fs-image",
-    value: "image",
-  },
+  // {
+  //   btnText: "Add Image from library",
+  //   leftIcon: "icon-image-library",
+  //   value: "add-from-library",
+  // },
+  // {
+  //   btnText: "Upload and Add from Library",
+  //   tooltip: "Upload Image to Library and Add",
+  //   leftIcon: "icon-fs-image",
+  //   value: "image",
+  // },
   {
     btnText: "Add Svg",
     tooltip: "Upload Svg from Desktop",
@@ -378,11 +378,11 @@ export const ADD_SHAPE_OPTIONS = [
     leftIcon: "icon-engage",
     value: "speech_label",
   },
-  {
-    btnText: "Add Random Shape",
-    leftIcon: "icon-blob",
-    value: "random_shape",
-  },
+  // {
+  //   btnText: "Add Random Shape",
+  //   leftIcon: "icon-blob",
+  //   value: "random_shape",
+  // },
 ];
 
 export const CANVAS_ACTION_HISTORY = {
@@ -606,70 +606,70 @@ export const DefaultTemplate = {
     height: 720,
   },
   elements: [
-    {
-      type: "Pattern",
-      name: "Background Image",
-      width: 1280,
-      height: 720,
-      containerType: "rect", //triangle. circle, rect
-      url: "https://cdn.pixabay.com/photo/2023/10/12/06/44/flowers-8309995_1280.jpg",
-      imageFit: "Show full Image",
-      BorderX: 5,
-      BorderY: 5,
-      BorderLock: true,
-    },
-    {
-      type: "rect",
-      name: "Overlay Bottom",
-      width: 768,
-      height: 432,
-      left: 1,
-      top: 1,
-      fill: "#00000020",
-      stroke: "rgba(0,0,0,0)",
-      strokeWidth: 0,
-      rx: 0,
-      ry: 0,
-      BorderLock: true,
-    },
-    {
-      type: "rect",
-      name: "Overlay Top",
-      left: 50,
-      top: 50,
-      width: 668,
-      height: 332,
-      fill: "#ffffff50",
-      stroke: "rgba(0,0,0,0)",
-      strokeWidth: 0,
-      rx: 5,
-      ry: 5,
-      BorderLock: true,
-    },
+    // {
+    //   type: "Pattern",
+    //   name: "Background Image",
+    //   width: 1280,
+    //   height: 720,
+    //   containerType: "rect", //triangle. circle, rect
+    //   url: "https://cdn.pixabay.com/photo/2018/05/17/09/18/away-3408119_1280.jpg",
+    //   imageFit: "Show full Image",
+    //   BorderX: 5,
+    //   BorderY: 5,
+    //   BorderLock: true,
+    //   preselected: true,
+    // },
+    // {
+    //   type: "rect",
+    //   name: "Overlay Bottom",
+    //   width: 1080,
+    //   height: 520,
+    //   left: 100,
+    //   top: 100,
+    //   fill: "#00000020",
+    //   stroke: "rgba(0,0,0,0)",
+    //   strokeWidth: 0,
+    //   rx: 0,
+    //   ry: 0,
+    //   BorderLock: true,
+    // },
+    // {
+    //   type: "rect",
+    //   name: "Overlay Top",
+    //   left: 200,
+    //   top: 200,
+    //   width: 880,
+    //   height: 320,
+    //   fill: "#ffffff50",
+    //   stroke: "rgba(0,0,0,0)",
+    //   strokeWidth: 0,
+    //   rx: 5,
+    //   ry: 5,
+    //   BorderLock: true,
+    // },
+    // {
+    //   ...FONT_PROPS_DEFAULT,
+    //   value: "Make/Edit Your Svg",
+    //   left: 400,
+    //   top: 280,
+    //   fontFamily: "Comforter Brush",
+    //   fontSize: 75,
+    //   fill: "#660708",
+    //   stroke: "#a52e2e",
+    // },
     {
       ...FONT_PROPS_DEFAULT,
       value: "Make/Edit Your Image",
-      left: 230,
-      top: 108,
+      left: 450,
+      top: 158,
       fontSize: 32,
       fill: "#660708",
     },
     {
       ...FONT_PROPS_DEFAULT,
-      value: "Make/Edit Your Svg",
-      left: 120,
-      top: 180,
-      fontFamily: "Comforter Brush",
-      fontSize: 75,
-      fill: "#660708",
-      stroke: "#a52e2e",
-      preselected: true,
-    },
-    {
-      ...FONT_PROPS_DEFAULT,
       value: "Make/Edit Your Cover",
-      left: 230,
-      top: 288,
+      left: 430,
+      top: 458,
       fontSize: 32,
       fill: "#660708",
     },

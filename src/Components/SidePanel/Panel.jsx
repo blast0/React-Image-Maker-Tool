@@ -2,7 +2,13 @@ import { useState } from "react";
 // import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
-const OffCanvasExample = ({ name, children, theme, ...props }) => {
+const OffCanvasExample = ({
+  name,
+  headerChildren,
+  bodyChildren,
+  theme,
+  ...props
+}) => {
   const [show, setShow] = useState(true);
 
   const handleClose = () => setShow(false);
@@ -14,7 +20,7 @@ const OffCanvasExample = ({ name, children, theme, ...props }) => {
         style={{
           position: "absolute",
           top: "85px",
-          left: `calc(100% - ${show ? "428px" : "30px"})`,
+          left: `calc(100% - ${show ? "328px" : "30px"})`,
           height: "60px",
           width: "30px",
           // backgroundColor: "#fff",
@@ -31,26 +37,46 @@ const OffCanvasExample = ({ name, children, theme, ...props }) => {
       >
         <i className={`icon-common ${show ? "icon-right" : "icon-left"}`}></i>
       </div>
-      <Offcanvas backdrop={false} show={show} onHide={handleClose} {...props}>
+      <Offcanvas
+        backdrop={false}
+        enforceFocus={false}
+        show={show}
+        onHide={handleClose}
+        {...props}
+      >
         <Offcanvas.Header>
-          <Offcanvas.Title>{children}</Offcanvas.Title>
+          <Offcanvas.Title
+            style={{
+              width: "100%",
+            }}
+          >
+            {headerChildren}
+          </Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body></Offcanvas.Body>
+        <Offcanvas.Body>{bodyChildren}</Offcanvas.Body>
       </Offcanvas>
     </>
   );
 };
 
-export const Panel = ({ direction, name, children, theme }) => {
+export const Panel = ({
+  direction,
+  name,
+  headerChildren,
+  bodyChildren,
+  theme,
+}) => {
   return (
     <OffCanvasExample
-      children={children}
+      headerChildren={headerChildren}
       key={name}
       placement={direction}
+      bodyChildren={bodyChildren}
       name={name}
       theme={theme}
       style={{
         top: "75px",
+        width: "300px",
         backgroundColor: theme === "light" ? "#fff" : "#212529",
         borderLeft: theme === "light" ? "1px solid #a1a1a1" : "1px solid #fff",
       }}

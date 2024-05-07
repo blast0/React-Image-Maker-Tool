@@ -1,9 +1,8 @@
 import Dropdown from "react-bootstrap/Dropdown";
 
-function DropdownButton(props) {
+const DropdownButton = (props) => {
   const { btnText, leftIcon, rightIcon, buttons, onDropBtnClick, variant } =
     props;
-  // console.log(leftIcon);
   return (
     <Dropdown
       onClick={() => {
@@ -11,21 +10,30 @@ function DropdownButton(props) {
           onDropBtnClick();
         }
       }}
+      style={{
+        border: "1px solid #f1f1f1",
+        borderRadius: "10px",
+      }}
     >
-      <Dropdown.Toggle variant={variant} id="dropdown-basic">
+      <Dropdown.Toggle
+        variant={variant}
+        id="dropdown-basic"
+        style={{ width: "100%" }}
+      >
         {leftIcon ? <i className={"icon-common " + leftIcon}></i> : null}
         {btnText}
         {rightIcon ? <i className={"icon-common " + rightIcon}></i> : null}
       </Dropdown.Toggle>
       {buttons.length > 0 ? (
-        <Dropdown.Menu>
-          {buttons.map((item) => {
+        <Dropdown.Menu style={{ width: "100%" }}>
+          {buttons.map((item, index) => {
             return (
               <Dropdown.Item
                 href="#/action"
                 onClick={() => {
                   onDropBtnClick(item);
                 }}
+                key={"dropbtn" + index}
               >
                 {item.leftIcon ? (
                   <i
@@ -47,7 +55,7 @@ function DropdownButton(props) {
       ) : null}
     </Dropdown>
   );
-}
+};
 DropdownButton.defaultProps = {
   name: "Button",
   buttons: [],

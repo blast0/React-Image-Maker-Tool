@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import { fabric } from "fabric";
-import { NumericInput } from "../text-input";
+import TextInput, { NumericInput } from "../../Input/text-input";
 // CONSTANTS
 import {
   ACTIONS,
   // OPEN_OPTIONS,
-  ADD_SHAPE_OPTIONS,
-  SAVE_OPTIONS,
-  DELETE_OPTIONS,
-} from "./constants";
-import DropdownButton from "../buttons/DropdownBtn";
-import ModalApp from "../modal/modal";
-import IconButton from "../buttons/ButtonIcon";
+  // ADD_SHAPE_OPTIONS,
+  // SAVE_OPTIONS,
+  // DELETE_OPTIONS,
+} from "../constants";
+import DropdownButton from "../../Buttons/DropdownBtn";
+// import ModalApp from "../modal/modal";
+// import IconButton from "../buttons/ButtonIcon";
 // COMPONENTS
-// import ActiveElementControls from "./ActiveElementControls/activeElementControls";
+import ActiveElementControls from "./activeControls";
 
 class Canvastools extends Component {
   constructor(props) {
@@ -263,12 +263,12 @@ class Canvastools extends Component {
 
   render() {
     const {
-      // activeElementProps,
+      activeElementProps,
       showStyleEditor,
       onChange,
-      // elementIds,
-      // canvas,
-      // selectedElementName,
+      elementIds,
+      canvas,
+      selectedElementName,
       elementsDropDownData,
       jsonRef,
       // siteColorsSettings,
@@ -277,76 +277,100 @@ class Canvastools extends Component {
       theme,
     } = this.props;
     console.log(theme);
-    // const activeElementType = canvas?.getActiveObject()?.type;
-    // const activeElem = canvas.getActiveObject();
+    const activeElementType = canvas?.getActiveObject()?.type;
+    const activeElem = canvas.getActiveObject();
     return (
       <div className="DesignerConfigPanel">
-        <div className="outlined-buttons btn-fixed-right-panel">
-          <input
-            ref={jsonRef}
-            className="hidden-file"
-            type="file"
-            accept="image/svg"
-            onChange={this.handleJsonData}
-          />{" "}
-          <input
-            ref={jsonRef}
-            className="hidden-file"
-            type="file"
-            accept="image/svg"
-            onChange={this.handleJsonData}
-          />
-          <DropdownButton
-            leftIcon={"icon-add"}
-            variant="light"
-            btnText={""}
-            buttons={ADD_SHAPE_OPTIONS}
-            onDropBtnClick={(option) => {
-              onChange(option.value);
-            }}
-          />
-          <IconButton
-            leftIcon="icon-undo"
-            btnText={""}
-            btnClick={() => {
-              onChange(ACTIONS.UNDO_ACTION);
-            }}
-          />
-          <IconButton
-            leftIcon="icon-redo"
-            btnText={""}
-            btnClick={() => {
-              onChange(ACTIONS.REDO_ACTION);
-            }}
-          />
-          <DropdownButton
-            leftIcon={"icon-delete"}
-            variant="light"
-            btnText={""}
-            buttons={DELETE_OPTIONS}
-            onDropBtnClick={(option) => {
-              this.deleteHandler(option.value);
-            }}
-          />
-          <DropdownButton
-            leftIcon={"icon-save"}
-            variant="light"
-            btnText={""}
-            buttons={SAVE_OPTIONS}
-            onDropBtnClick={(option) => {
-              onChange(option.value);
-            }}
-          />
-          <ModalApp
-            leftIcon="icon-laptop"
-            onBtnClick={(e) => {
-              onChange(ACTIONS.CLEAR_PAGE);
-            }}
-            children={<>All item(s) in self page will be deleted.</>}
-          />
+        <input
+          ref={jsonRef}
+          className="hidden-file"
+          type="file"
+          accept="image/svg"
+          onChange={this.handleJsonData}
+        />{" "}
+        <input
+          ref={jsonRef}
+          className="hidden-file"
+          type="file"
+          accept="image/svg"
+          onChange={this.handleJsonData}
+        />
+        <div className="page-dimensions mt-10">
+          <div className="page-dimensions-control">
+            <NumericInput
+              theme={theme}
+              value={pageWidth}
+              containerClass="cls number sm"
+              label="Canvas Width"
+              onChange={(val) => {
+                if (val < 1920)
+                  onChange(ACTIONS.CHANGE_PAGE_DIMENSIONS, {
+                    name: "width",
+                    val: Number(val),
+                  });
+                else {
+                  onChange(ACTIONS.CHANGE_PAGE_DIMENSIONS, {
+                    name: "width",
+                    val: 1920,
+                  });
+                }
+              }}
+            />
+            <NumericInput
+              theme={theme}
+              // key={`elem-${configKey}`}
+              // configKey={configKey}
+              value={pageHeight}
+              // containerStyle={item?.containerStyle}
+              // controlStyle={item?.controlStyle}
+              containerClass={"cls number sm"}
+              // tooltip={item.tooltip}
+              // opt={item?.opt}
+              label="Canvas Height"
+              onChange={(val) => {
+                if (val < 1080)
+                  onChange(ACTIONS.CHANGE_PAGE_DIMENSIONS, {
+                    name: "height",
+                    val: Number(val),
+                  });
+                else {
+                  onChange(ACTIONS.CHANGE_PAGE_DIMENSIONS, {
+                    name: "height",
+                    val: 1080,
+                  });
+                }
+              }}
+            />
+            <NumericInput
+              theme={theme}
+              value={parseInt(activeElem?.width)}
+              containerClass={"cls number "}
+              label={"Item Width"}
+              onChange={(val) => {
+                activeElem.set({
+                  width: Number(val),
+                });
+                canvas.renderAll();
+              }}
+            />
+            <NumericInput
+              theme={theme}
+              value={parseInt(activeElem?.height)}
+              containerClass={"cls number "}
+              label={"Item Height"}
+              onChange={(val) => {
+                activeElem.set({
+                  height: Number(val),
+                });
+                canvas.renderAll();
+              }}
+            />
+          </div>
+        </div>
+        <div className="element-selector">
           <DropdownButton
             leftIcon={true}
-            btnText={"Select"}
+            btnText={"Selected: " + selectedElementName}
             variant="light"
             buttons={elementsDropDownData}
             onDropBtnClick={(option) => {
@@ -360,109 +384,67 @@ class Canvastools extends Component {
             }}
           />
         </div>
-        <div className="designer-style-container slim-scroll">
-          <div className="page-dimensions mt-10">
-            <div className="page-dimensions-control">
-              <NumericInput
-                theme={theme}
-                value={pageWidth}
-                containerClass="cls number sm"
-                label="Canvas Width"
-                onChange={(val) => {
-                  if (val < 1920)
-                    onChange(ACTIONS.CHANGE_PAGE_DIMENSIONS, {
-                      name: "width",
-                      val: Number(val),
-                    });
-                  else {
-                    onChange(ACTIONS.CHANGE_PAGE_DIMENSIONS, {
-                      name: "width",
-                      val: 1920,
-                    });
-                  }
-                }}
-              />
-              <NumericInput
-                theme={theme}
-                // key={`elem-${configKey}`}
-                // configKey={configKey}
-                value={pageHeight}
-                // containerStyle={item?.containerStyle}
-                // controlStyle={item?.controlStyle}
-                containerClass={"cls number sm"}
-                // tooltip={item.tooltip}
-                // opt={item?.opt}
-                label="Canvas Height"
-                onChange={(val) => {
-                  if (val < 1080)
-                    onChange(ACTIONS.CHANGE_PAGE_DIMENSIONS, {
-                      name: "height",
-                      val: Number(val),
-                    });
-                  else {
-                    onChange(ACTIONS.CHANGE_PAGE_DIMENSIONS, {
-                      name: "height",
-                      val: 1080,
-                    });
-                  }
-                }}
-              />
-            </div>
+        {activeElementType !== "activeSelection" &&
+        activeElementType !== "polygon" &&
+        activeElementType !== "textbox" ? (
+          <div
+            className="elementName"
+            style={{
+              width: "100%",
+            }}
+          >
+            {/* <label>Element Name:</label>
+            <input
+              style={{
+                width: "100%",
+                height: "31px",
+              }}
+              placeholder="Element Name"
+              value={selectedElementName ? selectedElementName : ""}
+              onChange={(el) => {
+                const elem = canvas.getActiveObject();
+                if (elem) {
+                  elem.customName = true;
+                  elem.changeName = el.target.value;
+                  onChange(ACTIONS.ELEMENT_NAME, el);
+                }
+              }}
+            /> */}
+            <TextInput
+              theme={theme}
+              style={{
+                width: "100%",
+                height: "31px",
+              }}
+              value={selectedElementName ? selectedElementName : ""}
+              label="Element Name:"
+              onChange={(el) => {
+                const elem = canvas.getActiveObject();
+                if (elem) {
+                  elem.customName = true;
+                  elem.changeName = el.target.value;
+                  onChange(ACTIONS.ELEMENT_NAME, el);
+                }
+              }}
+            />
           </div>
-          {/* {activeElementType !== "activeSelection" &&
-          activeElementType !== "polygon" &&
-          activeElementType !== "textbox" ? (
-            <div className="elementName">
-              <label>Element Name:</label>
-              <input
-                style={{
-                  width: "100%",
-                  height: "31px",
-                }}
-                placeholder="Element Name"
-                value={selectedElementName ? selectedElementName : ""}
-                onChange={(el) => {
-                  const elem = canvas.getActiveObject();
-                  if (elem) {
-                    elem.customName = true;
-                    elem.changeName = el.target.value;
-                    onChange(ACTIONS.ELEMENT_NAME, el);
-                  }
-                }}
-              />
-            </div>
-          ) : null} */}
-          <div className="element-selector"></div>
-          {showStyleEditor ? (
-            // <ActiveElementControls
-            //   siteColorsSettings={siteColorsSettings}
-            //   canvas={canvas}
-            //   elementIds={elementIds}
-            //   activeElementProps={activeElementProps}
-            //   selectedElementName={selectedElementName}
-            //   elementsDropDownData={elementsDropDownData}
-            //   onActiveElementPropsChange={(props) => {
-            //     onChange(ACTIONS.CHANGE_ACTIVE_ELEMENT_PROPS, props);
-            //   }}
-            //   onChange={(action, data) => {
-            //     onChange(action, data);
-            //   }}
-            // />
-            <>
-              {/* <NumericInput
-                value={activeElem.width}
-                containerClass={"cls number "}
-                label={"Width"}
-                onChange={(val) => {
-                  activeElem.set({
-                    width: Number(val),
-                  });
-                  canvas.renderAll();
-                }}
-              /> */}
-            </>
-          ) : null}
-        </div>
+        ) : null}
+        {showStyleEditor ? (
+          <ActiveElementControls
+            theme={theme}
+            canvas={canvas}
+            elementIds={elementIds}
+            activeElementProps={activeElementProps}
+            selectedElementName={selectedElementName}
+            elementsDropDownData={elementsDropDownData}
+            onActiveElementPropsChange={(props) => {
+              onChange(ACTIONS.CHANGE_ACTIVE_ELEMENT_PROPS, props);
+            }}
+            onChange={(action, data) => {
+              onChange(action, data);
+            }}
+          />
+        ) : null}
       </div>
     );
   }

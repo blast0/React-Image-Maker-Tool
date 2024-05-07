@@ -1,6 +1,6 @@
 import React, { useRef, memo, forwardRef, useEffect } from "react";
 import { noop, isEqual } from "lodash";
-import { mergeRefs, copyToClipboard } from "./ImageEditor/helper-functions";
+import { mergeRefs, copyToClipboard } from "../ImageEditor/helper-functions";
 
 const TextInput = forwardRef((props, ref) => {
   const {

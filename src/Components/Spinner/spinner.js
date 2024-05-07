@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import manager from "./manager";
-import Spinner from "react-bootstrap/Spinner";
 import "./style.css";
 
 class SpinnerApp extends React.Component {
@@ -34,7 +33,7 @@ class SpinnerApp extends React.Component {
       <React.Fragment>
         {this.state.active ? (
           <div className="loading-overlay" style={overlayProps}>
-            <Spinner animation="border" />
+            <span class="loader"></span>
           </div>
         ) : null}
       </React.Fragment>

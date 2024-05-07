@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import IconButton from "../buttons/ButtonIcon";
+import IconButton from "../Buttons/IconButton";
 import { useState } from "react";
 
 function NavbarApp({ themed, themes, onThemeChange }) {

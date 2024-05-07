@@ -15,7 +15,7 @@ import { inRange, cloneDeep, uniqueId } from "lodash";
 import { produce } from "immer";
 import { fabric } from "fabric";
 import { saveAs } from "file-saver";
-import Spinner from "../spinner/manager";
+import Spinner from "../Spinner/manager";
 // import crypto from "crypto";
 // import { inRange } from "lodash";
 var FontFaceObserver = require("fontfaceobserver");
@@ -40,7 +40,6 @@ export const handleRightPanelUpdates = (action, data, self) => {
       addText(self);
       break;
     case ACTIONS.CHANGE_ACTIVE_ELEMENT_PROPS:
-      console.log(data);
       self.setState(
         {
           showStyleEditor: true,
@@ -52,7 +51,7 @@ export const handleRightPanelUpdates = (action, data, self) => {
           canvasRef.requestRenderAll();
         }
       );
-      setActiveObject(data.id, self);
+      // setActiveObject(data.id, self);
       break;
     case ACTIONS.CHANGE_PAGE_BACKGROUND:
       // changePageBackGround(data, self);
@@ -182,10 +181,10 @@ export const handleRightPanelUpdates = (action, data, self) => {
       }
       break;
     case ACTIONS.CHANGE_PATTERN_SIZE:
-      // handlePatternSize(data.width, data.height, self);
+      handlePatternSize(data.width, data.height, self);
       break;
     case ACTIONS.CHANGE_PATTERN_POSITION:
-      // handlePatternPosition(data.left, data.top, data.angle, self);
+      handlePatternPosition(data.left, data.top, data.angle, self);
       break;
     default:
       console.log("unhandled-action", action);
@@ -194,13 +193,7 @@ export const handleRightPanelUpdates = (action, data, self) => {
 };
 
 export const initializeApp = async (self) => {
-  // if query param contains a template, load it on page init
-  // self.queryParams = queryString.parse(self.props.location.search, {
-  //   parseBooleans: true,
-  //   parseNumbers: true,
-  // });
-  // const tmplCode = self.queryParams.template;
-  // if template is not defined in query parameter, use default template
+  // use default template
   const tmpl = PAGE_TEMPLATES[1];
 
   // get svg image properties from query params
@@ -780,7 +773,7 @@ export const alignElementVertically = (
       element.setCoords();
       // parentCanvasRef._historySaveAction();
     }
-  } else if (alignment === "center") {
+  } else if (alignment === "middle") {
     // topmostcoord such that the element falls in center
     const topCoordForCenter = (pageHeight - objectHeight) / 2;
     // topmost distance from center coord
@@ -1920,4 +1913,90 @@ export const copyToClipboard = (val) => {
   selBox.select();
   document.execCommand("copy");
   document.body.removeChild(selBox);
+};
+
+export const handlePatternSize = (w, h, self) => {
+  const canvasRef = Object.values(self.state.canvases)[0];
+  const activeObject = canvasRef.getActiveObject();
+  const { activeElementProps } = self.state;
+  let imgObj = activeObject.patternSourceCanvas._objects?.[0];
+  if (!imgObj) {
+    addPattern(
+      activeObject.patternSourceCanvas.objects[0].src,
+      canvasRef,
+      () => {}
+    );
+  } else {
+    let ratio = imgObj.width / imgObj.height;
+    let width = w;
+    let height = h;
+    if (!w) {
+      width = height * ratio;
+    }
+    if (!h) {
+      height = width / ratio;
+    }
+    if (width > 1 && height > 1) {
+      imgObj.scaleToWidth(width / fabric.devicePixelRatio);
+      activeObject.patternSourceCanvas.setDimensions({
+        width,
+        height,
+      });
+      activeObject.patternWidth = width;
+      activeObject.patternHeight = height;
+    }
+    const _activeElementProps = {
+      ...activeElementProps,
+      patternWidth: width,
+      patternHeight: height,
+    };
+    self.setState(
+      {
+        activeElementProps: _activeElementProps,
+      },
+      () => {
+        canvasRef.requestRenderAll();
+      }
+    );
+  }
+};
+
+export const handlePatternPosition = (left, top, angle, self) => {
+  const canvasRef = Object.values(self.state.canvases)[0];
+  const { activeElementProps } = self.state;
+  const activeObject = canvasRef.getActiveObject();
+  if (!activeObject.patternSourceCanvas._objects?.[0]) {
+    addPattern(
+      activeObject.patternSourceCanvas.objects[0].src,
+      canvasRef,
+      () => {}
+    );
+  } else {
+    if (left !== null && left !== undefined) {
+      activeObject.fill.offsetX = left;
+      const _activeElementProps = {
+        ...activeElementProps,
+        patternLeft: left,
+      };
+      activeObject.patternLeft = left;
+      self.setState({
+        activeElementProps: _activeElementProps,
+      });
+    } else if (top !== null && top !== undefined) {
+      activeObject.fill.offsetY = top;
+      const _activeElementProps = {
+        ...activeElementProps,
+        patternTop: top,
+      };
+      activeObject.patternTop = top;
+      self.setState({
+        activeElementProps: _activeElementProps,
+      });
+    } else if (angle !== null && angle !== undefined) {
+      activeObject.patternSourceCanvas._objects[0].rotate(angle);
+      activeObject.patternAngle = angle;
+      activeObject.patternSourceCanvas.renderAll();
+      canvasRef.renderAll();
+    }
+  }
 };

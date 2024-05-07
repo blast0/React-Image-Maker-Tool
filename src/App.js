@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./App.css";
-import Designer from "./Components/ImageEditor/imageEditor";
-import NavbarApp from "./Components/navbar/navbar";
-import Spinner from "./Components/spinner/spinner";
+import Designer from "./Components/ImageEditor";
+import NavbarApp from "./Components/Navbar/navbar";
+import Spinner from "./Components/Spinner/spinner";
 function App() {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   return (
     <div
       className="App"
@@ -15,6 +15,7 @@ function App() {
       }}
     >
       <NavbarApp
+        themed={theme}
         onThemeChange={(theme) => {
           setTheme(theme);
         }}

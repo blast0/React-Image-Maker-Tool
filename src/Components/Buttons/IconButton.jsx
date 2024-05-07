@@ -14,6 +14,9 @@ function IconButton(props) {
       <Button
         variant={"outline-" + theme !== "light" ? "light" : "dark"}
         onClick={() => btnClick()}
+        style={{
+          border: "1px solid #f1f1f1",
+        }}
       >
         <i
           stye={theme === "light" ? { color: "#fff" } : { color: "#212529" }}

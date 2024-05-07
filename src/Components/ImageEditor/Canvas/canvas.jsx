@@ -3,8 +3,8 @@ import { fabric } from "fabric";
 import _, { noop } from "lodash";
 // LOCAL COMPONENTS / METHODS
 import CanvasCore from "../core";
-import PopupContainer from "../../popmenu/popup-container";
-import PopMenuPortal from "../../popmenu/popmenu-portal";
+import PopupContainer from "../../PopMenu/popup-container";
+import PopMenuPortal from "../../PopMenu/popmenu-portal";
 import {
   ACTIONS,
   ARROW_HEAD,
