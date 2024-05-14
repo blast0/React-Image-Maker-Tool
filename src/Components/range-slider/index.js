@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { clone as _clone } from "lodash";
+// import { clone as _clone } from "lodash";
 import PropTypes from "prop-types";
 
 import "./css/range-slider.css";

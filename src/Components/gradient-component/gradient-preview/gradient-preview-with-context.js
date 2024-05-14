@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import GradientPreview from "./gradient-preview";
 import GradientContext from "../gradient-context";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 class GradientPreviewWithContext extends Component {
   static contextType = GradientContext;
@@ -48,7 +48,7 @@ GradientPreviewWithContext.defaultProps = {
 GradientPreviewWithContext.proptypes = {
   height: PropTypes.number,
   width: PropTypes.number,
-  config: PropTypes.object
-}
+  config: PropTypes.object,
+};
 
 export default GradientPreviewWithContext;

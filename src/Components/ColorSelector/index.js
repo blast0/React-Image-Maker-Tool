@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { CustomPicker } from "react-color";
 import { noop } from "lodash";
 import ChromePointerCircle from "./ChromePointerCircle";
@@ -186,7 +186,7 @@ class SubPopup extends React.Component {
 // create a custom picker
 const CustomColorPicker = CustomPicker(SubPopup);
 const ColorSelector = ({ onChange, ...restProps }) => {
-  const { color } = restProps;
+  // const { color } = restProps;
 
   const createColorText = (color) => {
     let _color;
@@ -211,10 +211,6 @@ const ColorSelector = ({ onChange, ...restProps }) => {
     const _color = createColorText(color);
     onChange(_color);
   };
-
-  useEffect(() => {
-    handleChange(color);
-  }, []);
 
   return <CustomColorPicker onChange={handleChange} {...restProps} />;
 };
