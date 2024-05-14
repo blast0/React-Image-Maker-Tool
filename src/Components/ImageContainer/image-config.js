@@ -164,7 +164,14 @@ class ImageConfig extends React.Component {
           ) : null}
         </div>
         {isImageLoading ? (
-          <InlineLoader />
+          <div
+            style={{
+              height: "150px",
+              width: "auto",
+            }}
+          >
+            <InlineLoader />
+          </div>
         ) : (
           <div className="control-wrapper">
             {this.showImagePlaceholder() ? (
@@ -200,7 +207,19 @@ class ImageConfig extends React.Component {
                   {/* Show blank area with error icon */}
                   {imgSrc && isImageError ? (
                     <span>
-                      <i className="icon-error" />
+                      <img
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "100%",
+                          padding: "5px 0",
+                        }}
+                        src={
+                          "https://icons.veryicon.com/png/o/business/new-vision-2/picture-loading-failed-1.png"
+                        }
+                        width={"auto"}
+                        alt="loading failed"
+                      />
                     </span>
                   ) : null}
                 </div>
@@ -215,8 +234,17 @@ class ImageConfig extends React.Component {
 
 function InlineLoader(props) {
   return (
-    <div className="TextLabel icon-only image-loading-icon">
-      <div className="loading loading-sm"></div>
+    <div
+      className="TextLabel icon-only image-loading-icon"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100%",
+        background: "#f1f1f1",
+      }}
+    >
+      <span class="loader"></span>
     </div>
   );
 }

@@ -18,6 +18,8 @@ const TextInput = forwardRef((props, ref) => {
     configKey,
     onChange,
     theme,
+    placeholder,
+    onClick,
     ...inputOnlyProps
   } = props;
   const textInputRef = useRef(null);
@@ -44,7 +46,7 @@ const TextInput = forwardRef((props, ref) => {
       descriptionRef.current.innerHTML = description;
     }
   }, [description]);
-  console.log(theme, props);
+
   return (
     <div
       className={`control-wrapper ${containerClass ?? ""}`}
@@ -74,7 +76,8 @@ const TextInput = forwardRef((props, ref) => {
           }}
           onChange={(e) => onChange(e.target.value, configKey)}
           {...inputOnlyProps}
-          placeholder={opt?.placeholder}
+          placeholder={placeholder}
+          onClick={onClick()}
         />
         {suffix ? <span className="ml-1 p-absolute">{suffix}</span> : null}
         {showCopyButton ? (
@@ -113,6 +116,16 @@ NumericInput.defaultProps = {
   isValid: true,
   description: "",
   onChange: noop,
+  onClick: noop,
+};
+
+TextInput.defaultProps = {
+  suffix: "",
+  value: "",
+  isValid: true,
+  description: "",
+  onChange: noop,
+  onClick: noop,
 };
 
 export default memo(TextInput, isEqual);

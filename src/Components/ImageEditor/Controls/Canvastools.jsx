@@ -276,7 +276,6 @@ class Canvastools extends Component {
       pageHeight,
       theme,
     } = this.props;
-    console.log(theme);
     const activeElementType = canvas?.getActiveObject()?.type;
     const activeElem = canvas.getActiveObject();
     return (

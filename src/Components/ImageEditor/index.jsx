@@ -132,224 +132,222 @@ class Designer extends Component {
               }
         }
       >
-        <div>
-          {pages.map((page) => {
-            return (
-              <div key={`page-div-${page.id}`}>
-                <Page
-                  theme={this.props.theme}
-                  isCanvasActive={isCanvasActive && !modalActive}
-                  selectedElementId={selectedElementId}
-                  key={`page-${page.id}`}
-                  activePageID={activePageID}
-                  _canvas={_canvas}
-                  config={page}
-                  activeElementProps={activeElementProps}
-                  isTemplateLoaded={isTemplateLoaded}
-                  ontemplateLoaded={(elem) => {
-                    this.setState(
-                      {
-                        isTemplateLoaded: true,
-                      },
-                      () => {
-                        // _canvas.clearHistory();
-                        setTimeout(() => {
-                          if (elem) {
-                            _canvas.setActiveObject(elem);
-                            _canvas.renderAll();
-                          }
-                        }, 100);
-                      }
-                    );
-                  }}
-                  onCanvasActive={(isActive) => {
-                    if (modalActive) {
-                      this.setState({
-                        isCanvasActive: false,
-                      });
-                    } else {
-                      this.setState({
-                        isCanvasActive: isActive,
-                      });
+        {pages.map((page) => {
+          return (
+            <div key={`page-div-${page.id}`}>
+              <Page
+                theme={this.props.theme}
+                isCanvasActive={isCanvasActive && !modalActive}
+                selectedElementId={selectedElementId}
+                key={`page-${page.id}`}
+                activePageID={activePageID}
+                _canvas={_canvas}
+                config={page}
+                activeElementProps={activeElementProps}
+                isTemplateLoaded={isTemplateLoaded}
+                ontemplateLoaded={(elem) => {
+                  this.setState(
+                    {
+                      isTemplateLoaded: true,
+                    },
+                    () => {
+                      // _canvas.clearHistory();
+                      setTimeout(() => {
+                        if (elem) {
+                          _canvas.setActiveObject(elem);
+                          _canvas.renderAll();
+                        }
+                      }, 100);
                     }
-                  }}
-                  onCanvasPostInit={(id, canvas) => {
+                  );
+                }}
+                onCanvasActive={(isActive) => {
+                  if (modalActive) {
                     this.setState({
-                      canvases: {
-                        ...this.state.canvases,
-                        [id]: canvas,
-                      },
+                      isCanvasActive: false,
                     });
-                  }}
-                  pageBgColor={pageBgColor}
-                  onElementsRendered={() => {
-                    createCanvasElementsDropdownData(this);
-                  }}
-                  onElementDeleteRequested={(action) =>
-                    handleRightPanelUpdates(action, null, this)
+                  } else {
+                    this.setState({
+                      isCanvasActive: isActive,
+                    });
                   }
-                  onElemSelect={(showStyleEditor, activeElementProps) => {
-                    this.setState({
-                      showStyleEditor,
-                      activeElementProps,
-                      selectedElementName: activeElementProps.name,
-                      selectedElementId: activeElementProps.id,
-                    });
-                    setActiveObject(activeElementProps.id, _canvas);
+                }}
+                onCanvasPostInit={(id, canvas) => {
+                  this.setState({
+                    canvases: {
+                      ...this.state.canvases,
+                      [id]: canvas,
+                    },
+                  });
+                }}
+                pageBgColor={pageBgColor}
+                onElementsRendered={() => {
+                  createCanvasElementsDropdownData(this);
+                }}
+                onElementDeleteRequested={(action) =>
+                  handleRightPanelUpdates(action, null, this)
+                }
+                onElemSelect={(showStyleEditor, activeElementProps) => {
+                  this.setState({
+                    showStyleEditor,
+                    activeElementProps,
+                    selectedElementName: activeElementProps.name,
+                    selectedElementId: activeElementProps.id,
+                  });
+                  setActiveObject(activeElementProps.id, _canvas);
+                }}
+                setSelectedName={(name) => {
+                  _canvas.getActiveObject().name = name;
+                  this.setState({
+                    selectedElementName: name,
+                  });
+                }}
+              />
+              <div // ref={this.imagetoLibInputRef}
+                className="hidden-file"
+                children={{}}
+                type="file"
+                accept="image/svg"
+                onChange={(e) => {
+                  onSelectImage(e, this);
+                }}
+                onClick={(e) => {
+                  onSelectImage(e, this);
+                }}
+              >
+                <ModalApp
+                  leftIcon={"icon-laptop"}
+                  onBtnClick={(e) => {
+                    console.log("cliked");
                   }}
-                  setSelectedName={(name) => {
-                    _canvas.getActiveObject().name = name;
-                    this.setState({
-                      selectedElementName: name,
-                    });
-                  }}
+                  children={
+                    <>
+                      <div className="delete-modal modal-body">
+                        <p className="text-center">
+                          All item(s) in self page will be deleted.
+                        </p>
+                      </div>
+                      <div className="modal-footer align-center"></div>
+                    </>
+                  }
                 />
-                <div // ref={this.imagetoLibInputRef}
-                  className="hidden-file"
-                  children={{}}
-                  type="file"
-                  accept="image/svg"
-                  onChange={(e) => {
-                    onSelectImage(e, this);
-                  }}
-                  onClick={(e) => {
-                    onSelectImage(e, this);
+              </div>
+            </div>
+          );
+        })}
+        <div>
+          <input
+            ref={this.imagetoLibInputRef}
+            className="hidden-file"
+            type="file"
+            accept="image/svg"
+            onChange={(e) => {
+              onSelectImage(e, this);
+            }}
+            onClick={(e) => {
+              onSelectImage(e, this);
+            }}
+          />
+          <input
+            ref={this.imagetoCanvasRef}
+            className="hidden-file"
+            style={{ border: "2px solid black" }}
+            type="file"
+            accept="image/svg"
+            onChange={(e) => {
+              onAddImageFromFile(e, this, pageHeight, pageWidth);
+            }}
+            onClick={(e) => {
+              onAddImageFromFile(e, this, pageHeight, pageWidth);
+            }}
+          />
+          <input
+            ref={this.svgInputRef}
+            className="hidden-file"
+            type="file"
+            accept="image/svg"
+            onChange={(e) => onSelectSvg(e, this)}
+          />
+          <Panel
+            theme={this.props.theme}
+            direction="end"
+            name="Tools"
+            headerChildren={
+              <>
+                <div
+                  className="outlined-buttons btn-fixed-right-panel"
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    gap: "5px",
                   }}
                 >
-                  <ModalApp
-                    leftIcon={"icon-laptop"}
-                    onBtnClick={(e) => {
-                      console.log("cliked");
+                  <DropdownButton
+                    leftIcon={"icon-add"}
+                    variant="light"
+                    btnText={""}
+                    buttons={ADD_SHAPE_OPTIONS}
+                    onDropBtnClick={(option) => {
+                      console.log(option);
+                      handleRightPanelUpdates(option.value, {}, this);
                     }}
-                    children={
-                      <>
-                        <div className="delete-modal modal-body">
-                          <p className="text-center">
-                            All item(s) in self page will be deleted.
-                          </p>
-                        </div>
-                        <div className="modal-footer align-center"></div>
-                      </>
-                    }
+                  />
+                  <IconButton
+                    leftIcon="icon-undo"
+                    btnText={""}
+                    btnClick={() => {
+                      handleRightPanelUpdates(ACTIONS.UNDO_ACTION, {}, this);
+                    }}
+                  />
+                  <IconButton
+                    leftIcon="icon-redo"
+                    btnText={""}
+                    btnClick={() => {
+                      handleRightPanelUpdates(ACTIONS.REDO_ACTION, {}, this);
+                    }}
+                  />
+                  <DropdownButton
+                    leftIcon={"icon-save-new"}
+                    variant="light"
+                    btnText={""}
+                    buttons={SAVE_OPTIONS}
+                    onDropBtnClick={(option) => {
+                      handleRightPanelUpdates(option.value, {}, this);
+                    }}
+                  />
+                  <ModalApp
+                    leftIcon="icon-delete"
+                    onBtnClick={(e) => {
+                      handleRightPanelUpdates(ACTIONS.CLEAR_PAGE, {}, this);
+                    }}
+                    children={<>All item(s) in your page will be deleted.</>}
                   />
                 </div>
-              </div>
-            );
-          })}
-          <div>
-            <input
-              ref={this.imagetoLibInputRef}
-              className="hidden-file"
-              type="file"
-              accept="image/svg"
-              onChange={(e) => {
-                onSelectImage(e, this);
-              }}
-              onClick={(e) => {
-                onSelectImage(e, this);
-              }}
-            />
-            <input
-              ref={this.imagetoCanvasRef}
-              className="hidden-file"
-              style={{ border: "2px solid black" }}
-              type="file"
-              accept="image/svg"
-              onChange={(e) => {
-                onAddImageFromFile(e, this, pageHeight, pageWidth);
-              }}
-              onClick={(e) => {
-                onAddImageFromFile(e, this, pageHeight, pageWidth);
-              }}
-            />
-            <input
-              ref={this.svgInputRef}
-              className="hidden-file"
-              type="file"
-              accept="image/svg"
-              onChange={(e) => onSelectSvg(e, this)}
-            />
-            <Panel
-              theme={this.props.theme}
-              direction="end"
-              name="Tools"
-              headerChildren={
-                <>
-                  <div
-                    className="outlined-buttons btn-fixed-right-panel"
-                    style={{
-                      width: "100%",
-                      display: "flex",
-                      gap: "5px",
-                    }}
-                  >
-                    <DropdownButton
-                      leftIcon={"icon-add"}
-                      variant="light"
-                      btnText={""}
-                      buttons={ADD_SHAPE_OPTIONS}
-                      onDropBtnClick={(option) => {
-                        console.log(option);
-                        handleRightPanelUpdates(option.value, {}, this);
-                      }}
-                    />
-                    <IconButton
-                      leftIcon="icon-undo"
-                      btnText={""}
-                      btnClick={() => {
-                        handleRightPanelUpdates(ACTIONS.UNDO_ACTION, {}, this);
-                      }}
-                    />
-                    <IconButton
-                      leftIcon="icon-redo"
-                      btnText={""}
-                      btnClick={() => {
-                        handleRightPanelUpdates(ACTIONS.REDO_ACTION, {}, this);
-                      }}
-                    />
-                    <DropdownButton
-                      leftIcon={"icon-save-new"}
-                      variant="light"
-                      btnText={""}
-                      buttons={SAVE_OPTIONS}
-                      onDropBtnClick={(option) => {
-                        handleRightPanelUpdates(option.value, {}, this);
-                      }}
-                    />
-                    <ModalApp
-                      leftIcon="icon-delete"
-                      onBtnClick={(e) => {
-                        handleRightPanelUpdates(ACTIONS.CLEAR_PAGE, {}, this);
-                      }}
-                      children={<>All item(s) in your page will be deleted.</>}
-                    />
-                  </div>
-                </>
-              }
-              bodyChildren={
-                <>
-                  <Canvastools
-                    theme={this.props.theme}
-                    canvas={_canvas}
-                    elementsDropDownData={elementsDropDownData}
-                    error={error}
-                    pageWidth={pageWidth}
-                    pageHeight={pageHeight}
-                    pageBgColor={pageBgColor}
-                    showStyleEditor={showStyleEditor}
-                    selectedElementName={selectedElementName}
-                    activeElementProps={activeElementProps}
-                    onChange={(action, data) =>
-                      handleRightPanelUpdates(action, data, this)
-                    }
-                    handleJsonData={(e) => handleJsonData(e, this)}
-                    jsonRef={this.jsonRef}
-                    siteColorsSettings={this.props.siteColorsSettings}
-                  />
-                </>
-              }
-            />
-          </div>
+              </>
+            }
+            bodyChildren={
+              <>
+                <Canvastools
+                  theme={this.props.theme}
+                  canvas={_canvas}
+                  elementsDropDownData={elementsDropDownData}
+                  error={error}
+                  pageWidth={pageWidth}
+                  pageHeight={pageHeight}
+                  pageBgColor={pageBgColor}
+                  showStyleEditor={showStyleEditor}
+                  selectedElementName={selectedElementName}
+                  activeElementProps={activeElementProps}
+                  onChange={(action, data) =>
+                    handleRightPanelUpdates(action, data, this)
+                  }
+                  handleJsonData={(e) => handleJsonData(e, this)}
+                  jsonRef={this.jsonRef}
+                  siteColorsSettings={this.props.siteColorsSettings}
+                />
+              </>
+            }
+          />
         </div>
       </div>
     );

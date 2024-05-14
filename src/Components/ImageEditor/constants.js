@@ -145,24 +145,24 @@ export const TEXT_ALIGNMENT = [
 
 export const FONT_STYLES = [
   {
-    title: "Bold Toggle",
-    icon: "icon-bold",
-    bId: "bold",
+    // btnText: "Bold Toggle",
+    leftIcon: "icon-bold",
+    value: "bold",
   },
   {
-    title: "Italic Toggle",
-    icon: "icon-italic",
-    bId: "italic",
+    // btnText: "Italic Toggle",
+    leftIcon: "icon-italic",
+    value: "italic",
   },
   {
-    title: "Strikethrough Toggle",
-    icon: "icon-strikethrough",
-    bId: "strikethrough",
+    // btnText: "Strikethrough Toggle",
+    leftIcon: "icon-strikethrough",
+    value: "strikethrough",
   },
   {
-    title: "Underline Toggle",
-    icon: "icon-underline",
-    bId: "underline",
+    // btnText: "Underline Toggle",
+    leftIcon: "icon-underline",
+    value: "underline",
   },
 ];
 
@@ -566,14 +566,14 @@ export const BlankTemplate = Object.freeze({
 
 export const SPACE_EVENLY_OPTIONS = [
   {
-    title: "Equally Space Horizontal",
-    icon: "icon-space-evenly-horizontally",
-    bId: "horizontal",
+    // btnText: "Equally Space Horizontal",
+    leftIcon: "icon-space-evenly-horizontally",
+    value: "horizontal",
   },
   {
-    title: "Equally Space Vertical",
-    icon: "icon-space-evenly-vertically",
-    bId: "vertical",
+    // btnText: "Equally Space Vertical",
+    leftIcon: "icon-space-evenly-vertically",
+    value: "vertical",
   },
 ];
 
@@ -617,7 +617,6 @@ export const DefaultTemplate = {
       BorderX: 5,
       BorderY: 5,
       BorderLock: true,
-      preselected: true,
     },
     {
       type: "rect",
@@ -632,6 +631,7 @@ export const DefaultTemplate = {
       rx: 0,
       ry: 0,
       BorderLock: true,
+      preselected: true,
     },
     {
       type: "rect",

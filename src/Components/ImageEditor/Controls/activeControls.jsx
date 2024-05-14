@@ -2,24 +2,23 @@ import React, { Component } from "react";
 import { fabric } from "fabric";
 import { noop } from "lodash";
 import { NumericInput } from "../../Input/text-input";
+import RangeSlider from "../../range-slider/index";
 import ImageContainer from "../../ImageContainer/image-container";
 // import
 // {
-//   ColorContainer,
 //   ConfiguratorCore,
 //   GradientContainer,
 //   BorderRadius,
 //   BoxShadowContainer,
-//   RangeSlider,
 // }
 // "@attosol/react-ui-kit";
 import {
   ACTIONS,
   RESET_ACTIVE_ELEM_PROPS,
   ALIGNMENT_OPTIONS,
-  //   SPACE_EVENLY_OPTIONS,
+  SPACE_EVENLY_OPTIONS,
   //   ArrowDirection,
-  //   FONT_STYLES,
+  FONT_STYLES,
   TEXT_ALIGNMENT,
   FLIP_OPTIONS,
 } from "../constants";
@@ -30,6 +29,7 @@ import {
   scaleElementTofitCanvas,
 } from "../helper-functions";
 import DropdownButton from "../../Buttons/DropdownBtn";
+// import GradientContainer from "../../gradient-container";
 import {
   //   handleSelectedTool,
   //   handleSvgElem,
@@ -45,10 +45,12 @@ import {
   //   makeGradient,
   setArrowHead,
   setfontfamily,
-  //   handleFontStyle,
+  handleFontStyle,
   //   setBubbleFontFamily,
 } from "./activeElementHandlers";
 import ComboButton from "../../Buttons/ButtonGroup";
+// import ColorSelector from "../../ColorSelector";
+import ColorSelectorButton from "../../Buttons/ColorSelectorBtn";
 // CSS
 // import "./activeElementControls.css";
 
@@ -311,24 +313,18 @@ class ActiveElementControls extends Component {
     );
 
     const activeBgColor = (
-      //   <ColorContainer
-      //     opt={{
-      //       showInput: true,
-      //       containerWidth: "calc(50% - 5px)",
-      //       controlWidth: "100%",
-      //     }}
-      //     label={
-      //       activeElement instanceof fabric.IText
-      //         ? "Text Background:"
-      //         : "Background Color:"
-      //     }
-      //     showInPopup={true}
-      //     color={activeElement?.backgroundColor}
-      //     onChange={(color) => {
-      //       updateActiveElement({ backgroundColor: color }, this);
-      //     }}
-      //   />
-      <></>
+      <ColorSelectorButton
+        theme={theme}
+        label={
+          activeElement instanceof fabric.IText
+            ? "Text Background:"
+            : "Background Color:"
+        }
+        onChange={(color) => {
+          updateActiveElement({ backgroundColor: color }, this);
+        }}
+        value={activeElement?.backgroundColor}
+      />
     );
 
     const SpeechBubbleControls = (
@@ -602,7 +598,7 @@ class ActiveElementControls extends Component {
             }
           />
         </div>
-        {/* <RangeSlider
+        <RangeSlider
           min={0}
           max={360}
           step={1}
@@ -613,153 +609,133 @@ class ActiveElementControls extends Component {
             this.setState({ patternAngle: parseInt(e.target.value) });
             handlePatternPosition(null, null, parseInt(e.target.value), this);
           }}
-        />  */}
+        />
       </>
     );
 
     const activeElementColor = (
-      //   <GradientContainer
-      //     siteColorData={siteColorsSettings}
-      //     showSiteColorBtn={Object.keys(siteColorsSettings).length ? true : false}
-      //     canChooseGradientType={true}
-      //     value={
-      //       activeElement?.fillGradient
-      //         ? activeElement?.fillGradient
-      //         : activeElementProps?.colors[0]
+      // <GradientContainer
+      //   value={
+      //     activeElement?.fillGradient
+      //       ? activeElement?.fillGradient
+      //       : activeElementProps?.colors[0]
+      //   }
+      //   // onChange={(value) => {
+      //   //   updateActiveElement({ colors: [value] }, this);
+      //   //   activeElement.set("fill", value);
+      //   // }}
+      //   btnText={activeElementProps?.colors[0]}
+      //   isGradientAllowed={true}
+      //   // opt={{ showInput: true }}
+      //   containerClass={"gradient "}
+      //   onValueChange={(gradientText, configKey, rawConfig) => {
+      //     console.log(gradientText, configKey, rawConfig);
+      //     let grad = makeGradient(
+      //       rawConfig,
+      //       gradientText,
+      //       activeElement?.height,
+      //       activeElement?.width,
+      //       this
+      //     );
+      //     if (rawConfig.colorStops.length < 2) {
+      //       updateActiveElement({ colors: [grad] }, this);
+      //       activeElement.set("fill", grad);
+      //     } else {
+      //       activeElement.set("fill", new fabric.Gradient(grad));
       //     }
-      //     previewWidth={200}
-      //     switchToColor={activeElement?.fillGradient ? false : true}
-      //     showInPopup={false}
-      //     label={
-      //       activeElement instanceof fabric.IText ? "Text Color:" : "Fill Color:"
-      //     }
-      //     isGradientAllowed={true}
-      //     opt={{ showInput: true }}
-      //     containerClass={"gradient "}
-      //     onValueChange={(gradientText, configKey, rawConfig) => {
-      //       let grad = makeGradient(
-      //         rawConfig,
-      //         gradientText,
-      //         activeElement?.height,
-      //         activeElement?.width,
-      //         this
-      //       );
-      //       if (rawConfig.colorStops.length < 2) {
-      //         updateActiveElement({ colors: [grad] }, this);
-      //         activeElement.set("fill", grad);
-      //       } else {
-      //         activeElement.set("fill", new fabric.Gradient(grad));
-      //       }
-      //       activeElement.ElementColor = activeElementProps?.colors[0];
-      //       canvas.renderAll();
-      //     }}
-      //   />
-      <></>
+      //     activeElement.ElementColor = activeElementProps?.colors[0];
+      //     canvas.renderAll();
+      //   }}
+      // />
+      <ColorSelectorButton
+        theme={theme}
+        label="Fill Color"
+        onChange={(color) => {
+          // updateActiveElement({ color: color }, this);
+          activeElement.set("fill", color);
+          activeElement.ElementColor = activeElementProps?.colors[0];
+          canvas.renderAll();
+        }}
+        value={activeElementProps?.colors[0]}
+      />
     );
 
     const activeArrowColor = (
-      //   <ColorContainer
-      //     opt={{
-      //       showInput: true,
-      //       controlWidth: "68%",
-      //     }}
-      //     label={"Arrow Color:"}
-      //     showInPopup={true}
-      //     color={activeElement?.fill}
-      //     onChange={(color) => {
-      //       activeElement.fill = color;
-      //       activeElement._objects.forEach((el) => {
-      //         if (el instanceof fabric.Triangle) {
-      //           el.set("fill", color);
-      //         }
-      //         el.set("stroke", color);
-      //       });
-      //       canvas.renderAll();
-      //       updateActiveElement({ fill: color }, this);
-      //     }}
-      //   />
-      <></>
+      <ColorSelectorButton
+        theme={theme}
+        label="Arrow Color:"
+        value={activeElement?.fill}
+        onChange={(color) => {
+          activeElement._objects.forEach((el) => {
+            if (el instanceof fabric.Triangle) {
+              el.set("fill", color);
+            }
+            el.set("stroke", color);
+          });
+          canvas.renderAll();
+          updateActiveElement({ fill: color }, this);
+        }}
+      />
     );
 
     const activeBorderColor = (
-      //   <ColorContainer
-      //     opt={{
-      //       showInput: true,
-      //       containerWidth: "calc(50% - 5px)",
-      //       controlWidth: "100%",
-      //     }}
-      //     label={
-      //       activeElement instanceof fabric.IText
-      //         ? "Text Border:"
-      //         : activeElement instanceof fabric.Line
-      //         ? "Line Color:"
-      //         : "Border Color:"
-      //     }
-      //     showInPopup={true}
-      //     color={activeElement?.stroke}
-      //     onChange={(color) => {
-      //       activeElement.set("stroke", color);
-      //       updateActiveElement({ stroke: color }, this);
-      //     }}
-      //   />
-      <></>
+      <ColorSelectorButton
+        theme={theme}
+        label={
+          activeElement instanceof fabric.IText
+            ? "Text Border:"
+            : activeElement instanceof fabric.Line
+            ? "Line Color:"
+            : "Border Color:"
+        }
+        onChange={(color) => {
+          activeElement.set("stroke", color);
+          updateActiveElement({ stroke: color }, this);
+        }}
+        value={activeElement?.stroke}
+      />
     );
 
     const groupArrowColor = (
       <div className="svg-colors-group">
-        {/* <ColorContainer
-          opt={{
-            showInput: true,
-            containerWidth: "calc(50% - 5px)",
-            controlWidth: "100%",
-          }}
+        <ColorSelectorButton
+          theme={theme}
           label={"Arrow Line:"}
-          showInPopup={true}
-          color={activeElementProps?.stroke}
           onChange={(color) => {
             activeElement.item(0).set("stroke", color);
             updateActiveElement({ stroke: color }, this);
           }}
+          value={activeElementProps?.stroke}
         />
-
-        <ColorContainer
-          opt={{
-            showInput: true,
-            containerWidth: "calc(50% - 5px)",
-            controlWidth: "100%",
-          }}
+        <ColorSelectorButton
+          theme={theme}
           label={
             activeElement?._objects?.length === 3
               ? "Right Arrow Head:"
               : "Arrow Head"
           }
-          showInPopup={true}
-          color={activeElementProps.colors?.[1]}
           onChange={(color) => {
             activeElement.item(1).set("fill", color);
             let newColors = activeElementProps.colors;
             newColors[1] = color;
             updateActiveElement({ colors: newColors }, this);
           }}
+          value={activeElementProps.colors?.[1]}
         />
+
         {activeElement?._objects?.length === 3 && (
-          <ColorContainer
-            opt={{
-              showInput: true,
-              containerWidth: "calc(50% - 5px)",
-              controlWidth: "100%",
-            }}
+          <ColorSelectorButton
+            theme={theme}
             label={"Left Arrow Head:"}
-            showInPopup={true}
-            color={activeElementProps.colors?.[2]}
             onChange={(color) => {
               activeElement.item(2).set("fill", color);
               let newColors = activeElementProps.colors;
               newColors[2] = color;
               updateActiveElement({ colors: newColors }, this);
             }}
+            value={activeElementProps.colors?.[2]}
           />
-        )} */}
+        )}
       </div>
     );
 
@@ -846,44 +822,34 @@ class ActiveElementControls extends Component {
     const SpaceElementsEvenly = activeElement instanceof
       fabric.ActiveSelection && (
       <div className="space-evenly">
-        {/* <ComboButton
+        <ComboButton
           label="Space Objects Evenly"
-          btnArray={SPACE_EVENLY_OPTIONS}
+          buttons={SPACE_EVENLY_OPTIONS}
           onBtnClick={(btn) => {
             onChange(ACTIONS.SPACE_WITHIN_GROUP_EVENLY, btn.bId);
           }}
           btnContainerClass={"designer-group-button"}
-        ></ComboButton> */}
+        ></ComboButton>
       </div>
     );
 
     const TextStyles = (
       <div className="Text-Styles">
-        {/* <ComboButton
+        <ComboButton
           label={"Text Style:"}
-          btnArray={FONT_STYLES}
+          buttons={FONT_STYLES}
           onBtnClick={(btn) => {
             handleFontStyle(btn, activeElement, canvas);
           }}
           btnContainerClass={"designer-group-button"}
-        ></ComboButton> */}
+        ></ComboButton>
       </div>
     );
 
     const FlipElement = (
       <div className="Flip-Controls">
-        {/* <ComboButton
-          label={"Flip Element:"}
-          btnArray={FLIP_OPTIONS}
-          onBtnClick={(btn) => {
-            if (btn.bId === "x")
-              activeElement.set("flipX", !activeElement.flipX);
-            else activeElement.set("flipY", !activeElement.flipY);
-            canvas.renderAll();
-          }}
-          btnContainerClass={"designer-group-button"}
-        ></ComboButton> */}
         <ComboButton
+          label={"Flip Element:"}
           buttons={FLIP_OPTIONS}
           onBtnClick={(button) => {
             if (button.value === "x")
@@ -913,19 +879,12 @@ class ActiveElementControls extends Component {
       activeElement instanceof fabric.ActiveSelection ? (
         <div className="align-within-Group-Vertically">
           <ComboButton
+            label="Object Horizontal Alignment"
             buttons={ALIGNMENT_OPTIONS}
             onBtnClick={(button) => {
               onChange(ACTIONS.ALIGN_WITHIN_GROUP_HORIZONTALLTY, button.value);
             }}
           />
-          {/* <ComboButton
-            label="Object Horizontal Alignment"
-            btnArray={ALIGNMENT_OPTIONS}
-            onBtnClick={(btn) => {
-              onChange(ACTIONS.ALIGN_WITHIN_GROUP_HORIZONTALLTY, btn.bId);
-            }}
-            btnContainerClass={"designer-group-button"}
-          ></ComboButton> */}
         </div>
       ) : null;
 
