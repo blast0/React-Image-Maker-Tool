@@ -6,7 +6,6 @@ import { useState } from "react";
 
 function NavbarApp({ themed, themes, onThemeChange }) {
   const [theme, setTheme] = useState(themed);
-  console.log(theme);
   return (
     <>
       <Navbar

@@ -288,7 +288,6 @@ class Designer extends Component {
                     btnText={""}
                     buttons={ADD_SHAPE_OPTIONS}
                     onDropBtnClick={(option) => {
-                      console.log(option);
                       handleRightPanelUpdates(option.value, {}, this);
                     }}
                   />

@@ -310,7 +310,6 @@ export const handleFontStyle = (btn, activeElement, canvas) => {
       canvas.renderAll();
       break;
     case "underline":
-      console.log(activeElement.underline);
       activeElement.set("underline", !activeElement.underline);
       canvas.renderAll();
       break;

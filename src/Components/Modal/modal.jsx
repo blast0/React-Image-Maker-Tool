@@ -12,7 +12,6 @@ function ModalApp(props) {
     handleClose();
   }, []);
   const { children, onBtnClick, leftIcon } = props;
-  // console.log(children, onBtnClick, leftIcon);
   return (
     <>
       <IconButton btnClick={handleShow} leftIcon={leftIcon} variant="light" />

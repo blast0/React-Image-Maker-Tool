@@ -1,5 +1,6 @@
 import Dropdown from "react-bootstrap/Dropdown";
-import ColorSelector from "../ColorSelector";
+// import ColorSelector from "../ColorSelector";
+import { SketchPicker } from "react-color";
 import TextInput from "../Input/text-input";
 import { useState } from "react";
 
@@ -85,14 +86,23 @@ const ColorSelectorButton = (props) => {
               }}
               key={"dropbtncolor"}
             >
-              <ColorSelector
-                value={color}
-                previewWidth={200}
+              <SketchPicker
                 onChange={(e) => {
                   console.log(e);
-                  onChange(e);
-                  setColor(e);
+                  const rgba =
+                    "rgba(" +
+                    e.rgb.r +
+                    "," +
+                    e.rgb.g +
+                    "," +
+                    e.rgb.b +
+                    "," +
+                    e.rgb.a +
+                    ")";
+                  setColor(rgba);
+                  onChange(rgba);
                 }}
+                color={color}
               />
             </Dropdown.Item>
           </Dropdown.Menu>

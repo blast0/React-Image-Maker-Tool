@@ -10,7 +10,6 @@ function Manager() {
     // find the reference of spinner having id = spinnerId
     const _ref = find(this.refSpinners, (spinner) => spinner.id === spinnerId);
     // if ref to spinner exists
-    console.log(_ref);
     if (_ref) {
       return _ref.fn.show();
     }
@@ -35,7 +34,6 @@ function Manager() {
     };
     // store ref to this spinner
     this.refSpinners[spinnerId] = newRef;
-    console.log(this.refSpinners[spinnerId]);
   };
 
   return this;

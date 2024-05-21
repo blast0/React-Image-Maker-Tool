@@ -614,46 +614,13 @@ class ActiveElementControls extends Component {
     );
 
     const activeElementColor = (
-      // <GradientContainer
-      //   value={
-      //     activeElement?.fillGradient
-      //       ? activeElement?.fillGradient
-      //       : activeElementProps?.colors[0]
-      //   }
-      //   // onChange={(value) => {
-      //   //   updateActiveElement({ colors: [value] }, this);
-      //   //   activeElement.set("fill", value);
-      //   // }}
-      //   btnText={activeElementProps?.colors[0]}
-      //   isGradientAllowed={true}
-      //   // opt={{ showInput: true }}
-      //   containerClass={"gradient "}
-      //   onValueChange={(gradientText, configKey, rawConfig) => {
-      //     console.log(gradientText, configKey, rawConfig);
-      //     let grad = makeGradient(
-      //       rawConfig,
-      //       gradientText,
-      //       activeElement?.height,
-      //       activeElement?.width,
-      //       this
-      //     );
-      //     if (rawConfig.colorStops.length < 2) {
-      //       updateActiveElement({ colors: [grad] }, this);
-      //       activeElement.set("fill", grad);
-      //     } else {
-      //       activeElement.set("fill", new fabric.Gradient(grad));
-      //     }
-      //     activeElement.ElementColor = activeElementProps?.colors[0];
-      //     canvas.renderAll();
-      //   }}
-      // />
       <ColorSelectorButton
         theme={theme}
         label="Fill Color"
         onChange={(color) => {
-          // updateActiveElement({ color: color }, this);
           activeElement.set("fill", color);
-          activeElement.ElementColor = activeElementProps?.colors[0];
+          activeElement.ElementColor = color;
+          updateActiveElement({ colors: [color] }, this);
           canvas.renderAll();
         }}
         value={activeElementProps?.colors[0]}

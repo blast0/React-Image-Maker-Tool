@@ -40,8 +40,6 @@ const GradientMakerWithInput = ({
     ...controlStyle,
   };
 
-  console.log("the", restProps?.theme);
-
   return (
     <>
       <div

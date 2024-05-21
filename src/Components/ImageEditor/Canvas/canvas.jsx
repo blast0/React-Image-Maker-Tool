@@ -612,8 +612,7 @@ class Page extends Component {
       activeObject = activeElem;
       canvas = canvasRef;
     }
-    let count = this.countCustomElementTypes(activeObject.type);
-    console.log("count", count, "type", activeObject.type);
+    // let count = this.countCustomElementTypes(activeObject.type);
     if (activeObject.customType === "SpeechBubble") {
       if (activeObject.isLabel === true) {
         // const bubbleElementSchema = getNextSpeechLabelSchema(this.canvasRef);
@@ -627,7 +626,6 @@ class Page extends Component {
       this.addQuadratic(quadraticElementSchema);
     } else if (activeObject.type === "activeSelection") {
       const activeSelection = canvas.getActiveObjects();
-      console.log(activeSelection);
       canvas.discardActiveObject();
       activeSelection.forEach((item) => {
         this.cloneElement(item, canvas);
@@ -635,7 +633,6 @@ class Page extends Component {
     } else if (activeObject.type === "group") {
       const activeSelection = activeObject.toActiveSelection();
       // canvas.discardActiveObject();
-      console.log(activeSelection);
       activeSelection.forEach((item) => {
         this.cloneElement(item, canvas);
       });
@@ -2051,7 +2048,6 @@ class Page extends Component {
   render() {
     const { style, id: pageId } = this.props.config;
     const { showContextmenu } = this.state;
-    // console.log(this.props.theme);
     return (
       <div
         className="page"

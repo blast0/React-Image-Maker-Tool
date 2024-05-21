@@ -25,7 +25,6 @@ function Manager() {
   };
 
   this.register = (menuId, { showMenu, hideMenu }) => {
-    console.log(menuId);
     const newRef = {
       id: menuId,
       fn: {

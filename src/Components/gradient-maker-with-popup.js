@@ -56,7 +56,6 @@ function GradientMakerWithPopup(props) {
     ...containerStyle,
   };
 
-  console.log(showSubPopup);
   return (
     <div className="control-wrapper" style={{ ...containerStyles }}>
       {label ? <label className="InputLabel">{label}</label> : null}

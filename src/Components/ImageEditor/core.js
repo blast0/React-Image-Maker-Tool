@@ -4,7 +4,7 @@ import {
   scaleElementTofitCanvas,
   addPattern,
   getNewID,
-  // loadGoogleFont,
+  loadGoogleFont,
 } from "./helper-functions";
 import { INITIAL_PATH, svg } from "./constants";
 import Spinner from "../Spinner/manager";
@@ -68,22 +68,25 @@ class CanvasCore {
     if (!options?.fontFamily) return textElement;
 
     // try to load google font
-    // try {
-    //   await loadGoogleFont(options?.fontFamily);
-    // } catch (error) {
-    //   console.log("error loading google font ", error);
-    // } finally {
-    //   this.__canvas.add(textElement);
-    //   if (options.preselected) {
-    //     textElement.preselected = options.preselected;
-    //   }
-    //   return textElement;
-    // }
-    this.__canvas.add(textElement);
-    if (options.preselected) {
-      textElement.preselected = options.preselected;
+    try {
+      Spinner.showSpinner();
+      await loadGoogleFont(options?.fontFamily);
+    } catch (error) {
+      console.log("error loading google font ", error);
+      this.__canvas.add(textElement);
+      Spinner.hideSpinner();
+      if (options.preselected) {
+        textElement.preselected = options.preselected;
+      }
+      return textElement;
+    } finally {
+      this.__canvas.add(textElement);
+      Spinner.hideSpinner();
+      if (options.preselected) {
+        textElement.preselected = options.preselected;
+      }
+      return textElement;
     }
-    return textElement;
   }
 
   addTriangle(options) {
@@ -121,7 +124,6 @@ class CanvasCore {
   }
 
   addImgFromURL(url, options) {
-    console.log(url);
     return new Promise((resolve, reject) => {
       if (!this.__canvas) return;
       const { cover, ...restOptions } = options;

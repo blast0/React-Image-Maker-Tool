@@ -19,7 +19,6 @@ class SpinnerApp extends React.Component {
     });
   }
   show() {
-    console.log("S");
     this.setState({ active: "active" });
   }
 
