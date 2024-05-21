@@ -17,6 +17,8 @@ const ColorSelectorButton = (props) => {
     withInput,
     theme,
     label,
+    colorBoxWidth,
+    colorBoxHeight,
   } = props;
   const [color, setColor] = useState(value);
   const [show, setShow] = useState(false);
@@ -53,7 +55,7 @@ const ColorSelectorButton = (props) => {
             }
           }}
           style={{
-            border: "1px solid white",
+            border: theme === "light" ? "1px solid black" : "1px solid white",
             cursor: "pointer",
             display: "flex",
           }}
@@ -68,7 +70,11 @@ const ColorSelectorButton = (props) => {
             variant={variant}
             bsPrefix="color-dd"
             id="dropdown-basic"
-            style={{ width: "60px", backgroundColor: color, height: "28px" }}
+            style={{
+              width: colorBoxWidth,
+              backgroundColor: color,
+              height: colorBoxHeight,
+            }}
             onClick={() => {
               setShow(!show);
             }}
@@ -79,13 +85,7 @@ const ColorSelectorButton = (props) => {
           </Dropdown.Toggle>
           {/* {buttons.length > 0 ? ( */}
           <Dropdown.Menu style={{}}>
-            <Dropdown.Item
-              href="#/action"
-              onClick={() => {
-                // onDropBtnClick();
-              }}
-              key={"dropbtncolor"}
-            >
+            <Dropdown.Item onClick={() => {}} key={"dropbtncolor"}>
               <SketchPicker
                 onChange={(e) => {
                   console.log(e);
@@ -119,5 +119,7 @@ ColorSelectorButton.defaultProps = {
   variant: "success",
   onChange: () => {},
   withInput: true,
+  colorBoxWidth: "60px",
+  colorBoxHeight: "28px",
 };
 export default ColorSelectorButton;

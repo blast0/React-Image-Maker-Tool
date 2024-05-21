@@ -4,7 +4,7 @@ import GradientContext, { GradientProvider } from "./gradient-context";
 import GradientControls from "./gradient-controls/gradient-controls";
 import { noop } from "lodash";
 import PropTypes from "prop-types";
-import ColorSelector from "../ColorSelector";
+import ColorSelectorButton from "../Buttons/ColorSelectorBtn";
 
 class GradientMaker extends Component {
   static contextType = GradientContext;
@@ -28,10 +28,6 @@ class GradientMaker extends Component {
       controlStyle,
       canChooseGradientType,
       isGradientAllowed,
-      siteColorData,
-      nativeElement,
-      onOutsideClick,
-      showSiteColorBtn,
       value,
     } = this.props;
     const containerStyles = {
@@ -61,20 +57,38 @@ class GradientMaker extends Component {
         {label ? <label className="InputLabel">{label}</label> : null}
         <div style={{ ...controlStyles }}>
           {!isGradientAllowed || this.state.switchToColor ? (
-            <ColorSelector
-              color={config.colorStops[0].color}
-              elemRef={nativeElement}
-              onOutsideClick={onOutsideClick}
-              siteColorData={siteColorData}
-              showSiteColor={this.state.showSiteColor}
-              showSiteColorBtn={showSiteColorBtn}
-              showInPopup={false}
-              controlStyle={{
-                width: "35px",
-                height: "18px",
-                marginRight: "4px",
-              }}
-              optData={{ showSiteSettings: showSiteColorBtn }}
+            // <ColorSelector
+            //   color={config.colorStops[0].color}
+            //   elemRef={nativeElement}
+            //   onOutsideClick={onOutsideClick}
+            //   siteColorData={siteColorData}
+            //   showSiteColor={this.state.showSiteColor}
+            //   showSiteColorBtn={showSiteColorBtn}
+            //   showInPopup={false}
+            //   controlStyle={{
+            //     width: "35px",
+            //     height: "18px",
+            //     marginRight: "4px",
+            //   }}
+            //   optData={{ showSiteSettings: showSiteColorBtn }}
+            //   onChange={(color) => {
+            //     onGradientChange({
+            //       config: {
+            //         colorStops: [
+            //           {
+            //             color,
+            //             offset: 10,
+            //           },
+            //         ],
+            //         type: "linear",
+            //         angle: 45,
+            //       },
+            //       gradient: color,
+            //     });
+            //   }}
+            // />
+            <ColorSelectorButton
+              // theme={theme}
               onChange={(color) => {
                 onGradientChange({
                   config: {
@@ -90,6 +104,7 @@ class GradientMaker extends Component {
                   gradient: color,
                 });
               }}
+              value={config.colorStops[0].color}
             />
           ) : isGradientAllowed && !this.state.switchToColor ? (
             <GradientProvider>
