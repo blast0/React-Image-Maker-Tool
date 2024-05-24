@@ -1,34 +1,12 @@
 import React, { memo } from "react";
 import { isEqual } from "lodash";
 import PropTypes from "prop-types";
-// import GradientMakerWithPopup from "./gradient-maker-with-popup";
 import GradientMaker from "./gradient-component/index";
 import { convertGradientToConfig } from "./utilities";
-// import GradientMakerWithInput from "./gradient-maker-with-input";
 
 const GradientContainer = ({ showInPopup, configKey, ...restProps }) => {
   return (
     <>
-      {/* {showInPopup ? (
-        <GradientMakerWithPopup
-          {...restProps}
-          controlStyle={{
-            width: "24px",
-            height: "24px",
-            borderRadius: "3px",
-          }}
-          onValueChange={(val) =>
-            restProps.onValueChange(val.gradient, configKey, val.config)
-          }
-        />
-      ) : restProps?.opt?.showInput ? (
-        <GradientMakerWithInput
-          {...restProps}
-          onValueChange={(val) =>
-            restProps.onValueChange(val.gradient, configKey, val.config)
-          }
-        />
-      ) : ( */}
       <GradientMaker
         {...restProps}
         outsideClickExcludeSelectors={[
@@ -43,7 +21,6 @@ const GradientContainer = ({ showInPopup, configKey, ...restProps }) => {
           restProps.onValueChange(val.gradient, configKey, val.config)
         }
       />
-      {/* )} */}
     </>
   );
 };

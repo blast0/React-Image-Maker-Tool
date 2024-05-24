@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import GradientPreview from "./gradient-preview/gradient-preview";
-import GradientContext, { GradientProvider } from "./gradient-context";
-import GradientControls from "./gradient-controls/gradient-controls";
+import GradientContext from "./gradient-context";
 import { noop } from "lodash";
 import PropTypes from "prop-types";
 import ColorSelectorButton from "../Buttons/ColorSelectorBtn";
@@ -18,15 +16,15 @@ class GradientMaker extends Component {
   render() {
     const {
       config,
-      previewHeight,
-      previewWidth,
+      // previewHeight,
+      // previewWidth,
       onGradientChange,
       opt,
       label,
       containerClass,
       containerStyle,
       controlStyle,
-      canChooseGradientType,
+      // canChooseGradientType,
       isGradientAllowed,
       value,
     } = this.props;
@@ -46,7 +44,7 @@ class GradientMaker extends Component {
       flexWrap: "wrap",
       flexDirection: "column",
     };
-
+    console.log(this.state.switchToColor);
     return (
       <div
         className={`control-wrapper GradientMaker canvas-parent ${
@@ -57,38 +55,9 @@ class GradientMaker extends Component {
         {label ? <label className="InputLabel">{label}</label> : null}
         <div style={{ ...controlStyles }}>
           {!isGradientAllowed || this.state.switchToColor ? (
-            // <ColorSelector
-            //   color={config.colorStops[0].color}
-            //   elemRef={nativeElement}
-            //   onOutsideClick={onOutsideClick}
-            //   siteColorData={siteColorData}
-            //   showSiteColor={this.state.showSiteColor}
-            //   showSiteColorBtn={showSiteColorBtn}
-            //   showInPopup={false}
-            //   controlStyle={{
-            //     width: "35px",
-            //     height: "18px",
-            //     marginRight: "4px",
-            //   }}
-            //   optData={{ showSiteSettings: showSiteColorBtn }}
-            //   onChange={(color) => {
-            //     onGradientChange({
-            //       config: {
-            //         colorStops: [
-            //           {
-            //             color,
-            //             offset: 10,
-            //           },
-            //         ],
-            //         type: "linear",
-            //         angle: 45,
-            //       },
-            //       gradient: color,
-            //     });
-            //   }}
-            // />
             <ColorSelectorButton
               // theme={theme}
+              onGradientChange={onGradientChange}
               onChange={(color) => {
                 onGradientChange({
                   config: {
@@ -105,28 +74,10 @@ class GradientMaker extends Component {
                 });
               }}
               value={config.colorStops[0].color}
+              gradient={value}
+              config={config}
+              isGradientAllowed={true}
             />
-          ) : isGradientAllowed && !this.state.switchToColor ? (
-            <GradientProvider>
-              <GradientPreview
-                width={previewWidth}
-                height={previewHeight}
-                config={config}
-                value={value}
-              />
-              <div className="controls-small slim-scroll">
-                <GradientControls
-                  config={config}
-                  canChooseGradientType={canChooseGradientType}
-                  onControlValueChange={(value) => {
-                    onGradientChange({
-                      config: value.config,
-                      gradient: value.gradient,
-                    });
-                  }}
-                />
-              </div>
-            </GradientProvider>
           ) : null}
         </div>
         {isGradientAllowed ? (
@@ -135,17 +86,13 @@ class GradientMaker extends Component {
             style={{
               marginTop: "5px",
             }}
+            onClick={() => {
+              this.setState({
+                switchToColor: !this.state.switchToColor,
+              });
+            }}
           >
-            <a
-              onClick={() => {
-                this.setState({
-                  switchToColor: !this.state.switchToColor,
-                });
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              {this.state.switchToColor ? "Use Gradient" : "Use Color"}
-            </a>
+            {this.state.switchToColor ? "Use Gradient" : "Use Color"}
           </span>
         ) : null}
       </div>

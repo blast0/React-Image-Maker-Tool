@@ -1,14 +1,7 @@
 import Button from "react-bootstrap/Button";
 
 function IconButton(props) {
-  const {
-    btnClick,
-    rightIcon,
-    leftIcon,
-    //  variant, variants,
-    btnText,
-    theme,
-  } = props;
+  const { btnClick, rightIcon, leftIcon, btnText, theme, title } = props;
   return (
     <>
       <Button
@@ -17,6 +10,7 @@ function IconButton(props) {
         style={{
           border: "1px solid #f1f1f1",
         }}
+        title={title}
       >
         <i
           stye={theme === "light" ? { color: "#fff" } : { color: "#212529" }}

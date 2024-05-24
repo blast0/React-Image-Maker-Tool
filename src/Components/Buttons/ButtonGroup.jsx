@@ -14,6 +14,7 @@ const ComboButton = (props) => {
       {buttons.map((button, index) => {
         return (
           <IconButton
+            title={button.title}
             theme={theme}
             key={"btn" + index}
             leftIcon={button.leftIcon}

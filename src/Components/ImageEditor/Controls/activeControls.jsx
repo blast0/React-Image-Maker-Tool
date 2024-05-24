@@ -42,17 +42,16 @@ import {
   //   handleRectBorderRadius,
   //   updateStyle,
   //   createConfiguratorData,
-  //   makeGradient,
+  makeGradient,
   setArrowHead,
   setfontfamily,
   handleFontStyle,
   //   setBubbleFontFamily,
 } from "./activeElementHandlers";
 import ComboButton from "../../Buttons/ButtonGroup";
-// import ColorSelector from "../../ColorSelector";
 import ColorSelectorButton from "../../Buttons/ColorSelectorBtn";
+import GradientContainer from "../../gradient-container";
 // CSS
-// import "./activeElementControls.css";
 
 class ActiveElementControls extends Component {
   constructor(props) {
@@ -614,16 +613,50 @@ class ActiveElementControls extends Component {
     );
 
     const activeElementColor = (
-      <ColorSelectorButton
-        theme={theme}
-        label="Fill Color"
-        onChange={(color) => {
-          activeElement.set("fill", color);
-          activeElement.ElementColor = color;
-          updateActiveElement({ colors: [color] }, this);
+      // <ColorSelectorButton
+      //   theme={theme}
+      //   label="Fill Color"
+      //   onChange={(color) => {
+      //     activeElement.set("fill", color);
+      //     activeElement.ElementColor = color;
+      //     updateActiveElement({ colors: [color] }, this);
+      //     canvas.renderAll();
+      //   }}
+      //   value={activeElementProps?.colors[0]}
+      // />
+      <GradientContainer
+        canChooseGradientType={true}
+        value={
+          activeElement?.fillGradient
+            ? activeElement?.fillGradient
+            : activeElementProps?.colors[0]
+        }
+        previewWidth={200}
+        switchToColor={activeElement?.fillGradient ? false : true}
+        showInPopup={false}
+        label={
+          activeElement instanceof fabric.IText ? "Text Color:" : "Fill Color:"
+        }
+        isGradientAllowed={true}
+        opt={{ showInput: true }}
+        containerClass={"gradient "}
+        onValueChange={(gradientText, configKey, rawConfig) => {
+          let grad = makeGradient(
+            rawConfig,
+            gradientText,
+            activeElement?.height,
+            activeElement?.width,
+            this
+          );
+          if (rawConfig.colorStops.length < 2) {
+            updateActiveElement({ colors: [grad] }, this);
+            activeElement.set("fill", grad);
+          } else {
+            activeElement.set("fill", new fabric.Gradient(grad));
+          }
+          activeElement.ElementColor = activeElementProps?.colors[0];
           canvas.renderAll();
         }}
-        value={activeElementProps?.colors[0]}
       />
     );
 

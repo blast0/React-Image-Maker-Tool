@@ -1,8 +1,10 @@
 import Dropdown from "react-bootstrap/Dropdown";
-// import ColorSelector from "../ColorSelector";
 import { SketchPicker } from "react-color";
 import TextInput from "../Input/text-input";
 import { useState } from "react";
+import { GradientProvider } from "../gradient-component/gradient-context";
+import GradientPreview from "../gradient-component/gradient-preview/gradient-preview";
+import GradientControls from "../gradient-component/gradient-controls/gradient-controls";
 
 const ColorSelectorButton = (props) => {
   const {
@@ -19,9 +21,17 @@ const ColorSelectorButton = (props) => {
     label,
     colorBoxWidth,
     colorBoxHeight,
+    isGradientAllowed,
+    onGradientChange,
+    config,
   } = props;
+
   const [color, setColor] = useState(value);
+  const [gradient, setGradient] = useState("");
   const [show, setShow] = useState(false);
+  const [type, setType] = useState("color");
+  // const contextType = useContext(GradientContext);
+  console.log(type, config);
   return (
     <div
       style={{
@@ -44,11 +54,12 @@ const ColorSelectorButton = (props) => {
             label={label}
             onChange={(value) => {
               setColor(value);
-              onChange(value);
+              onChange(value, null);
             }}
           />
         ) : null}
         <Dropdown
+          flip={true}
           onClick={() => {
             if (buttons.length === 0) {
               onDropBtnClick();
@@ -83,28 +94,62 @@ const ColorSelectorButton = (props) => {
             {btnText}
             {rightIcon ? <i className={"icon-common " + rightIcon}></i> : null}
           </Dropdown.Toggle>
-          {/* {buttons.length > 0 ? ( */}
-          <Dropdown.Menu style={{}}>
-            <Dropdown.Item onClick={() => {}} key={"dropbtncolor"}>
-              <SketchPicker
-                onChange={(e) => {
-                  console.log(e);
-                  const rgba =
-                    "rgba(" +
-                    e.rgb.r +
-                    "," +
-                    e.rgb.g +
-                    "," +
-                    e.rgb.b +
-                    "," +
-                    e.rgb.a +
-                    ")";
-                  setColor(rgba);
-                  onChange(rgba);
-                }}
-                color={color}
-              />
+          <Dropdown.Menu>
+            <Dropdown.Item key={"dropbtncolor"}>
+              {type === "color" ? (
+                <SketchPicker
+                  onChange={(e) => {
+                    console.log(e);
+                    const rgba =
+                      "rgba(" +
+                      e.rgb.r +
+                      "," +
+                      e.rgb.g +
+                      "," +
+                      e.rgb.b +
+                      "," +
+                      e.rgb.a +
+                      ")";
+                    setColor(rgba);
+                    onChange(rgba, e);
+                  }}
+                  color={color}
+                />
+              ) : (
+                <GradientProvider>
+                  <GradientPreview
+                    width={120}
+                    height={200}
+                    config={config}
+                    value={gradient}
+                  />
+                  <div className="controls-small slim-scroll">
+                    <GradientControls
+                      config={config}
+                      canChooseGradientType={true}
+                      onControlValueChange={(value) => {
+                        setGradient(value.gradient);
+                        onGradientChange({
+                          config: value.config,
+                          gradient: value.gradient,
+                        });
+                      }}
+                    />
+                  </div>
+                </GradientProvider>
+              )}
             </Dropdown.Item>
+            {isGradientAllowed ? (
+              <Dropdown.Item
+                onClick={() => {
+                  if (type === "color") setType("gradient");
+                  else setType("color");
+                }}
+                key={"SwitchType"}
+              >
+                {type === "color" ? "Use Gradient" : "Use Color"}
+              </Dropdown.Item>
+            ) : null}
           </Dropdown.Menu>
         </Dropdown>
       </>
@@ -121,5 +166,7 @@ ColorSelectorButton.defaultProps = {
   withInput: true,
   colorBoxWidth: "60px",
   colorBoxHeight: "28px",
+  isGradientAllowed: false,
+  onGradientChange: () => {},
 };
 export default ColorSelectorButton;

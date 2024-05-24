@@ -1,24 +1,20 @@
 import React, { Component } from "react";
-import ColorBox from "../color-box";
 import produce from "immer";
-import PopupContainer from "../../PopMenu/popup-container";
-import PopMenuPortal from "../../PopMenu/popmenu-portal";
 import RangeSlider from "../../range-slider";
 import RadioButtonGroup from "../../radio-button-group";
 import RadioButton from "../../radio-button";
-import { SketchPicker } from "react-color";
-import { isUndefined, noop, orderBy } from "lodash";
+import { isUndefined, noop } from "lodash";
 import GradientContext, { GradientConsumer } from "../gradient-context";
 import PropTypes from "prop-types";
 // CSS
 import "./gradient-controls.css";
+import ColorSelectorButton from "../../Buttons/ColorSelectorBtn";
 
 class GradientControls extends Component {
   static contextType = GradientContext;
   constructor(props) {
     super(props);
     this.state = {
-      showPicker: null,
       gradient: "",
       config: props.config,
     };
@@ -38,12 +34,6 @@ class GradientControls extends Component {
         config: this.props.config,
       });
     }
-  }
-
-  hideColorPicker() {
-    this.setState({
-      showPicker: null,
-    });
   }
 
   handleControlValueChange() {
@@ -278,7 +268,7 @@ class GradientControls extends Component {
   }
 
   render() {
-    const { showPicker, config } = this.state;
+    const { config } = this.state;
     const { canChooseGradientType } = this.props;
     const maxColorStops = 6;
     const minColorStops = 2;
@@ -289,28 +279,28 @@ class GradientControls extends Component {
             <div className="GradientControls">
               {canChooseGradientType === true ? (
                 <div>
-                  {/* <RadioButtonGroup
+                  <RadioButtonGroup
                     groupId={"gradientStyle"}
                     groupLabel={"Gradient Style"}
                     inline={true}
-                  > */}
-                  <RadioButton
-                    value={"linear"}
-                    label={"Linear"}
-                    checked={config.type === "linear"}
-                    onChange={(e) => {
-                      this.gradientTypeChangeHandler(e.target.value);
-                    }}
-                  />
-                  <RadioButton
-                    value={"radial"}
-                    label={"Radial"}
-                    checked={config.type === "radial"}
-                    onChange={(e) => {
-                      this.gradientTypeChangeHandler(e.target.value);
-                    }}
-                  />
-                  {/* </RadioButtonGroup> */}
+                  >
+                    <RadioButton
+                      value={"linear"}
+                      label={"Linear"}
+                      checked={config.type === "linear"}
+                      onChange={(e) => {
+                        this.gradientTypeChangeHandler(e.target.value);
+                      }}
+                    />
+                    <RadioButton
+                      value={"radial"}
+                      label={"Radial"}
+                      checked={config.type === "radial"}
+                      onChange={(e) => {
+                        this.gradientTypeChangeHandler(e.target.value);
+                      }}
+                    />
+                  </RadioButtonGroup>
                 </div>
               ) : null}
               <div className="GradientControls__angle">
@@ -339,26 +329,17 @@ class GradientControls extends Component {
                       return (
                         <div className="colorStops" key={index}>
                           <label className="offset">{stop.offset}%</label>
-                          <div
-                            className="colorbox-container"
-                            style={{ border: "1px solid #f3f3f3" }}
-                            ref={(ref) => {
-                              this.colorBoxRefs[index] = ref;
+                          <ColorSelectorButton
+                            // theme={theme}
+                            withInput={false}
+                            colorBoxWidth={20}
+                            colorBoxHeight={20}
+                            onChange={(color, e) => {
+                              console.log(color);
+                              this.tabStopchangeHandler("color", e.rgb, index);
                             }}
-                            onClick={(e) => {
-                              if (showPicker || showPicker === 0) {
-                                this.setState({
-                                  showPicker: null,
-                                });
-                              } else {
-                                this.setState({
-                                  showPicker: index,
-                                });
-                              }
-                            }}
-                          >
-                            <ColorBox color={stop.color} />
-                          </div>
+                            value={stop.color}
+                          />
                           <div className="slider">
                             <RangeSlider
                               min={0}
@@ -411,48 +392,6 @@ class GradientControls extends Component {
                               </div>
                             ) : null}
                           </div>
-                          {showPicker === index && (
-                            <PopMenuPortal>
-                              <PopupContainer
-                                nativeElement={this.colorBoxRefs[index]}
-                                outsideClickExcludeSelectors={[
-                                  ".chrome-picker-container",
-                                ]}
-                                onOutsideClick={() => this.hideColorPicker()}
-                              >
-                                <div className="chrome-picker-container">
-                                  <SketchPicker
-                                    color={stop.color}
-                                    presetColors={[
-                                      "#D0021B",
-                                      "#F5A623",
-                                      "#F8E71C",
-                                      "#8B572A",
-                                      "#7ED321",
-                                      "#417505",
-                                      "#BD10E0",
-                                      "#9013FE",
-                                      "#4A90E2",
-                                      "#50E3C2",
-                                      "#B8E986",
-                                      "#000000",
-                                      "#4A4A4A",
-                                      "#9B9B9B",
-                                      "#FFFFFF",
-                                      "rgba(0,0,0,0)",
-                                    ]}
-                                    onChange={(e) => {
-                                      this.tabStopchangeHandler(
-                                        "color",
-                                        e.rgb,
-                                        index
-                                      );
-                                    }}
-                                  />
-                                </div>
-                              </PopupContainer>
-                            </PopMenuPortal>
-                          )}
                         </div>
                       );
                     })

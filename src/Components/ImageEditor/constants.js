@@ -114,12 +114,12 @@ export const ArrowDirection = [
 
 export const FLIP_OPTIONS = [
   {
-    // btnText: "Flip Text Horizontally",
+    title: "Flip Text Horizontally",
     leftIcon: "icon-flip-h",
     value: "x",
   },
   {
-    // btnText: "Flip Text Vertically",
+    title: "Flip Text Vertically",
     leftIcon: "icon-flip-v",
     value: "y",
   },
@@ -127,17 +127,17 @@ export const FLIP_OPTIONS = [
 
 export const TEXT_ALIGNMENT = [
   {
-    // btnText: "Align Left",
+    title: "Align Left",
     leftIcon: "icon-align-left",
     value: "left",
   },
   {
-    // btnText: "Align Center",
+    title: "Align Center",
     leftIcon: "icon-align-center",
     value: "center",
   },
   {
-    // btnText: "Align Right",
+    title: "Align Right",
     leftIcon: "icon-align-right",
     value: "right",
   },
@@ -145,22 +145,22 @@ export const TEXT_ALIGNMENT = [
 
 export const FONT_STYLES = [
   {
-    // btnText: "Bold Toggle",
+    title: "Bold Toggle",
     leftIcon: "icon-bold",
     value: "bold",
   },
   {
-    // btnText: "Italic Toggle",
+    title: "Italic Toggle",
     leftIcon: "icon-italic",
     value: "italic",
   },
   {
-    // btnText: "Strikethrough Toggle",
+    title: "Strikethrough Toggle",
     leftIcon: "icon-strikethrough",
     value: "strikethrough",
   },
   {
-    // btnText: "Underline Toggle",
+    title: "Underline Toggle",
     leftIcon: "icon-underline",
     value: "underline",
   },
@@ -168,32 +168,32 @@ export const FONT_STYLES = [
 
 export const ALIGNMENT_OPTIONS = [
   {
-    // btnText: "Align Left",
+    title: "Align Left",
     leftIcon: "icon-align-object-left",
     value: "left",
   },
   {
-    // btnText: "Align Center",
+    title: "Align Center",
     leftIcon: "icon-align-object-center",
     value: "center",
   },
   {
-    // btnText: "Align Right",
+    title: "Align Right",
     leftIcon: "icon-align-object-right",
     value: "right",
   },
   {
-    // btnText: "Align Top",
+    title: "Align Top",
     leftIcon: "icon-align-object-top",
     value: "top",
   },
   {
-    // btnText: "Align Middle",
+    title: "Align Middle",
     leftIcon: "icon-align-object-middle",
     value: "middle",
   },
   {
-    // btnText: "Align Bottom",
+    title: "Align Bottom",
     leftIcon: "icon-align-object-bottom",
     value: "bottom",
   },
@@ -378,11 +378,6 @@ export const ADD_SHAPE_OPTIONS = [
     leftIcon: "icon-engage",
     value: "speech_label",
   },
-  // {
-  //   btnText: "Add Random Shape",
-  //   leftIcon: "icon-blob",
-  //   value: "random_shape",
-  // },
 ];
 
 export const CANVAS_ACTION_HISTORY = {
@@ -566,12 +561,12 @@ export const BlankTemplate = Object.freeze({
 
 export const SPACE_EVENLY_OPTIONS = [
   {
-    // btnText: "Equally Space Horizontal",
+    title: "Equally Space Horizontal",
     leftIcon: "icon-space-evenly-horizontally",
     value: "horizontal",
   },
   {
-    // btnText: "Equally Space Vertical",
+    title: "Equally Space Vertical",
     leftIcon: "icon-space-evenly-vertically",
     value: "vertical",
   },
@@ -650,9 +645,9 @@ export const DefaultTemplate = {
     {
       ...FONT_PROPS_DEFAULT,
       value: "Make/Edit Your Svg",
-      left: 400,
-      top: 280,
-      fontFamily: "Comforter Brush",
+      left: 255,
+      top: 317,
+      fontFamily: "Caprasimo",
       fontSize: 75,
       fill: "#660708",
       stroke: "#a52e2e",
@@ -660,7 +655,7 @@ export const DefaultTemplate = {
     {
       ...FONT_PROPS_DEFAULT,
       value: "Make/Edit Your Image",
-      left: 450,
+      left: 490,
       top: 158,
       fontSize: 32,
       fill: "#660708",
@@ -668,7 +663,7 @@ export const DefaultTemplate = {
     {
       ...FONT_PROPS_DEFAULT,
       value: "Make/Edit Your Cover",
-      left: 430,
+      left: 480,
       top: 458,
       fontSize: 32,
       fill: "#660708",

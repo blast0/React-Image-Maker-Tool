@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-// import { RadioButtonContext } from "../gradient-component/gradient-context";
+import { RadioButtonContext } from "../radio-button-group";
 
 const RadioButton = (props) => {
   // excluding `name` from passed props
   const { name, inline, ...restProps } = props;
-  // const parentProps = useContext(RadioButtonContext);
-  const parentProps = useContext({});
+  const parentProps = useContext(RadioButtonContext);
   return (
     <label
       id="radio-button"
