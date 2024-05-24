@@ -1,5 +1,5 @@
 export function convertGradientToConfig(str) {
-  const regex = /(?<color>rgba\([0-9,\. ]+\)|#[\d\w]+)\s*(?<offset>[0-9]*)%?/gi;
+  const regex = /(?<color>rgba\([0-9,]+\)|#[\d\w]+)\s*(?<offset>[0-9]*)%?/gi;
   let angleStartPosition = str?.indexOf("(") ? str.indexOf("(") : -1;
   let angleEndPosition = str?.indexOf("deg") ? str.indexOf("deg") : -1;
   let angleText = "";
