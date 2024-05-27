@@ -243,6 +243,7 @@ class ActiveElementControls extends Component {
           onDropBtnClick={(option) => {
             setfontfamily(option.value, this);
           }}
+          btnHeight={"28px"}
         />
       </div>
     );
@@ -294,6 +295,7 @@ class ActiveElementControls extends Component {
               canvas.renderAll();
             }
           }}
+          btnHeight={"28px"}
         />
       </div>
     );
@@ -308,6 +310,7 @@ class ActiveElementControls extends Component {
           //   setfontfamily(option.value, this);
           setArrowHead(option.value, this);
         }}
+        btnHeight={"28px"}
       />
     );
 
@@ -489,6 +492,7 @@ class ActiveElementControls extends Component {
             />
             <>
               <ComboButton
+                theme={theme}
                 label="Text Alignment:"
                 btnArray={[
                   {
@@ -625,6 +629,7 @@ class ActiveElementControls extends Component {
       //   value={activeElementProps?.colors[0]}
       // />
       <GradientContainer
+        theme={theme}
         canChooseGradientType={true}
         value={
           activeElement?.fillGradient
@@ -805,6 +810,7 @@ class ActiveElementControls extends Component {
     const AlignElement = (
       <div className="element-alignment">
         <ComboButton
+          theme={theme}
           label="Alignment: "
           buttons={ALIGNMENT_OPTIONS}
           onBtnClick={(btn) => {
@@ -823,6 +829,7 @@ class ActiveElementControls extends Component {
       fabric.ActiveSelection && (
       <div className="space-evenly">
         <ComboButton
+          theme={theme}
           label="Space Objects Evenly"
           buttons={SPACE_EVENLY_OPTIONS}
           onBtnClick={(btn) => {
@@ -836,6 +843,7 @@ class ActiveElementControls extends Component {
     const TextStyles = (
       <div className="Text-Styles">
         <ComboButton
+          theme={theme}
           label={"Text Style:"}
           buttons={FONT_STYLES}
           onBtnClick={(btn) => {
@@ -849,6 +857,7 @@ class ActiveElementControls extends Component {
     const FlipElement = (
       <div className="Flip-Controls">
         <ComboButton
+          theme={theme}
           label={"Flip Element:"}
           buttons={FLIP_OPTIONS}
           onBtnClick={(button) => {
@@ -864,6 +873,7 @@ class ActiveElementControls extends Component {
     const AlignText = (
       <div className="Text-Alignment">
         <ComboButton
+          theme={theme}
           buttons={TEXT_ALIGNMENT}
           onBtnClick={(button) => {
             activeElement.set({
@@ -879,6 +889,7 @@ class ActiveElementControls extends Component {
       activeElement instanceof fabric.ActiveSelection ? (
         <div className="align-within-Group-Vertically">
           <ComboButton
+            theme={theme}
             label="Object Horizontal Alignment"
             buttons={ALIGNMENT_OPTIONS}
             onBtnClick={(button) => {

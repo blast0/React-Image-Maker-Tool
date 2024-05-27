@@ -1,8 +1,15 @@
 import Dropdown from "react-bootstrap/Dropdown";
 
 const DropdownButton = (props) => {
-  const { btnText, leftIcon, rightIcon, buttons, onDropBtnClick, variant } =
-    props;
+  const {
+    btnText,
+    leftIcon,
+    rightIcon,
+    buttons,
+    onDropBtnClick,
+    variant,
+    btnHeight,
+  } = props;
   return (
     <Dropdown
       onClick={() => {
@@ -18,7 +25,13 @@ const DropdownButton = (props) => {
       <Dropdown.Toggle
         variant={variant}
         id="dropdown-basic"
-        style={{ width: "100%" }}
+        style={{
+          width: "100%",
+          height: btnHeight,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
       >
         {leftIcon ? <i className={"icon-common " + leftIcon}></i> : null}
         {btnText}
@@ -61,5 +74,6 @@ DropdownButton.defaultProps = {
   buttons: [],
   onBtnClick: () => {},
   variant: "success",
+  btnHeight: "100%",
 };
 export default DropdownButton;

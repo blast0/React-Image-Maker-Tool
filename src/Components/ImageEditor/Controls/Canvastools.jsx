@@ -134,6 +134,7 @@ class Canvastools extends Component {
                 name: selected?.name,
               });
             }}
+            btnHeight={"28px"}
           />
         </div>
         {activeElementType !== "activeSelection" &&

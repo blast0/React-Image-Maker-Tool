@@ -6,22 +6,20 @@ import { convertGradientToConfig } from "./utilities";
 
 const GradientContainer = ({ showInPopup, configKey, ...restProps }) => {
   return (
-    <>
-      <GradientMaker
-        {...restProps}
-        outsideClickExcludeSelectors={[
-          ".ddList",
-          ".chrome-picker-container",
-          ".Gradient-Icon",
-        ]}
-        label={restProps.label}
-        controlStyle={{ ...restProps.controlStyle, gap: "20px" }}
-        config={convertGradientToConfig(restProps.value)}
-        onGradientChange={(val) =>
-          restProps.onValueChange(val.gradient, configKey, val.config)
-        }
-      />
-    </>
+    <GradientMaker
+      {...restProps}
+      outsideClickExcludeSelectors={[
+        ".ddList",
+        ".chrome-picker-container",
+        ".Gradient-Icon",
+      ]}
+      label={restProps.label}
+      controlStyle={{ ...restProps.controlStyle, gap: "20px" }}
+      config={convertGradientToConfig(restProps.value)}
+      onGradientChange={(val) =>
+        restProps.onValueChange(val.gradient, configKey, val.config)
+      }
+    />
   );
 };
 

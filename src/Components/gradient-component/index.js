@@ -27,6 +27,7 @@ class GradientMaker extends Component {
       // canChooseGradientType,
       isGradientAllowed,
       value,
+      theme,
     } = this.props;
     const containerStyles = {
       width: opt?.fullWidth
@@ -44,7 +45,7 @@ class GradientMaker extends Component {
       flexWrap: "wrap",
       flexDirection: "column",
     };
-    console.log(this.state.switchToColor);
+    console.log(theme);
     return (
       <div
         className={`control-wrapper GradientMaker canvas-parent ${
@@ -52,7 +53,20 @@ class GradientMaker extends Component {
         }`}
         style={{ ...containerStyles }}
       >
-        {label ? <label className="InputLabel">{label}</label> : null}
+        {label ? (
+          <label
+            style={
+              theme !== "light"
+                ? {
+                    color: "#fff",
+                  }
+                : {}
+            }
+            className="InputLabel"
+          >
+            {label}
+          </label>
+        ) : null}
         <div style={{ ...controlStyles }}>
           {!isGradientAllowed || this.state.switchToColor ? (
             <ColorSelectorButton
@@ -80,21 +94,6 @@ class GradientMaker extends Component {
             />
           ) : null}
         </div>
-        {isGradientAllowed ? (
-          <span
-            className="siteSettingsBtn"
-            style={{
-              marginTop: "5px",
-            }}
-            onClick={() => {
-              this.setState({
-                switchToColor: !this.state.switchToColor,
-              });
-            }}
-          >
-            {this.state.switchToColor ? "Use Gradient" : "Use Color"}
-          </span>
-        ) : null}
       </div>
     );
   }
