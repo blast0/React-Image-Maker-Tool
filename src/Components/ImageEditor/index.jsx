@@ -311,6 +311,13 @@ class Designer extends Component {
                     }}
                   />
                   <ModalApp
+                    leftIcon="icon-save-new"
+                    onBtnClick={(e) => {
+                      handleRightPanelUpdates(ACTIONS.DOWNLOAD_JSON, {}, this);
+                    }}
+                    children={<>SAVE.</>}
+                  />
+                  <ModalApp
                     leftIcon="icon-delete"
                     onBtnClick={(e) => {
                       handleRightPanelUpdates(ACTIONS.CLEAR_PAGE, {}, this);

@@ -22,12 +22,12 @@ function NavbarApp({ themed, themes, onThemeChange }) {
         data-bs-theme={theme}
       >
         <Container>
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Navbar.Brand href="#home">Bishal Kumar</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
-            <Nav.Link href="#pricing">theme</Nav.Link>
+            <Nav.Link href="#features">About Me</Nav.Link>
+            <Nav.Link href="#pricing">Tools</Nav.Link>
+            <Nav.Link href="#pricing">Files</Nav.Link>
           </Nav>
         </Container>
         <div

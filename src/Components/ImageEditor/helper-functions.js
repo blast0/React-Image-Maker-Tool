@@ -5,7 +5,7 @@ import {
   LINE_PROPS_DEFAULT,
   FONT_PROPS_DEFAULT,
   CANVAS_PAGE_GUTTER,
-  // EXTRA_ELEMENT_PROPS,
+  EXTRA_ELEMENT_PROPS,
   SHAPES_PROPS_DEFAULT,
   QUADRATIC_PROPS_DEFAULT,
   SPEECH_BUBBLE_DEFAULT_PROPS,
@@ -16,7 +16,6 @@ import { produce } from "immer";
 import { fabric } from "fabric";
 import { saveAs } from "file-saver";
 import Spinner from "../Spinner/manager";
-// import crypto from "crypto";
 // import { inRange } from "lodash";
 var FontFaceObserver = require("fontfaceobserver");
 
@@ -74,7 +73,7 @@ export const handleRightPanelUpdates = (action, data, self) => {
       downloadSelection(self);
       break;
     case ACTIONS.DOWNLOAD_JSON:
-      // downloadJSON(self);
+      downloadJSON(self);
       break;
     case ACTIONS.UPLOAD_JSON:
       // uploadTemplateModal(self);
@@ -1087,7 +1086,7 @@ export const onSelectSvg = (e, self) => {
 };
 
 export const handleJsonData = (event, self) => {
-  const { toast } = self.props;
+  // const { toast } = self.props;
   const file = event.target.files[0];
   if (!file) {
     return;
@@ -1098,21 +1097,22 @@ export const handleJsonData = (event, self) => {
     try {
       // Parse the JSON data and store it in the state.
       let jsonData = JSON.parse(reader.result);
-      const prevHash = jsonData.hash;
+      // const prevHash = jsonData.hash;
       delete jsonData.hash;
-      const hash = crypto
-        .createHash("sha256")
-        .update(JSON.stringify(jsonData))
-        .digest("hex");
-      if (prevHash === hash || !prevHash) {
-        // Soon, you won't be able to upload a file unless it has a hash value
-        // Disabling existing hash since there are many templates that has to be uploaded
-        // if (prevHash === hash) {
-        applyJsonToCanvas(jsonData, self);
-      } else {
-        toast.error("Error", "Hash matching failed");
-        Spinner.hideSpinner();
-      }
+      // const hash = crypto
+      //   .createHash("sha256")
+      //   .update(JSON.stringify(jsonData))
+      //   .digest("hex");
+      applyJsonToCanvas(jsonData, self);
+      // if (prevHash === hash || !prevHash) {
+      //   // Soon, you won't be able to upload a file unless it has a hash value
+      //   // Disabling existing hash since there are many templates that has to be uploaded
+      //   // if (prevHash === hash) {
+      //   applyJsonToCanvas(jsonData, self);
+      // } else {
+      //   toast.error("Error", "Hash matching failed");
+      //   Spinner.hideSpinner();
+      // }
     } catch (error) {
       console.error("Error parsing JSON:", error);
       Spinner.hideSpinner();
@@ -1637,6 +1637,45 @@ export const downloadSelection = (self) => {
   } else {
     downloadPage(self);
   }
+};
+
+export const downloadJSON = (self) => {
+  const temp = createJSON(self);
+  // temp.hash = crypto
+  //   .createHash("sha256")
+  //   .update(JSON.stringify(temp))
+  //   .digest("hex");
+  const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
+    JSON.stringify(temp)
+  )}`;
+  const link = document.createElement("a");
+  link.href = jsonString;
+  const fileName = "Sample";
+  if (fileName === "") link.download = "sample.json";
+  else link.download = fileName + ".json";
+  link.click();
+  self.setState({ modalActive: false });
+};
+
+export const createJSON = (self) => {
+  const canvasRef = Object.values(self.state.canvases)[0];
+  const groupPresent = isGroupPresent(canvasRef);
+  if (groupPresent) {
+    self.props.toast.error("Error", `Group object is not allowed to export`);
+    return;
+  }
+  const temp = canvasRef.toJSON(EXTRA_ELEMENT_PROPS);
+  return temp;
+};
+
+export const isGroupPresent = (canvas) => {
+  const objects = canvas.getObjects();
+  for (const obj of objects) {
+    if (obj.type === "Quadratic") {
+      return true;
+    }
+  }
+  return false;
 };
 
 export const addTriangle = (self) => {
