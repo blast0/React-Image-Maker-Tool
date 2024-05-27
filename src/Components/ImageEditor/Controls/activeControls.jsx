@@ -1008,6 +1008,7 @@ class ActiveElementControls extends Component {
         style={{
           width: "100%",
           gap: "10px",
+          paddingBottom: "100px",
         }}
       >
         {elementsDropDownData.length > 0 ? (

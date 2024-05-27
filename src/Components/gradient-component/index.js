@@ -67,31 +67,29 @@ class GradientMaker extends Component {
           </label>
         ) : null}
         <div style={{ ...controlStyles }}>
-          {!isGradientAllowed || this.state.switchToColor ? (
-            <ColorSelectorButton
-              // theme={theme}
-              onGradientChange={onGradientChange}
-              onChange={(color) => {
-                onGradientChange({
-                  config: {
-                    colorStops: [
-                      {
-                        color,
-                        offset: 10,
-                      },
-                    ],
-                    type: "linear",
-                    angle: 45,
-                  },
-                  gradient: color,
-                });
-              }}
-              value={config.colorStops[0].color}
-              gradient={value}
-              config={config}
-              isGradientAllowed={true}
-            />
-          ) : null}
+          <ColorSelectorButton
+            // theme={theme}
+            onGradientChange={onGradientChange}
+            onChange={(color) => {
+              onGradientChange({
+                config: {
+                  colorStops: [
+                    {
+                      color,
+                      offset: 10,
+                    },
+                  ],
+                  type: "linear",
+                  angle: 45,
+                },
+                gradient: color,
+              });
+            }}
+            value={value}
+            gradient={value}
+            config={config}
+            isGradientAllowed={isGradientAllowed}
+          />
         </div>
       </div>
     );

@@ -54,7 +54,7 @@ export const handleRightPanelUpdates = (action, data, self) => {
       // setActiveObject(data.id, self);
       break;
     case ACTIONS.CHANGE_PAGE_BACKGROUND:
-      // changePageBackGround(data, self);
+      changePageBackGround(data, self);
       break;
     case ACTIONS.ELEMENT_NAME:
       handleNameElement(data.target.value, self);
@@ -190,6 +190,14 @@ export const handleRightPanelUpdates = (action, data, self) => {
       console.log("unhandled-action", action);
       break;
   }
+};
+
+//change canvas background color
+export const changePageBackGround = (color, self) => {
+  const canvasRef = Object.values(self.state.canvases)[0];
+  canvasRef.backgroundColor = color;
+  canvasRef.renderAll();
+  self.setState({ pageBgColor: color });
 };
 
 export const initializeApp = async (self) => {
@@ -1132,7 +1140,7 @@ export const dataURLtoBlob = (dataurl) => {
 export const resetPage = (self) => {
   const canvasRef = Object.values(self.state.canvases)[0];
   canvasRef.clear();
-  canvasRef.backgroundColor = "#ffffff";
+  canvasRef.backgroundColor = "rgba(0,0,0,0.5)";
   canvasRef.renderAll();
   self.setState({
     activeElementProps: {

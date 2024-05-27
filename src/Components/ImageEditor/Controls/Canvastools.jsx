@@ -5,6 +5,7 @@ import { ACTIONS } from "../constants";
 import TextInput, { NumericInput } from "../../Input/text-input";
 import DropdownButton from "../../Buttons/DropdownBtn";
 import ActiveElementControls from "./activeControls";
+import GradientContainer from "../../gradient-container";
 
 class Canvastools extends Component {
   constructor(props) {
@@ -34,16 +35,18 @@ class Canvastools extends Component {
       jsonRef,
       pageWidth,
       pageHeight,
+      pageBgColor,
       theme,
     } = this.props;
     const activeElementType = canvas?.getActiveObject()?.type;
-    const activeElem = canvas.getActiveObject();
+    const activeElement = canvas.getActiveObject();
+
     return (
       <div
         className="DesignerConfigPanel"
         onClick={(e) => {
-          var activeElement = document.activeElement;
-          if (activeElement === document.body) {
+          var activeElementDiv = document.activeElement;
+          if (activeElementDiv === document.body) {
             onCanvasActive(true);
           } else {
             onCanvasActive(false);
@@ -106,11 +109,11 @@ class Canvastools extends Component {
             />
             <NumericInput
               theme={theme}
-              value={parseInt(activeElem?.width)}
+              value={parseInt(activeElement?.width)}
               containerClass={"cls number "}
               label={"Item Width"}
               onChange={(val) => {
-                activeElem.set({
+                activeElement.set({
                   width: Number(val),
                 });
                 canvas.renderAll();
@@ -118,11 +121,11 @@ class Canvastools extends Component {
             />
             <NumericInput
               theme={theme}
-              value={parseInt(activeElem?.height)}
+              value={parseInt(activeElement?.height)}
               containerClass={"cls number "}
               label={"Item Height"}
               onChange={(val) => {
-                activeElem.set({
+                activeElement.set({
                   height: Number(val),
                 });
                 canvas.renderAll();
@@ -130,6 +133,34 @@ class Canvastools extends Component {
             />
           </div>
         </div>
+        <GradientContainer
+          theme={theme}
+          canChooseGradientType={true}
+          value={pageBgColor}
+          previewWidth={200}
+          switchToColor={false}
+          label="Canvas Background:"
+          isGradientAllowed={false}
+          onValueChange={(gradientText, configKey, rawConfig) => {
+            // let grad = makeGradient(
+            //   rawConfig,
+            //   gradientText,
+            //   activeElement?.height,
+            //   activeElement?.width,
+            //   this
+            // );
+            console.log(gradientText, configKey, rawConfig);
+            if (rawConfig.colorStops.length < 2) {
+              onChange(ACTIONS.CHANGE_PAGE_BACKGROUND, gradientText);
+              // updateActiveElement({ colors: [grad] }, this);
+              // activeElement.set("fill", grad);
+            } else {
+              // activeElement.set("fill", new fabric.Gradient(grad));
+            }
+            // activeElement.ElementColor = activeElementProps?.colors[0];
+            canvas.renderAll();
+          }}
+        />
         <div className="element-selector">
           <DropdownButton
             leftIcon={true}

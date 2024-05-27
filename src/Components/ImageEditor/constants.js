@@ -538,7 +538,7 @@ export const FONT_PROPS_DEFAULT = Object.freeze({
   type: "i-text",
   value: "text",
   name: "text",
-  fontFamily: "Quicksand",
+  fontFamily: "Times New Roman",
   fontSize: 48,
   backgroundColor: "rgba(255,255,255,0)",
   fill: "#000",

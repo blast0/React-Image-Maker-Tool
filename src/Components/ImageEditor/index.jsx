@@ -56,7 +56,7 @@ class Designer extends Component {
       pages: [],
       canvases: {},
       activePageID: null,
-      pageBgColor: "rgba(0,0,0,0)",
+      pageBgColor: "rgba(0,0,0,0.5)",
       elementsDropDownData: [],
       selectedElementId: null,
       selectedElementName: "",
