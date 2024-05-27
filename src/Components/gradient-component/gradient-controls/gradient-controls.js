@@ -335,7 +335,6 @@ class GradientControls extends Component {
                             colorBoxWidth={20}
                             colorBoxHeight={20}
                             onChange={(color, e) => {
-                              console.log(color);
                               this.tabStopchangeHandler("color", e.rgb, index);
                             }}
                             value={stop.color}

@@ -30,8 +30,7 @@ const ColorSelectorButton = (props) => {
   const [gradient, setGradient] = useState("");
   const [show, setShow] = useState(false);
   const [type, setType] = useState("color");
-  // const contextType = useContext(GradientContext);
-  console.log(type, config);
+
   return (
     <div
       style={{
@@ -99,7 +98,6 @@ const ColorSelectorButton = (props) => {
               {type === "color" ? (
                 <SketchPicker
                   onChange={(e) => {
-                    console.log(e);
                     const rgba =
                       "rgba(" +
                       e.rgb.r +

@@ -793,6 +793,68 @@ export const alignElementVertically = (
   parentCanvasRef.renderAll();
 };
 
+export const getNextSpeechBubbleSchema = (canvasRef, obj) => {
+  let count = 1;
+  canvasRef.getObjects().forEach((item) => {
+    if (!item.isLabel && item?.customType === "SpeechBubble") {
+      count++;
+    }
+  });
+  const bubbleElementSchema = {
+    id: getNewID(),
+    type: "speech_bubble",
+    name: "Speech Bubble " + count,
+    text: "Hello World!",
+    fontFamily: "Ubuntu",
+    left: 100,
+    top: 50,
+    width: 200,
+    textPadding: 15,
+    selectable: true,
+    arrowWidth: 14,
+    strokeWidth: 1,
+    textColor: "#000",
+    isLabel: false,
+    arrow: "Bottom",
+    ...Object.assign({}, SPEECH_BUBBLE_DEFAULT_PROPS),
+  };
+  let prevTextBox = null;
+  let prevPolygon = null;
+  let arrow = null;
+  if (obj?.customType === "SpeechBubble") {
+    arrow = obj.arrow;
+    prevTextBox = obj._objects.find((item) => {
+      return item.customType === "Speechtext";
+    });
+    prevPolygon = obj._objects.find((item) => {
+      return item.customType === "SpeechPoly";
+    });
+  } else {
+    canvasRef.getObjects().forEach((item) => {
+      if (item?.customType === "SpeechBubble" && !item.isLabel) {
+        arrow = item.arrow;
+        prevTextBox = item._objects.find((item) => {
+          return item.customType === "Speechtext";
+        });
+        prevPolygon = item._objects.find((item) => {
+          return item.customType === "SpeechPoly";
+        });
+      }
+    });
+  }
+  if (prevTextBox && prevPolygon) {
+    bubbleElementSchema.width = prevTextBox.width;
+    bubbleElementSchema.textPadding = prevTextBox.polyPadding;
+    bubbleElementSchema.borderColor = prevPolygon.stroke;
+    bubbleElementSchema.textBgColor = prevTextBox.backgroundColor;
+    bubbleElementSchema.polyColor = prevPolygon.fill;
+    bubbleElementSchema.textColor = prevTextBox.fill;
+    bubbleElementSchema.arrow = arrow;
+    bubbleElementSchema.fontFamily = prevTextBox.fontFamily;
+  }
+  return bubbleElementSchema;
+};
+
 export const getNextSpeechLabelSchema = (canvasRef) => {
   let count = 1;
   canvasRef.getObjects().forEach((item) => {
@@ -887,6 +949,7 @@ export const loadGoogleFont = (fontName) => {
   return new Promise(async (resolve, reject) => {
     try {
       var myfont = new FontFaceObserver(fontName);
+      Spinner.showSpinner();
       const res = await myfont.load();
       resolve(res);
     } catch (err) {

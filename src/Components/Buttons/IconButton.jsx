@@ -9,6 +9,7 @@ function IconButton(props) {
         onClick={() => btnClick()}
         style={{
           border: "1px solid #f1f1f1",
+          padding: "2px 10px",
         }}
         title={title}
       >

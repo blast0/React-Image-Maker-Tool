@@ -26,6 +26,7 @@ class Canvastools extends Component {
       activeElementProps,
       showStyleEditor,
       onChange,
+      onCanvasActive,
       elementIds,
       canvas,
       selectedElementName,
@@ -38,7 +39,17 @@ class Canvastools extends Component {
     const activeElementType = canvas?.getActiveObject()?.type;
     const activeElem = canvas.getActiveObject();
     return (
-      <div className="DesignerConfigPanel">
+      <div
+        className="DesignerConfigPanel"
+        onClick={(e) => {
+          var activeElement = document.activeElement;
+          if (activeElement === document.body) {
+            onCanvasActive(true);
+          } else {
+            onCanvasActive(false);
+          }
+        }}
+      >
         <input
           ref={jsonRef}
           className="hidden-file"
@@ -154,12 +165,12 @@ class Canvastools extends Component {
               }}
               value={selectedElementName ? selectedElementName : ""}
               label="Element Name:"
-              onChange={(el) => {
+              onChange={(value) => {
                 const elem = canvas.getActiveObject();
                 if (elem) {
                   elem.customName = true;
-                  elem.changeName = el.target.value;
-                  onChange(ACTIONS.ELEMENT_NAME, el);
+                  elem.changeName = value;
+                  onChange(ACTIONS.ELEMENT_NAME, value);
                 }
               }}
             />

@@ -6,7 +6,6 @@ import CanvasCore from "../core";
 import PopupContainer from "../../PopMenu/popup-container";
 import PopMenuPortal from "../../PopMenu/popmenu-portal";
 import {
-  ACTIONS,
   ARROW_HEAD,
   ARROW_HEAD_POSITION,
   CANVAS_CONTEXT_MENU_ITEMS,
@@ -19,11 +18,12 @@ import {
   scaleElementTofitCanvas,
   alignElementToCenter,
   createNewPoly,
-  // getNextSpeechLabelSchema,
-  // getNextSpeechBubbleSchema,
+  getNextSpeechLabelSchema,
+  getNextSpeechBubbleSchema,
   getQuadraticSchema,
   getNewID,
   roundToDecimal,
+  addPattern,
 } from "../helper-functions";
 // CONSTANTS
 import "../history";
@@ -612,14 +612,19 @@ class Page extends Component {
       activeObject = activeElem;
       canvas = canvasRef;
     }
-    // let count = this.countCustomElementTypes(activeObject.type);
     if (activeObject.customType === "SpeechBubble") {
       if (activeObject.isLabel === true) {
-        // const bubbleElementSchema = getNextSpeechLabelSchema(this.canvasRef);
-        // this.addSpeechBubble(bubbleElementSchema, true);
+        const bubbleElementSchema = getNextSpeechLabelSchema(
+          this.canvasRef,
+          activeObject
+        );
+        this.addSpeechBubble(bubbleElementSchema, true);
       } else {
-        // const bubbleElementSchema = getNextSpeechBubbleSchema(this.canvasRef);
-        // this.addSpeechBubble(bubbleElementSchema, true);
+        const bubbleElementSchema = getNextSpeechBubbleSchema(
+          this.canvasRef,
+          activeObject
+        );
+        this.addSpeechBubble(bubbleElementSchema, true);
       }
     } else if (activeObject.customType === "Quadratic") {
       const quadraticElementSchema = getQuadraticSchema(this.canvasRef);
@@ -632,7 +637,6 @@ class Page extends Component {
       });
     } else if (activeObject.type === "group") {
       const activeSelection = activeObject.toActiveSelection();
-      // canvas.discardActiveObject();
       activeSelection.forEach((item) => {
         this.cloneElement(item, canvas);
       });
@@ -654,28 +658,16 @@ class Page extends Component {
         canvas.setActiveObject(cloned);
         this.handlePageItemClick(null, cloned);
         canvas.requestRenderAll();
+        if (activeObject.type === "rect" || "circle" || "triangle" || "i-text")
+          if (activeObject.patternActive) {
+            cloned.URL = activeObject.URL;
+            addPattern(activeObject.URL, canvas, (newProps) => {
+              this.handlePageItemClick(null, cloned);
+              canvas.requestRenderAll();
+            });
+          }
       }, 0);
     });
-  };
-
-  mouseOverListener = (event) => {
-    const { onCanvasActive } = this.props;
-    if (
-      event.target.classList.contains("upper-canvas") ||
-      event.target.classList.contains("designer")
-    ) {
-      onCanvasActive(true);
-    }
-  };
-
-  mouseOutListener = (event) => {
-    const { onCanvasActive } = this.props;
-    if (
-      event.target.classList.contains("lower-canvas") ||
-      event.target.classList.contains("designer")
-    ) {
-      onCanvasActive(false);
-    }
   };
 
   keydownListener = (event) => {
@@ -683,25 +675,10 @@ class Page extends Component {
     const key = event.key;
     const activeObject = this.canvasRef.getActiveObject();
     if (!activeObject) return;
+    if (!isCanvasActive) return;
     if (key === "Delete" || key === "Backspace") {
-      // ask to delete the element
-      if (activeObject?.bubbleId) {
-        if (!activeObject._objects) {
-          return;
-        }
-      }
-      if (
-        activeObject?.customType &&
-        activeObject?.customType !== "customGroup" &&
-        activeObject?.customType !== "Quadratic"
-      ) {
-        return;
-      }
-      if (isCanvasActive && !this.canvasRef.getActiveObject()?.isEditing) {
-        this.props.onElementDeleteRequested(ACTIONS.DELETE_SELECTION);
-      }
+      this.deleteObject();
     }
-    if (!this.props.isCanvasActive) return;
     //ctrl+z key press
     if (event.keyCode === 90 && event.ctrlKey) {
       this.canvasRef.undo();
@@ -756,16 +733,11 @@ class Page extends Component {
 
   componentDidMount() {
     this.initCanvas();
-    // const { onCanvasActive } = this.props;
-    document.addEventListener("mouseover", this.mouseOverListener);
-    document.addEventListener("mouseout", this.mouseOutListener);
     document.addEventListener("keydown", this.keydownListener);
     document.addEventListener("mouseup", this.mouseUpListener);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mouseover", this.mouseOverListener);
-    document.removeEventListener("mouseout", this.mouseOutListener);
     document.removeEventListener("keydown", this.keydownListener);
     document.removeEventListener("mouseup", this.mouseUpListener);
   }
@@ -1077,7 +1049,6 @@ class Page extends Component {
 
   closeContextMenu = () => {
     this.hideContextMenu();
-    this.clearActiveElement();
     this.setState({
       showContextmenu: false,
       contextMenuProps: {},
@@ -1494,10 +1465,10 @@ class Page extends Component {
     });
   }
 
-  addSpeechBubble(elem) {
+  async addSpeechBubble(elem) {
     //create polygon
     const bubbleId = getNewID();
-    const textbox = this._core.addTextBox(elem.text, {
+    const textbox = await this._core.addTextBox(elem.text, {
       left: elem.left + elem.textPadding,
       top: elem.top + elem.textPadding + elem.strokeWidth / 2 + 1,
       width: elem.width,
@@ -2063,6 +2034,12 @@ class Page extends Component {
               }
         }
         ref={this.containerRef}
+        onClick={(e) => {
+          var activeElement = document.activeElement;
+          if (activeElement === document.body) {
+            this.props.onCanvasActive(true);
+          }
+        }}
       >
         <canvas id={`canvas-${pageId}`} />
         <div

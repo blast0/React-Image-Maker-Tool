@@ -601,18 +601,18 @@ export const DefaultTemplate = {
     height: 720,
   },
   elements: [
-    // {
-    //   type: "Pattern",
-    //   name: "Background Image",
-    //   width: 1280,
-    //   height: 720,
-    //   containerType: "rect", //triangle. circle, rect
-    //   url: "https://cdn.pixabay.com/photo/2018/05/17/09/18/away-3408119_1280.jpg",
-    //   imageFit: "Show full Image",
-    //   BorderX: 5,
-    //   BorderY: 5,
-    //   BorderLock: true,
-    // },
+    {
+      type: "Pattern",
+      name: "Background Image",
+      width: 1280,
+      height: 720,
+      containerType: "rect", //triangle. circle, rect
+      url: "https://cdn.pixabay.com/photo/2017/10/10/07/48/hills-2836301_1280.jpg",
+      imageFit: "Show full Image",
+      BorderX: 5,
+      BorderY: 5,
+      BorderLock: true,
+    },
     {
       type: "rect",
       name: "Overlay Bottom",
@@ -656,7 +656,7 @@ export const DefaultTemplate = {
       ...FONT_PROPS_DEFAULT,
       value: "Make/Edit Your Image",
       left: 490,
-      top: 158,
+      top: 218,
       fontSize: 32,
       fill: "#660708",
     },

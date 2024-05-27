@@ -69,7 +69,6 @@ class CanvasCore {
 
     // try to load google font
     try {
-      Spinner.showSpinner();
       await loadGoogleFont(options?.fontFamily);
     } catch (error) {
       console.log("error loading google font ", error);

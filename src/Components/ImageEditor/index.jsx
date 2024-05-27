@@ -61,7 +61,7 @@ class Designer extends Component {
       selectedElementId: null,
       selectedElementName: "",
       isTemplateLoaded: false,
-      isCanvasActive: null,
+      isCanvasActive: true,
       shouldSave: false,
       fileDimensions: null,
       blob: null,
@@ -145,22 +145,6 @@ class Designer extends Component {
                 config={page}
                 activeElementProps={activeElementProps}
                 isTemplateLoaded={isTemplateLoaded}
-                ontemplateLoaded={(elem) => {
-                  this.setState(
-                    {
-                      isTemplateLoaded: true,
-                    },
-                    () => {
-                      // _canvas.clearHistory();
-                      setTimeout(() => {
-                        if (elem) {
-                          _canvas.setActiveObject(elem);
-                          _canvas.renderAll();
-                        }
-                      }, 100);
-                    }
-                  );
-                }}
                 onCanvasActive={(isActive) => {
                   if (modalActive) {
                     this.setState({
@@ -171,6 +155,20 @@ class Designer extends Component {
                       isCanvasActive: isActive,
                     });
                   }
+                }}
+                ontemplateLoaded={(elem) => {
+                  this.setState(
+                    {
+                      isTemplateLoaded: true,
+                    },
+                    () => {
+                      _canvas.clearHistory();
+                      if (elem) {
+                        _canvas.setActiveObject(elem);
+                        _canvas.renderAll();
+                      }
+                    }
+                  );
                 }}
                 onCanvasPostInit={(id, canvas) => {
                   this.setState({
@@ -203,7 +201,7 @@ class Designer extends Component {
                   });
                 }}
               />
-              <div // ref={this.imagetoLibInputRef}
+              <div
                 className="hidden-file"
                 children={{}}
                 type="file"
@@ -217,9 +215,7 @@ class Designer extends Component {
               >
                 <ModalApp
                   leftIcon={"icon-laptop"}
-                  onBtnClick={(e) => {
-                    console.log("cliked");
-                  }}
+                  onBtnClick={(e) => {}}
                   children={
                     <>
                       <div className="delete-modal modal-body">
@@ -327,6 +323,17 @@ class Designer extends Component {
             bodyChildren={
               <>
                 <Canvastools
+                  onCanvasActive={(isActive) => {
+                    if (modalActive) {
+                      this.setState({
+                        isCanvasActive: false,
+                      });
+                    } else {
+                      this.setState({
+                        isCanvasActive: isActive,
+                      });
+                    }
+                  }}
                   theme={this.props.theme}
                   canvas={_canvas}
                   elementsDropDownData={elementsDropDownData}
