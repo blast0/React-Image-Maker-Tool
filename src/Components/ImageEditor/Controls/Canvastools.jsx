@@ -6,6 +6,7 @@ import TextInput, { NumericInput } from "../../Input/text-input";
 import DropdownButton from "../../Buttons/DropdownBtn";
 import ActiveElementControls from "./activeControls";
 import GradientContainer from "../../gradient-container";
+import { getObjectTypeIcon } from "../helper-functions";
 
 class Canvastools extends Component {
   constructor(props) {
@@ -163,8 +164,9 @@ class Canvastools extends Component {
         />
         <div className="element-selector">
           <DropdownButton
-            leftIcon={true}
-            btnText={"Selected: " + selectedElementName}
+            leftIcon={getObjectTypeIcon(activeElement)}
+            label={"Selected Element:"}
+            btnText={selectedElementName}
             variant="light"
             buttons={elementsDropDownData}
             onDropBtnClick={(option) => {

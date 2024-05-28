@@ -72,12 +72,6 @@ class CanvasCore {
       await loadGoogleFont(options?.fontFamily);
     } catch (error) {
       console.log("error loading google font ", error);
-      this.__canvas.add(textElement);
-      Spinner.hideSpinner();
-      if (options.preselected) {
-        textElement.preselected = options.preselected;
-      }
-      return textElement;
     } finally {
       this.__canvas.add(textElement);
       Spinner.hideSpinner();
@@ -258,6 +252,7 @@ class CanvasCore {
           ...svgOptions,
           ...restOptions,
           type: "group",
+          customType: "svg",
         });
         if (imageFit) {
           scaleElementTofitCanvas(imageFit, canvas.height, canvas.width, svg);

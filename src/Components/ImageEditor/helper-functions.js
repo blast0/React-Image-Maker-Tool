@@ -343,6 +343,39 @@ export const createCanvasElementsDropdownData = (self) => {
   });
 };
 
+export const getObjectTypeIcon = (elem) => {
+  if (elem?.customType) {
+    console.log(elem?.customType);
+    switch (elem?.customType) {
+      case "svg":
+        return "icon-svg";
+      case "Quadratic":
+        return "icon-quad-arrow";
+      case "SpeechBubble":
+        if (elem?.isLabel) return "icon-engage";
+        else return "icon-random-communication";
+      default:
+        return "";
+    }
+  } else
+    switch (elem?.type) {
+      case "i-text":
+        return "icon-text";
+      case "rect":
+        return "icon-rectangle";
+      case "triangle":
+        return "icon-triangle";
+      case "circle":
+        return "icon-circle";
+      case "line":
+        return "icon-minus";
+      case "group":
+        return "icon-group";
+      default:
+        return "";
+    }
+};
+
 export const getCanvasElementNames = (canvas) => {
   if (!canvas) return [];
 
@@ -357,11 +390,13 @@ export const getCanvasElementNames = (canvas) => {
           return {
             btnText: elem.changeName === "" ? elem.text : elem.changeName,
             value: elem.id,
+            leftIcon: getObjectTypeIcon(elem),
           };
         } else {
           return {
             btnText: elem.text.length > 20 ? elem.text.slice(0, 20) : elem.name,
             value: elem.id,
+            leftIcon: getObjectTypeIcon(elem),
           };
         }
       } else {
@@ -369,11 +404,13 @@ export const getCanvasElementNames = (canvas) => {
           return {
             btnText: elem.name,
             value: elem.id,
+            leftIcon: getObjectTypeIcon(elem),
           };
         } else {
           return {
             btnText: elem.name,
             value: elem.bubbleId,
+            leftIcon: getObjectTypeIcon(elem),
           };
         }
       }

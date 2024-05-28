@@ -620,7 +620,7 @@ export const DefaultTemplate = {
       height: 520,
       left: 100,
       top: 100,
-      fill: "#00000020",
+      fill: "rgba(0,0,0,0.36)",
       stroke: "rgba(0,0,0,0)",
       strokeWidth: 0,
       rx: 0,

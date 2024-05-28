@@ -8,7 +8,7 @@ import {
   ACTIONS,
   ADD_SHAPE_OPTIONS,
   // DELETE_OPTIONS,
-  SAVE_OPTIONS,
+  // SAVE_OPTIONS,
   FONT_PROPS_DEFAULT,
 } from "./constants";
 
@@ -299,15 +299,6 @@ class Designer extends Component {
                     btnText={""}
                     btnClick={() => {
                       handleRightPanelUpdates(ACTIONS.REDO_ACTION, {}, this);
-                    }}
-                  />
-                  <DropdownButton
-                    leftIcon={"icon-save-new"}
-                    variant="light"
-                    btnText={""}
-                    buttons={SAVE_OPTIONS}
-                    onDropBtnClick={(option) => {
-                      handleRightPanelUpdates(option.value, {}, this);
                     }}
                   />
                   <ModalApp
