@@ -30,14 +30,13 @@ function convertToText(config) {
 
 function GradientMakerWithPopup(props) {
   const {
-    label,
-    tooltip,
-    value,
-    containerStyle,
-    controlStyle,
-    opt,
-    onValueChange,
-    canChooseGradientType,
+    label = "",
+    tooltip = "",
+    containerStyle = {},
+    opt = {},
+    onValueChange = noop,
+    value = "",
+    canChooseGradientType = false,
     switchToColor,
     ...restProps
   } = props;
@@ -98,16 +97,6 @@ function GradientMakerWithPopup(props) {
     </div>
   );
 }
-
-GradientMakerWithPopup.defaultProps = {
-  label: "",
-  tooltip: "",
-  containerStyle: {},
-  opt: {},
-  onValueChange: noop,
-  value: "",
-  canChooseGradientType: false,
-};
 
 GradientMakerWithPopup.propTypes = {
   label: PropTypes.string,

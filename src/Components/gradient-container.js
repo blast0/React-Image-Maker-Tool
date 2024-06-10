@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 import GradientMaker from "./gradient-component/index";
 import { convertGradientToConfig } from "./utilities";
 
-const GradientContainer = ({ showInPopup, configKey, ...restProps }) => {
+const GradientContainer = ({
+  showInPopup = true,
+  canChooseGradientType = true,
+  configKey,
+  ...restProps
+}) => {
   return (
     <GradientMaker
       {...restProps}
@@ -21,12 +26,6 @@ const GradientContainer = ({ showInPopup, configKey, ...restProps }) => {
       }
     />
   );
-};
-
-GradientContainer.defaultProps = {
-  showInPopup: true,
-  canChooseGradientType: true,
-  restProps: {},
 };
 
 GradientContainer.propTypes = {

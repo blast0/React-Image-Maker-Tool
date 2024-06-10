@@ -1872,6 +1872,7 @@ class Page extends Component {
 
   async generatePageContent(elements) {
     for (const elem of elements) {
+      console.log(elem.name);
       switch (elem.type) {
         case "i-text":
           await this.addTextElementToPage(elem);
@@ -1904,7 +1905,7 @@ class Page extends Component {
           this.addSpeechBubble(elem, false);
           break;
         case "speech_label":
-          this.addSpeechBubble(elem, true);
+          // this.addSpeechBubble(elem, true);
           break;
         default:
           console.log("unknown element type");

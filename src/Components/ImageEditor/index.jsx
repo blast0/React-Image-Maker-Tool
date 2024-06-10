@@ -35,7 +35,7 @@ import ModalApp from "../Modal/modal";
 import IconButton from "../Buttons/IconButton";
 import DropdownButton from "../Buttons/DropdownBtn";
 
-class Designer extends Component {
+class ImageMaker extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -358,4 +358,4 @@ class Designer extends Component {
   }
 }
 
-export default Designer;
+export default ImageMaker;

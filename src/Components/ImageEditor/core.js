@@ -33,19 +33,6 @@ class CanvasCore {
     };
     // finally create the canvas
     const _canvas = this.createCanvas(canvasId, _canvasProps);
-    const _original_initHiddenTextarea =
-      fabric.IText.prototype.initHiddenTextarea;
-    fabric.util.object.extend(
-      fabric.IText.prototype,
-      /** @lends fabric.IText.prototype */ {
-        //fix for : IText not editable when canvas is in a fullscreen element on chrome
-        // https://github.com/fabricjs/fabric.js/issues/5126
-        initHiddenTextarea: function () {
-          _original_initHiddenTextarea.call(this);
-          this.canvas.wrapperEl.appendChild(this.hiddenTextarea);
-        },
-      }
-    );
     return _canvas;
   }
 
@@ -62,7 +49,6 @@ class CanvasCore {
     if (!this.__canvas) return;
     const textElement = new fabric.IText(text, {
       ...options,
-      isEditable: true,
       id: getNewID(),
     });
     if (!options?.fontFamily) return textElement;
@@ -92,6 +78,83 @@ class CanvasCore {
     return triangleElement;
   }
 
+  makeQuadGroup(ObjectsArray) {
+    if (!this.__canvas) return;
+    const group = new fabric.Group(ObjectsArray);
+    group.name = "QuadraticArrow";
+    group.setControlsVisibility({
+      tl: false,
+      tr: false,
+      br: false,
+      bl: false,
+      ml: false,
+      mt: false,
+      mr: false,
+      mb: false,
+      mtr: false,
+    });
+    group.name = "QuadraticArrow";
+    return group;
+  }
+
+  makeEndTriangle(options, left, top, line1, line2, line3) {
+    if (!this.__canvas) return;
+    const triangle = new fabric.Triangle({
+      id: getNewID(),
+      left: left,
+      top: top,
+      ...options,
+    });
+    triangle.line1 = line1;
+    triangle.line2 = line2;
+    triangle.line3 = line3;
+    triangle.angle = this.getAngle(line1, line3);
+    return triangle;
+  }
+
+  getAngle(line1, line3) {
+    let x1, y1, x2, y2;
+
+    if (line1) {
+      // If line1 is provided (for left arrow)
+      x1 = line1.path[0][1]; // Get the x-coordinate of the start point
+      y1 = line1.path[0][2]; // Get the y-coordinate of the start point
+      x2 = line1.path[1][1]; // Get the x-coordinate of the control point
+      y2 = line1.path[1][2]; // Get the y-coordinate of the control point
+    } else if (line3) {
+      // If line3 is provided (for right arrow)
+      x1 = line3.path[1][3]; // Get the x-coordinate of the control point
+      y1 = line3.path[1][4]; // Get the y-coordinate of the control point
+      x2 = line3.path[1][1]; // Get the x-coordinate of the end point
+      y2 = line3.path[1][2]; // Get the y-coordinate of the end point
+    } else {
+      return 0; // Return 0 if no line is provided
+    }
+
+    // Calculate the angle in radians
+    const angleRadians = Math.atan2(y2 - y1, x2 - x1);
+
+    // Convert the angle from radians to degrees
+    const angleDegrees = fabric.util.radiansToDegrees(angleRadians);
+
+    // Adjust the angle by subtracting 90 degrees
+    return angleDegrees - 90;
+  }
+
+  createArrow(idType, groupArray) {
+    const groupObject = new fabric.Group(groupArray, {
+      id: `${idType}` + getNewID(),
+      name: `${idType}` + getNewID(),
+      customType: "arrow",
+    });
+    this.__canvas.add(groupObject);
+    groupArray.forEach((e) => {
+      this.removeElement(e);
+    });
+    this.__canvas.setActiveObject(groupObject);
+    return groupObject;
+  }
+
   removeElement(element) {
     this.__canvas.remove(element);
   }
@@ -104,6 +167,27 @@ class CanvasCore {
     });
     this.__canvas.add(circleElement);
     return circleElement;
+  }
+
+  drawQuadratic(options) {
+    if (!this.__canvas) return;
+    const curve = new fabric.Path(
+      `M ${INITIAL_PATH.p0}, Q ${INITIAL_PATH.p1} ${INITIAL_PATH.p2}`,
+      {
+        ...options,
+      }
+    );
+    return curve;
+  }
+
+  makeControlPoint(options, left, top) {
+    if (!this.__canvas) return;
+    const points = new fabric.Path(svg, {
+      left: left,
+      top: top,
+      ...options,
+    });
+    return points;
   }
 
   addLine(options) {
@@ -231,13 +315,34 @@ class CanvasCore {
     return _rect;
   }
 
-  addTextBox(text, options) {
+  addSpeechRect(options) {
     if (!this.__canvas) return;
+    const _rect = new fabric.Rect({
+      ...options,
+      id: getNewID(),
+    });
+    return _rect;
+  }
+
+  async addTextBox(text, options) {
+    if (!this.__canvas) return;
+    if (options?.fontFamily) {
+      await loadGoogleFont(options?.fontFamily);
+    }
     const textbox = new fabric.Textbox(text, {
       ...options,
       id: getNewID(),
     });
     return textbox;
+  }
+
+  addPolygon(points, options) {
+    if (!this.__canvas) return;
+    const polyElement = new fabric.Polygon(points, {
+      ...options,
+      id: getNewID(),
+    });
+    return polyElement;
   }
 
   addSVGFromURL(url, options) {
@@ -262,104 +367,6 @@ class CanvasCore {
       });
     });
     return promise;
-  }
-
-  drawQuadratic(options) {
-    if (!this.__canvas) return;
-    const curve = new fabric.Path(
-      `M ${INITIAL_PATH.p0}, Q ${INITIAL_PATH.p1} ${INITIAL_PATH.p2}`,
-      {
-        ...options,
-      }
-    );
-    return curve;
-  }
-
-  makeQuadGroup(ObjectsArray) {
-    if (!this.__canvas) return;
-    const group = new fabric.Group(ObjectsArray);
-    group.name = "QuadraticArrow";
-    group.setControlsVisibility({
-      tl: false,
-      tr: false,
-      br: false,
-      bl: false,
-      ml: false,
-      mt: false,
-      mr: false,
-      mb: false,
-      mtr: false,
-    });
-    group.name = "QuadraticArrow";
-    return group;
-  }
-
-  makeEndTriangle(options, left, top, line1, line2, line3) {
-    if (!this.__canvas) return;
-    const triangle = new fabric.Triangle({
-      id: getNewID(),
-      left: left,
-      top: top,
-      ...options,
-    });
-    triangle.line1 = line1;
-    triangle.line2 = line2;
-    triangle.line3 = line3;
-    triangle.angle = this.getAngle(line1, line3);
-    return triangle;
-  }
-
-  getAngle(line1, line3) {
-    let x1, y1, x2, y2;
-
-    if (line1) {
-      // If line1 is provided (for left arrow)
-      x1 = line1.path[0][1]; // Get the x-coordinate of the start point
-      y1 = line1.path[0][2]; // Get the y-coordinate of the start point
-      x2 = line1.path[1][1]; // Get the x-coordinate of the control point
-      y2 = line1.path[1][2]; // Get the y-coordinate of the control point
-    } else if (line3) {
-      // If line3 is provided (for right arrow)
-      x1 = line3.path[1][3]; // Get the x-coordinate of the control point
-      y1 = line3.path[1][4]; // Get the y-coordinate of the control point
-      x2 = line3.path[1][1]; // Get the x-coordinate of the end point
-      y2 = line3.path[1][2]; // Get the y-coordinate of the end point
-    } else {
-      return 0; // Return 0 if no line is provided
-    }
-
-    // Calculate the angle in radians
-    const angleRadians = Math.atan2(y2 - y1, x2 - x1);
-
-    // Convert the angle from radians to degrees
-    const angleDegrees = fabric.util.radiansToDegrees(angleRadians);
-
-    // Adjust the angle by subtracting 90 degrees
-    return angleDegrees - 90;
-  }
-
-  createArrow(idType, groupArray) {
-    const groupObject = new fabric.Group(groupArray, {
-      id: `${idType}` + getNewID(),
-      name: `${idType}` + getNewID(),
-      customType: "arrow",
-    });
-    this.__canvas.add(groupObject);
-    groupArray.forEach((e) => {
-      this.removeElement(e);
-    });
-    this.__canvas.setActiveObject(groupObject);
-    return groupObject;
-  }
-
-  makeControlPoint(options, left, top) {
-    if (!this.__canvas) return;
-    const points = new fabric.Path(svg, {
-      left: left,
-      top: top,
-      ...options,
-    });
-    return points;
   }
 
   addSVGFromURL__Experimental(url, options) {
@@ -398,5 +405,4 @@ class CanvasCore {
     return promise;
   }
 }
-
 export default CanvasCore;

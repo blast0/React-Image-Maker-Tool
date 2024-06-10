@@ -244,18 +244,24 @@ export const PAGE_CONFIG = Object.freeze({
 });
 
 export const SAVE_OPTIONS = [
-  // {
-  //   btnText: "Save Design to Library",
-  //   tooltip: "Save raw design",
-  //   leftIcon: "icon-image-library",
-  //   value: ACTIONS.UPLOAD_JSON,
-  // },
-  // {
-  //   btnText: "Save Image to Library",
-  //   tooltip: "Export design as an image",
-  //   leftIcon: "icon-image",
-  //   value: ACTIONS.SAVE_PAGE_TO_LIBRARY,
-  // },
+  {
+    btnText: "Canvas as Image",
+    tooltip: "Download Design as Image",
+    leftIcon: "icon-image",
+    value: ACTIONS.DOWNLOAD_PAGE,
+  },
+  {
+    btnText: "Selection as Image",
+    tooltip: "Download Design as Image",
+    leftIcon: "icon-image",
+    value: ACTIONS.DOWNLOAD_SELECTION,
+  },
+  {
+    btnText: "Raw Canvas json",
+    tooltip: "Download Design as json",
+    leftIcon: "icon-fs-file",
+    value: ACTIONS.SAVE_PAGE_TO_LIBRARY,
+  },
   {
     btnText: "Save to File",
     tooltip: "Download raw design",

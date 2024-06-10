@@ -4,7 +4,11 @@ import Navbar from "react-bootstrap/Navbar";
 import IconButton from "../Buttons/IconButton";
 import { useState } from "react";
 
-function NavbarApp({ themed, themes, onThemeChange }) {
+function NavbarApp({
+  themed = "light",
+  themes = ["light", "dark", "primary"],
+  onThemeChange,
+}) {
   const [theme, setTheme] = useState(themed);
   return (
     <>
@@ -53,10 +57,5 @@ function NavbarApp({ themed, themes, onThemeChange }) {
     </>
   );
 }
-
-NavbarApp.defaultProps = {
-  themed: "light",
-  themes: ["light", "dark", "primary"],
-};
 
 export default NavbarApp;

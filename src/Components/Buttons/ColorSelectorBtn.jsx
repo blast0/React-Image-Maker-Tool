@@ -8,21 +8,23 @@ import GradientControls from "../gradient-component/gradient-controls/gradient-c
 
 const ColorSelectorButton = (props) => {
   const {
+    // name = "Button",
+    // onBtnClick = () => {},
+    buttons = [],
+    onDropBtnClick = () => {},
+    variant = "success",
+    onChange = () => {},
+    withInput = true,
+    colorBoxWidth = "60px",
+    colorBoxHeight = "28px",
+    isGradientAllowed = false,
+    onGradientChange = () => {},
     btnText,
     leftIcon,
     rightIcon,
-    buttons,
-    onDropBtnClick,
-    variant,
     value,
-    onChange,
-    withInput,
     theme,
     label,
-    colorBoxWidth,
-    colorBoxHeight,
-    isGradientAllowed,
-    onGradientChange,
     config,
   } = props;
 
@@ -154,17 +156,5 @@ const ColorSelectorButton = (props) => {
     </div>
   );
 };
-ColorSelectorButton.defaultProps = {
-  name: "Button",
-  buttons: [],
-  onBtnClick: () => {},
-  onDropBtnClick: () => {},
-  variant: "success",
-  onChange: () => {},
-  withInput: true,
-  colorBoxWidth: "60px",
-  colorBoxHeight: "28px",
-  isGradientAllowed: false,
-  onGradientChange: () => {},
-};
+
 export default ColorSelectorButton;

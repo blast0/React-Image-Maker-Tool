@@ -62,8 +62,6 @@ export const handleRightPanelUpdates = (action, data, self) => {
       dimensionChangeHandler(data.name, data.val, self);
       break;
     case ACTIONS.CLEAR_PAGE:
-      // showPageResetWarning(ACTIONS.CLEAR_PAGE, self);
-      // self.setState({ showPageResetWarning: true });
       resetPage(self);
       break;
     case ACTIONS.DOWNLOAD_PAGE:
@@ -91,7 +89,7 @@ export const handleRightPanelUpdates = (action, data, self) => {
       canvasRef.redo();
       break;
     case ACTIONS.SAVE_PAGE_TO_LIBRARY:
-      // saveToImageLibrary(ACTIONS.SAVE_PAGE_TO_LIBRARY, self);
+      saveToImageLibrary(ACTIONS.SAVE_PAGE_TO_LIBRARY, self);
       break;
     case ACTIONS.SAVE_SELECTION_TO_LIBRARY:
       // saveToImageLibrary(ACTIONS.SAVE_SELECTION_TO_LIBRARY, self);
@@ -140,10 +138,10 @@ export const handleRightPanelUpdates = (action, data, self) => {
       alignGroupHorizontally(data, self);
       break;
     case ACTIONS.ADD_SPEECH_BUBBLE:
-      // addSpeechBubble(self);
+      addSpeechBubble(self);
       break;
     case "speech_label":
-      // addSpeechLabel(self, true);
+      addSpeechLabel(self, true);
       break;
     case ACTIONS.ADD_RANDOM_SHAPE:
       // addRandomShape(self);
@@ -188,6 +186,45 @@ export const handleRightPanelUpdates = (action, data, self) => {
     default:
       console.log("unhandled-action", action);
       break;
+  }
+};
+
+export const saveToImageLibrary = (
+  type = ACTIONS.SAVE_PAGE_TO_LIBRARY,
+  self
+) => {
+  const { pageHeight, pageWidth } = self.state;
+  const canvasRef = Object.values(self.state.canvases)[0];
+  const selected = cloneDeep(canvasRef.getActiveObject());
+  if (type === ACTIONS.SAVE_SELECTION_TO_LIBRARY && selected) {
+    //Selection exist so download selection
+    const fileSVGData2 = selected.toDataURL();
+    var myselectionblob = dataURLtoBlob(fileSVGData2);
+    self.setState({
+      shouldSave: true,
+      thumbnailUrl: fileSVGData2,
+      fileDimensions: {
+        height: parseInt(selected.height),
+        width: parseInt(selected.width),
+      },
+      showDownloadBtn: true,
+      blob: myselectionblob,
+    });
+  } else {
+    // Save Entire Page to Image library
+    const fileSVGData = canvasRef.toDataURL();
+    var myblob = dataURLtoBlob(fileSVGData);
+    self.setState({
+      shouldSave: true,
+      thumbnailUrl: fileSVGData,
+      fileDimensions: {
+        height: pageHeight,
+        width: pageWidth,
+      },
+      showDownloadBtn: true,
+      blob: myblob,
+    });
+    saveAs(fileSVGData, "canvas.png");
   }
 };
 
@@ -345,7 +382,6 @@ export const createCanvasElementsDropdownData = (self) => {
 
 export const getObjectTypeIcon = (elem) => {
   if (elem?.customType) {
-    console.log(elem?.customType);
     switch (elem?.customType) {
       case "svg":
         return "icon-svg";
@@ -592,6 +628,30 @@ function loadPattern(url, canvas, cb) {
     img.src = smallUrl;
   }
 }
+
+export const addSpeechLabel = (self) => {
+  const { pages, activePageID } = self.state;
+  if (!activePageID) return;
+  const canvasRef = Object.values(self.state.canvases)[0];
+  const bubbleElementSchema = getNextSpeechLabelSchema(canvasRef, null);
+  const _pagesNext = produce(pages, (draftState) => {
+    const activePage = draftState.find((p) => p.id === activePageID);
+    activePage.elements.push(bubbleElementSchema);
+  });
+  self.setState({ pages: _pagesNext });
+};
+
+export const addSpeechBubble = (self) => {
+  const { pages, activePageID } = self.state;
+  if (!activePageID) return;
+  const canvasRef = Object.values(self.state.canvases)[0];
+  const bubbleElementSchema = getNextSpeechBubbleSchema(canvasRef);
+  const _pagesNext = produce(pages, (draftState) => {
+    const activePage = draftState.find((p) => p.id === activePageID);
+    activePage.elements.push(bubbleElementSchema);
+  });
+  self.setState({ pages: _pagesNext });
+};
 
 export const CheckPattern = (value, _canvas, activeElement) => {
   if (!activeElement.patternSourceCanvas._objects?.[0]) {
@@ -996,6 +1056,7 @@ export const loadGoogleFont = (fontName) => {
       Spinner.showSpinner();
       const res = await myfont.load();
       resolve(res);
+      Spinner.hideSpinner();
     } catch (err) {
       console.log("font loading failed ", err);
       reject(err);

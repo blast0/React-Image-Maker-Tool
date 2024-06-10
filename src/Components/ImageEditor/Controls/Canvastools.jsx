@@ -44,7 +44,7 @@ class Canvastools extends Component {
 
     return (
       <div
-        className="DesignerConfigPanel"
+        className="ImageMakerConfigPanel"
         onClick={(e) => {
           var activeElementDiv = document.activeElement;
           if (activeElementDiv === document.body) {
@@ -143,22 +143,9 @@ class Canvastools extends Component {
           label="Canvas Background:"
           isGradientAllowed={false}
           onValueChange={(gradientText, configKey, rawConfig) => {
-            // let grad = makeGradient(
-            //   rawConfig,
-            //   gradientText,
-            //   activeElement?.height,
-            //   activeElement?.width,
-            //   this
-            // );
-            console.log(gradientText, configKey, rawConfig);
             if (rawConfig.colorStops.length < 2) {
               onChange(ACTIONS.CHANGE_PAGE_BACKGROUND, gradientText);
-              // updateActiveElement({ colors: [grad] }, this);
-              // activeElement.set("fill", grad);
-            } else {
-              // activeElement.set("fill", new fabric.Gradient(grad));
             }
-            // activeElement.ElementColor = activeElementProps?.colors[0];
             canvas.renderAll();
           }}
         />

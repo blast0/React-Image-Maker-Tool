@@ -1,7 +1,24 @@
 import Button from "react-bootstrap/Button";
 
-function IconButton(props) {
-  const { btnClick, rightIcon, leftIcon, btnText, theme, title } = props;
+function IconButton({
+  variant = "dark",
+  variants = [
+    "secondary",
+    "success",
+    "warning",
+    "danger",
+    "info",
+    "light",
+    "dark",
+    "Link",
+  ],
+  btnClick = () => {},
+  rightIcon,
+  leftIcon,
+  btnText,
+  theme,
+  title,
+}) {
   return (
     <>
       <Button
@@ -33,19 +50,5 @@ function IconButton(props) {
     </>
   );
 }
-IconButton.defaultProps = {
-  variant: "dark",
-  variants: [
-    "secondary",
-    "success",
-    "warning",
-    "danger",
-    "info",
-    "light",
-    "dark",
-    "Link",
-  ],
-  btnClick: () => {},
-};
 
 export default IconButton;

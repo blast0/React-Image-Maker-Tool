@@ -2,13 +2,15 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 const DropdownButton = (props) => {
   const {
+    // name = "Button",
+    // onBtnClick = () => {},
+    buttons = [],
+    variant = "success",
+    btnHeight = "100%",
     btnText,
     leftIcon,
     rightIcon,
-    buttons,
     onDropBtnClick,
-    variant,
-    btnHeight,
     label,
     theme,
   } = props;
@@ -63,7 +65,6 @@ const DropdownButton = (props) => {
             {buttons.map((item, index) => {
               return (
                 <Dropdown.Item
-                  href="#/action"
                   onClick={() => {
                     onDropBtnClick(item);
                   }}
@@ -91,11 +92,5 @@ const DropdownButton = (props) => {
     </div>
   );
 };
-DropdownButton.defaultProps = {
-  name: "Button",
-  buttons: [],
-  onBtnClick: () => {},
-  variant: "success",
-  btnHeight: "100%",
-};
+
 export default DropdownButton;

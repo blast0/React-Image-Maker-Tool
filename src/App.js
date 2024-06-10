@@ -1,8 +1,8 @@
 import { useState } from "react";
-import "./App.css";
-import Designer from "./Components/ImageEditor";
+import ImageMaker from "./Components/ImageEditor";
 import NavbarApp from "./Components/Navbar/navbar";
 import Spinner from "./Components/Spinner/spinner";
+import "./App.css";
 function App() {
   const [theme, setTheme] = useState("dark");
   return (
@@ -20,7 +20,7 @@ function App() {
           setTheme(theme);
         }}
       />
-      <Designer theme={theme} />
+      <ImageMaker theme={theme} />
       <Spinner id="root" overlayProps={{ position: "fixed" }} />
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import TextInput from "../Input/text-input";
+import { imgUrl } from "./placeHolderImage";
 
 class ImageConfig extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class ImageConfig extends React.Component {
       isUrlValid: false,
       isImageLoading: false,
       isImageError: false,
+      showImageDropZone: true,
     };
     this.imageContainerRef = React.createRef(null);
     this.descriptionRef = React.createRef(null);
@@ -85,41 +87,33 @@ class ImageConfig extends React.Component {
   render() {
     const {
       value: imgSrc,
-      // opt,
       onChange,
-      // onOptChange,
       containerStyle,
       containerClass,
       tooltip,
       label,
-      // description,
       showImageDropZone,
       configKey,
       theme,
     } = this.props;
     const { isUrlValid, isImageLoading, isImageError } = this.state;
-    // define control visibility
-    // const showAlignOptions = typeof opt?.align === "undefined" ? false : true;
-    // const showHeightWidth =
-    //   typeof opt?.iw === "undefined" || typeof opt?.ih === "undefined"
-    //     ? false
-    //     : true;
-    // const showStyleOptions = typeof opt?.fit === "undefined" ? false : true;
 
     return (
       <div
         className={`control-wrapper ${containerClass ?? ""}`}
         style={{
           ...containerStyle,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start",
         }}
         title={tooltip ? tooltip : label}
       >
-        {/* {label ? <label className="InputLabel">{label}</label> : null} */}
-        {/* {description ? <p className="Title" ref={descriptionRef}></p> : null} */}
         <div
           className="image-url"
           style={{
             display: "flex",
+            width: "100%",
           }}
         >
           <TextInput
@@ -173,7 +167,12 @@ class ImageConfig extends React.Component {
             <InlineLoader />
           </div>
         ) : (
-          <div className="control-wrapper">
+          <div
+            className="control-wrapper"
+            style={{
+              width: "100%",
+            }}
+          >
             {this.showImagePlaceholder() ? (
               <React.Fragment>
                 <div
@@ -183,8 +182,22 @@ class ImageConfig extends React.Component {
                   style={{
                     height: "150px",
                     width: "auto",
+                    border: "1px solid black",
                   }}
                 >
+                  {imgSrc === "" ? (
+                    <img
+                      style={{
+                        objectFit: "contain",
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "#fff",
+                      }}
+                      src={imgUrl}
+                      width={"auto"}
+                      alt="loading failed"
+                    />
+                  ) : null}
                   {/* Show the image */}
                   {isUrlValid ? (
                     <img
@@ -201,6 +214,7 @@ class ImageConfig extends React.Component {
                   {/* Show blank area with image icon */}
                   {showImageDropZone && !isUrlValid ? (
                     <span>
+                      hello
                       <i className="icon-image"></i>
                     </span>
                   ) : null}
