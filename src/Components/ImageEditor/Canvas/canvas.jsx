@@ -1300,7 +1300,7 @@ class Page extends Component {
 
   handleElementInit(elem) {
     this.handlePageItemClick(null, elem);
-    this.canvasRef.setActiveObject(elem);
+    this?.canvasRef?.setActiveObject(elem);
     this.checkElementPosition(elem);
   }
 

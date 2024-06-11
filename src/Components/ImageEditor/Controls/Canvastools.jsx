@@ -4,8 +4,8 @@ import { ACTIONS } from "../constants";
 // COMPONENTS
 import TextInput, { NumericInput } from "../../Input/text-input";
 import DropdownButton from "../../Buttons/DropdownBtn";
+import ColorSelectorButton from "../../Buttons/ColorSelectorBtn";
 import ActiveElementControls from "./activeControls";
-import GradientContainer from "../../gradient-container";
 import { getObjectTypeIcon } from "../helper-functions";
 
 class Canvastools extends Component {
@@ -140,19 +140,12 @@ class Canvastools extends Component {
             marginTop: "10px",
           }}
         >
-          <GradientContainer
+          <ColorSelectorButton
             theme={theme}
-            canChooseGradientType={true}
-            value={pageBgColor}
-            previewWidth={200}
-            switchToColor={false}
             label="Canvas Background:"
-            isGradientAllowed={true}
-            onValueChange={(gradientText, configKey, rawConfig) => {
-              if (rawConfig.colorStops.length < 2) {
-                onChange(ACTIONS.CHANGE_PAGE_BACKGROUND, gradientText);
-              }
-              canvas.renderAll();
+            value={pageBgColor}
+            onChange={(color) => {
+              onChange(ACTIONS.CHANGE_PAGE_BACKGROUND, color);
             }}
           />
         </div>

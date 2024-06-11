@@ -30,9 +30,10 @@ const ColorSelectorButton = (props) => {
 
   const [color, setColor] = useState(value);
   const [gradient, setGradient] = useState("");
+  const [gradientConfig, setGradientConfig] = useState(config);
   const [show, setShow] = useState(false);
   const [type, setType] = useState("color");
-  console.log(label, theme);
+
   return (
     <div
       style={{
@@ -118,17 +119,23 @@ const ColorSelectorButton = (props) => {
               ) : (
                 <GradientProvider>
                   <GradientPreview
-                    width={120}
-                    height={200}
+                    width={100}
+                    height={150}
                     config={config}
                     value={gradient}
                   />
-                  <div className="controls-small slim-scroll">
+                  <div
+                    className="controls-small slim-scroll"
+                    style={{
+                      marginBottom: "10px",
+                    }}
+                  >
                     <GradientControls
-                      config={config}
+                      config={gradientConfig}
                       canChooseGradientType={true}
                       onControlValueChange={(value) => {
                         setGradient(value.gradient);
+                        setGradientConfig(value.config);
                         onGradientChange({
                           config: value.config,
                           gradient: value.gradient,
