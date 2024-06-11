@@ -134,21 +134,28 @@ class Canvastools extends Component {
             />
           </div>
         </div>
-        <GradientContainer
-          theme={theme}
-          canChooseGradientType={true}
-          value={pageBgColor}
-          previewWidth={200}
-          switchToColor={false}
-          label="Canvas Background:"
-          isGradientAllowed={false}
-          onValueChange={(gradientText, configKey, rawConfig) => {
-            if (rawConfig.colorStops.length < 2) {
-              onChange(ACTIONS.CHANGE_PAGE_BACKGROUND, gradientText);
-            }
-            canvas.renderAll();
+        <div
+          className="canvas-background"
+          style={{
+            marginTop: "10px",
           }}
-        />
+        >
+          <GradientContainer
+            theme={theme}
+            canChooseGradientType={true}
+            value={pageBgColor}
+            previewWidth={200}
+            switchToColor={false}
+            label="Canvas Background:"
+            isGradientAllowed={true}
+            onValueChange={(gradientText, configKey, rawConfig) => {
+              if (rawConfig.colorStops.length < 2) {
+                onChange(ACTIONS.CHANGE_PAGE_BACKGROUND, gradientText);
+              }
+              canvas.renderAll();
+            }}
+          />
+        </div>
         <div className="element-selector">
           <DropdownButton
             leftIcon={getObjectTypeIcon(activeElement)}
@@ -166,6 +173,7 @@ class Canvastools extends Component {
               });
             }}
             btnHeight={"28px"}
+            theme={theme}
           />
         </div>
         {activeElementType !== "activeSelection" &&

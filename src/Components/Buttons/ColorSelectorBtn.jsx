@@ -32,7 +32,7 @@ const ColorSelectorButton = (props) => {
   const [gradient, setGradient] = useState("");
   const [show, setShow] = useState(false);
   const [type, setType] = useState("color");
-
+  console.log(label, theme);
   return (
     <div
       style={{
@@ -52,7 +52,7 @@ const ColorSelectorButton = (props) => {
             onClick={() => {
               onDropBtnClick();
             }}
-            label={label}
+            label={isGradientAllowed ? "" : label}
             onChange={(value) => {
               setColor(value);
               onChange(value, null);

@@ -942,7 +942,14 @@ class ActiveElementControls extends Component {
 
     const RectangleControls =
       activeElement?.type === "rect" ? (
-        <div className="rect-controls">
+        <div
+          className="rect-controls"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+          }}
+        >
           {rectBorderRadius}
           {activeBorderColor}
           {activeBorderThickness}

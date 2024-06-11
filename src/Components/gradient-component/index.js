@@ -45,6 +45,7 @@ class GradientMaker extends Component {
       flexWrap: "wrap",
       flexDirection: "column",
     };
+    console.log(theme);
     return (
       <div
         className={`control-wrapper GradientMaker canvas-parent ${
@@ -89,6 +90,8 @@ class GradientMaker extends Component {
             gradient={value}
             config={config}
             isGradientAllowed={isGradientAllowed}
+            label={label}
+            theme={theme}
           />
         </div>
       </div>
