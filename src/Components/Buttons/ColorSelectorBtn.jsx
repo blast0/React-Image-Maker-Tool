@@ -16,7 +16,7 @@ const ColorSelectorButton = (props) => {
     onChange = () => {},
     withInput = true,
     colorBoxWidth = "60px",
-    colorBoxHeight = "28px",
+    colorBoxHeight = "27px",
     isGradientAllowed = false,
     onGradientChange = () => {},
     btnText,
@@ -37,7 +37,7 @@ const ColorSelectorButton = (props) => {
     <div
       style={{
         display: "flex",
-        alignItems: "flex-end",
+        alignItems: isGradientAllowed ? "center" : "end",
       }}
     >
       <>
