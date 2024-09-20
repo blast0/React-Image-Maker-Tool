@@ -29,7 +29,6 @@ import {
   scaleElementTofitCanvas,
 } from "../helper-functions";
 import DropdownButton from "../../Buttons/DropdownBtn";
-// import GradientContainer from "../../gradient-container";
 import {
   //   handleSelectedTool,
   //   handleSvgElem,

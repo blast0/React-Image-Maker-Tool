@@ -90,7 +90,7 @@ class GradientMaker extends Component {
             gradient={value}
             config={config}
             isGradientAllowed={isGradientAllowed}
-            label={label}
+            // label={label}
             theme={theme}
           />
         </div>
