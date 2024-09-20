@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Spinner from "../Spinner/spinner";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 const OffCanvasExample = ({
@@ -52,7 +53,10 @@ const OffCanvasExample = ({
             {headerChildren}
           </Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>{bodyChildren}</Offcanvas.Body>
+        <Offcanvas.Body>
+          <Spinner id="root" overlayProps={{ position: "fixed" }} />
+          {bodyChildren}
+        </Offcanvas.Body>
       </Offcanvas>
     </>
   );
