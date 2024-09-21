@@ -286,7 +286,7 @@ export const setfontfamily = async (value, self) => {
 };
 
 export const handleFontStyle = (btn, activeElement, canvas) => {
-  switch (btn.bId) {
+  switch (btn.value) {
     case "bold":
       if (activeElement.fontWeight !== "bold") {
         activeElement.set("fontWeight", "bold");
