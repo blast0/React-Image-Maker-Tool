@@ -183,6 +183,7 @@ class ImageConfig extends React.Component {
                     height: "150px",
                     width: "auto",
                     border: "1px solid black",
+                    marginTop: "1px",
                   }}
                 >
                   {imgSrc === "" ? (

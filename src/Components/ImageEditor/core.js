@@ -53,7 +53,6 @@ class CanvasCore {
     });
     if (!options?.fontFamily) {
       this.__canvas.add(textElement);
-      this.__canvas.requestRenderAll();
       return textElement;
     }
 

@@ -235,10 +235,12 @@ class ActiveElementControls extends Component {
     const activeFontFamily = (
       <div className="font-family-control">
         <DropdownButton
+          theme={theme}
           leftIcon={true}
           btnText={"Font Family: " + activeElement?.fontFamily}
           variant="light"
           buttons={getFrontDropdownData()}
+          label="Font Family:"
           onDropBtnClick={(option) => {
             setfontfamily(option.value, this);
           }}
@@ -872,6 +874,7 @@ class ActiveElementControls extends Component {
     const AlignText = (
       <div className="Text-Alignment">
         <ComboButton
+          label="Text Alignment:"
           theme={theme}
           buttons={TEXT_ALIGNMENT}
           onBtnClick={(button) => {

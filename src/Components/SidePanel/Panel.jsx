@@ -23,8 +23,7 @@ const OffCanvasExample = ({
           left: `calc(100% - ${show ? "328px" : "30px"})`,
           height: "60px",
           width: "30px",
-          // backgroundColor: "#fff",
-          // backgroundColor: theme === "light" ? "#fff" : "#212529",
+          backgroundColor: theme === "light" ? "#fff" : "#212529",
           color: theme !== "light" ? "#fff" : "#212529",
           border: "1px solid #989898",
           borderRadius: "5px 0 0 5px",
@@ -53,7 +52,12 @@ const OffCanvasExample = ({
             {headerChildren}
           </Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body>
+        <Offcanvas.Body
+          style={{
+            scrollbarWidth: "thin",
+            borderTop: "1px solid #989898",
+          }}
+        >
           <Spinner id="root" overlayProps={{ position: "fixed" }} />
           {bodyChildren}
         </Offcanvas.Body>
@@ -78,7 +82,7 @@ export const Panel = ({
       name={name}
       theme={theme}
       style={{
-        top: "75px",
+        top: "67px",
         width: "300px",
         backgroundColor: theme === "light" ? "#fff" : "#212529",
         borderLeft: theme === "light" ? "1px solid #a1a1a1" : "1px solid #fff",
