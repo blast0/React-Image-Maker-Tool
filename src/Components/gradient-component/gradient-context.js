@@ -22,7 +22,7 @@ export class GradientProvider extends Component {
       angle: 45,
     },
     height: 200,
-    width: 200,
+    width: 230,
     canvasRef: "",
     error: {
       width: 180,

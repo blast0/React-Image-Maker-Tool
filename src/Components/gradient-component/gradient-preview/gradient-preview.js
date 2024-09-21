@@ -19,12 +19,13 @@ class GradientPreview extends Component {
         style={{
           height,
           width: width ? width : "100%",
-          minWidth: "217px",
+          minWidth: "230px",
           display: "flex",
           justifyContent: "center",
           background: value,
           border: "1px solid #bababa",
           borderRadius: "3px",
+          margin: "0 10px",
         }}
       ></div>
     );

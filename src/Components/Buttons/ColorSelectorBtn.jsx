@@ -113,55 +113,56 @@ const ColorSelectorButton = (props) => {
               ) : null}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item key={"dropbtncolor"}>
-                {type === "color" ? (
-                  <SketchPicker
-                    onChange={(e) => {
-                      const rgba =
-                        "rgba(" +
-                        e.rgb.r +
-                        "," +
-                        e.rgb.g +
-                        "," +
-                        e.rgb.b +
-                        "," +
-                        e.rgb.a +
-                        ")";
-                      setColor(rgba);
-                      onChange(rgba, e);
-                    }}
-                    color={color}
+              {/* <Dropdown.Item key={"dropbtncolor"}> */}
+              {type === "color" ? (
+                <SketchPicker
+                  onChange={(e) => {
+                    const rgba =
+                      "rgba(" +
+                      e.rgb.r +
+                      "," +
+                      e.rgb.g +
+                      "," +
+                      e.rgb.b +
+                      "," +
+                      e.rgb.a +
+                      ")";
+                    setColor(rgba);
+                    onChange(rgba, e);
+                  }}
+                  color={color}
+                  width="230px"
+                />
+              ) : (
+                <GradientProvider>
+                  <GradientPreview
+                    width={230}
+                    height={150}
+                    config={config}
+                    value={gradient}
                   />
-                ) : (
-                  <GradientProvider>
-                    <GradientPreview
-                      width={100}
-                      height={150}
-                      config={config}
-                      value={gradient}
-                    />
-                    <div
-                      className="controls-small slim-scroll"
-                      style={{
-                        marginBottom: "10px",
+                  <div
+                    className="controls-small slim-scroll"
+                    style={{
+                      marginBottom: "0 10px",
+                    }}
+                  >
+                    <GradientControls
+                      config={gradientConfig}
+                      canChooseGradientType={true}
+                      onControlValueChange={(value) => {
+                        setGradient(value.gradient);
+                        setGradientConfig(value.config);
+                        onGradientChange({
+                          config: value.config,
+                          gradient: value.gradient,
+                        });
                       }}
-                    >
-                      <GradientControls
-                        config={gradientConfig}
-                        canChooseGradientType={true}
-                        onControlValueChange={(value) => {
-                          setGradient(value.gradient);
-                          setGradientConfig(value.config);
-                          onGradientChange({
-                            config: value.config,
-                            gradient: value.gradient,
-                          });
-                        }}
-                      />
-                    </div>
-                  </GradientProvider>
-                )}
-              </Dropdown.Item>
+                    />
+                  </div>
+                </GradientProvider>
+              )}
+              {/* </Dropdown.Item> */}
               {isGradientAllowed ? (
                 <Dropdown.Item
                   onClick={() => {
