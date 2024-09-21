@@ -4,6 +4,7 @@ import { noop } from "lodash";
 import { NumericInput } from "../../Input/text-input";
 import RangeSlider from "../../range-slider/index";
 import ImageContainer from "../../ImageContainer/image-container";
+import AccordionBox from "../../AccordionBox";
 // import
 // {
 //   ConfiguratorCore,
@@ -809,7 +810,12 @@ class ActiveElementControls extends Component {
     );
 
     const AlignElement = (
-      <div className="element-alignment">
+      <div
+        className="element-alignment"
+        style={{
+          marginBottom: "10px",
+        }}
+      >
         <ComboButton
           theme={theme}
           label="Alignment: "
@@ -856,19 +862,20 @@ class ActiveElementControls extends Component {
     );
 
     const FlipElement = (
-      <div className="Flip-Controls">
-        <ComboButton
-          theme={theme}
-          label={"Flip Element:"}
-          buttons={FLIP_OPTIONS}
-          onBtnClick={(button) => {
-            if (button.value === "x")
-              activeElement.set("flipX", !activeElement.flipX);
-            else activeElement.set("flipY", !activeElement.flipY);
-            canvas.renderAll();
-          }}
-        />
-      </div>
+      // <div className="Flip-Controls">
+      <ComboButton
+        width={"45%"}
+        theme={theme}
+        label={"Flip Element:"}
+        buttons={FLIP_OPTIONS}
+        onBtnClick={(button) => {
+          if (button.value === "x")
+            activeElement.set("flipX", !activeElement.flipX);
+          else activeElement.set("flipY", !activeElement.flipY);
+          canvas.renderAll();
+        }}
+      />
+      // </div>
     );
 
     const AlignText = (
@@ -903,20 +910,25 @@ class ActiveElementControls extends Component {
 
     const TextControls =
       activeElement?.type === "text" || activeElement?.type === "i-text" ? (
-        <div className="font-controls">
-          {activeFontFamily}
-          {TextStyles}
-          {AlignText}
-          {!activeElement?.patternActive ? activeElementColor : null}
-          {activeBgColor}
-          {activeBorderColor}
-          {activeBorderThickness}
-          {!activeElement?.patternActive ? boxShadow : null}
-          {FlipElement}
-          {patternImgController}
-          {activeElement?.patternActive ? activePattern : null}
-          {activeElementProps?.patternActive ? imageFit : null}
-        </div>
+        <AccordionBox
+          theme={theme}
+          header="Text Controls"
+          children={
+            <div className="font-controls">
+              {activeFontFamily}
+              {TextStyles}
+              {AlignText}
+              {!activeElement?.patternActive ? activeElementColor : null}
+              {activeBgColor}
+              {activeBorderColor}
+              {activeBorderThickness}
+              {!activeElement?.patternActive ? boxShadow : null}
+              {patternImgController}
+              {activeElement?.patternActive ? activePattern : null}
+              {activeElementProps?.patternActive ? imageFit : null}
+            </div>
+          }
+        />
       ) : null;
 
     const CircleControls =
@@ -937,24 +949,37 @@ class ActiveElementControls extends Component {
 
     const RectangleControls =
       activeElement?.type === "rect" ? (
-        <div
-          className="rect-controls"
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-          }}
-        >
-          {rectBorderRadius}
-          {activeBorderColor}
-          {activeBorderThickness}
-          {!activeElement?.patternActive ? boxShadow : null}
-          {!activeElement?.patternActive ? activeElementColor : null}
-          {patternImgController}
-          {activeElementProps?.patternActive ? activePattern : null}
-          {FlipElement}
-          {activeElementProps?.patternActive ? imageFit : null}
-        </div>
+        <AccordionBox
+          theme={theme}
+          header="Rectangle Controls"
+          children={
+            <div
+              className="rect-controls"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              {rectBorderRadius}
+              {activeBorderColor}
+              <div
+                style={{
+                  display: "flex",
+                  gap: "5px",
+                }}
+              >
+                {activeBorderThickness}
+                {FlipElement}
+              </div>
+              {!activeElement?.patternActive ? boxShadow : null}
+              {!activeElement?.patternActive ? activeElementColor : null}
+              {patternImgController}
+              {activeElementProps?.patternActive ? activePattern : null}
+              {activeElementProps?.patternActive ? imageFit : null}
+            </div>
+          }
+        />
       ) : null;
 
     const TriangleControls =
@@ -1010,7 +1035,6 @@ class ActiveElementControls extends Component {
         style={{
           width: "100%",
           gap: "10px",
-          paddingBottom: "100px",
         }}
       >
         {elementsDropDownData.length > 0 ? (
@@ -1021,6 +1045,7 @@ class ActiveElementControls extends Component {
           </>
         ) : null}
         {SvgControls}
+
         {TextControls}
         {LineControls}
         {ArrowControls}

@@ -182,7 +182,8 @@ class ImageConfig extends React.Component {
                   style={{
                     height: "150px",
                     width: "auto",
-                    border: "1px solid black",
+                    border:
+                      theme === "dark" ? "1px solid white" : "1px solid black",
                     marginTop: "1px",
                   }}
                 >

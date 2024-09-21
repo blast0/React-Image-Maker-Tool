@@ -2,11 +2,13 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import IconButton from "./IconButton";
 
 const ComboButton = (props) => {
-  const { buttons, theme, onBtnClick, label } = props;
+  const { buttons, theme, onBtnClick, label, width } = props;
   return (
     <div
       style={{
-        padding: "5px 0",
+        display: "flex",
+        flexDirection: "column",
+        width: width ? width : "100%",
       }}
     >
       {label ? (
@@ -23,12 +25,7 @@ const ComboButton = (props) => {
           {label}
         </label>
       ) : null}
-      <ButtonGroup
-        aria-label="Basic example"
-        style={{
-          width: "100%",
-        }}
-      >
+      <ButtonGroup aria-label="Basic example">
         {buttons.map((button, index) => {
           return (
             <IconButton

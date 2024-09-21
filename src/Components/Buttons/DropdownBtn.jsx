@@ -15,11 +15,7 @@ const DropdownButton = (props) => {
     theme,
   } = props;
   return (
-    <div
-    // style={{
-    //   padding: "10px 0",
-    // }}
-    >
+    <div>
       {label ? (
         <label
           style={
