@@ -51,7 +51,11 @@ class CanvasCore {
       ...options,
       id: getNewID(),
     });
-    if (!options?.fontFamily) return textElement;
+    if (!options?.fontFamily) {
+      this.__canvas.add(textElement);
+      this.__canvas.requestRenderAll();
+      return textElement;
+    }
 
     // try to load google font
     try {

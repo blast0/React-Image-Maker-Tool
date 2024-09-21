@@ -911,15 +911,8 @@ class ActiveElementControls extends Component {
           {!activeElement?.patternActive ? boxShadow : null}
           {FlipElement}
           {patternImgController}
-          {/* 
-          DUE TO CHROME BUG NOT RENDERING PATTERN ON FONTS, 
-          WORK AROUND TO JUST RENDER THE IMAGE AS A REPEATING PATTERN
-          WITHOUT CONTROLS FOR RESIZE OR OFFSET OF THE GIVEN PATTERN
-          FOR MORE DETAILS VISIT: https://github.com/fabricjs/fabric.js/issues/9414
-          
           {activeElement?.patternActive ? activePattern : null}
-          {activeElementProps?.patternActive ? imageFit : null} 
-          */}
+          {activeElementProps?.patternActive ? imageFit : null}
         </div>
       ) : null;
 

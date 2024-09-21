@@ -507,13 +507,6 @@ export const addPattern = async (url, canvasRef, cb) => {
       patternActive: false,
     };
     cb(_newProps);
-  } else if (activeObject.type === "i-text") {
-    /*DUE TO CHROME BUG NOT RENDERING PATTERN ON FONTS, 
-       WORK AROUND TO JUST RENDER THE IMAGE AS A REPEATING PATTERN
-       WITHOUT CONTROLS FOR RESIZE OR OFFSET OF THE GIVEN PATTERN
-       FOR MORE DETAILS VISIT: https://github.com/fabricjs/fabric.js/issues/9414
-       */
-    loadPattern(url, canvasRef, cb);
   } else {
     Spinner.showSpinner();
     var img = new Image();
@@ -575,59 +568,6 @@ export const addPattern = async (url, canvasRef, cb) => {
 export const getNewID = () => {
   return uniqueId();
 };
-
-function loadPattern(url, canvas, cb) {
-  const activeObject = canvas.getActiveObject();
-  if (url === "") {
-    activeObject.URL = "";
-    activeObject.patternActive = false;
-    activeObject.set({
-      fill: activeObject.fillColor,
-    });
-    const _newProps = {
-      URL: "",
-      patternActive: false,
-    };
-    cb(_newProps);
-  } else {
-    Spinner.showSpinner();
-    const smallUrl = url.replace("original", "200x200");
-    var img = new Image();
-    img.onload = function () {
-      fabric.util.loadImage(smallUrl, (img) => {
-        const pattern = new fabric.Pattern({
-          source: img,
-          repeat: "repeat",
-          offsetX: 0,
-          offsetY: 0,
-        });
-        activeObject.fillColor = activeObject.fill;
-        activeObject.set({
-          fill: pattern,
-          patternActive: true,
-        });
-        activeObject.patternActive = true;
-        const _newProps = {
-          URL: url,
-          patternActive: true,
-        };
-        cb(_newProps);
-        canvas.renderAll();
-        Spinner.hideSpinner();
-      });
-    };
-    img.onerror = function () {
-      console.log("img loading failed");
-      Spinner.hideSpinner();
-      activeObject.patternActive = false;
-      const _activeElementProps = {
-        patternActive: false,
-      };
-      cb(_activeElementProps);
-    };
-    img.src = smallUrl;
-  }
-}
 
 export const addSpeechLabel = (self) => {
   const { pages, activePageID } = self.state;
