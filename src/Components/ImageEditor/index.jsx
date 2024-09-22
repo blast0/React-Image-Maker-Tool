@@ -306,7 +306,7 @@ class ImageMaker extends Component {
                     leftIcon="icon-save-new"
                     theme={this.props.theme}
                     onBtnClick={(e) => {
-                      handleRightPanelUpdates(ACTIONS.DOWNLOAD_JSON, {}, this);
+                      handleRightPanelUpdates(ACTIONS.DOWNLOAD_PAGE, {}, this);
                     }}
                     children={
                       <>

@@ -102,6 +102,7 @@ class Canvastools extends Component {
                     containerClass="cls number sm"
                     label="Canvas Width"
                     onChange={(val) => {
+                      console.log(val);
                       if (val < 1920)
                         onChange(ACTIONS.CHANGE_PAGE_DIMENSIONS, {
                           name: "width",
@@ -140,9 +141,14 @@ class Canvastools extends Component {
                     containerClass={"cls number "}
                     label={"Item Width"}
                     onChange={(val) => {
-                      activeElement.set({
-                        width: Number(val),
-                      });
+                      if (val === "")
+                        activeElement.set({
+                          width: 0,
+                        });
+                      else
+                        activeElement.set({
+                          width: Number(val),
+                        });
                       canvas.renderAll();
                     }}
                   />
