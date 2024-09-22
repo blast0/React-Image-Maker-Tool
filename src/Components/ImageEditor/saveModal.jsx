@@ -1,15 +1,12 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import RangeSlider from "../range-slider";
 import TextInput from "../Input/text-input";
 import ComboButton from "../Buttons/ButtonGroup";
 
 const SaveModalJsx = ({
   defaultFileName,
-  fileTypeOptions,
   defaultFileType,
   onBtnClick,
-  showDownloadBtn,
-  thumbnailUrl,
   imageWidth,
   ratio,
   canvas,
@@ -20,22 +17,6 @@ const SaveModalJsx = ({
   const [ImageWidth, set_ImageWidth] = useState(imageWidth);
   const [ImageHeight, set_ImageHeight] = useState(parseInt(imageWidth / ratio));
   const [jpegQuality, set_jpegQuality] = useState(0.9);
-
-  const isDownloadDisabled = useCallback(() => {
-    if (
-      chosenFileType === "svg" ||
-      chosenFileType === "png" ||
-      chosenFileType === "jpeg" ||
-      chosenFileType === "webp"
-    )
-      return false;
-    else return true;
-  }, [chosenFileType]);
-
-  const isSaveDisabled = useCallback(() => {
-    if (fileTypeOptions.includes(chosenFileType)) return false;
-    else return true;
-  }, [chosenFileType, fileTypeOptions]);
 
   return (
     <>

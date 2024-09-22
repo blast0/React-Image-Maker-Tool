@@ -163,11 +163,11 @@ class ImageMaker extends Component {
                       isTemplateLoaded: true,
                     },
                     () => {
-                      _canvas.clearHistory();
-                      if (elem) {
-                        _canvas.setActiveObject(elem);
-                        _canvas.renderAll();
-                      }
+                      // _canvas.clearHistory();
+                      // if (elem) {
+                      //   _canvas.setActiveObject(elem);
+                      //   _canvas.renderAll();
+                      // }
                     }
                   );
                 }}
