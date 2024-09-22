@@ -34,6 +34,7 @@ import { Panel } from "../SidePanel/Panel";
 import ModalApp from "../Modal/modal";
 import IconButton from "../Buttons/IconButton";
 import DropdownButton from "../Buttons/DropdownBtn";
+import SaveModalJsx from "./saveModal";
 
 class ImageMaker extends Component {
   constructor(props) {
@@ -303,10 +304,23 @@ class ImageMaker extends Component {
                   />
                   <ModalApp
                     leftIcon="icon-save-new"
+                    theme={this.props.theme}
                     onBtnClick={(e) => {
                       handleRightPanelUpdates(ACTIONS.DOWNLOAD_JSON, {}, this);
                     }}
-                    children={<>SAVE.</>}
+                    children={
+                      <>
+                        <SaveModalJsx
+                          thumbnailUrl={null}
+                          canvas={_canvas}
+                          theme={this.props.theme}
+                          defaultFileName={"canvas"}
+                          defaultFileType={"jpg"}
+                          imageWidth={pageWidth}
+                          ratio={pageWidth / pageHeight}
+                        />
+                      </>
+                    }
                   />
                   <ModalApp
                     leftIcon="icon-delete"

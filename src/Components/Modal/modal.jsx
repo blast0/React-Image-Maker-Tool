@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import IconButton from "../Buttons/IconButton";
@@ -8,31 +8,60 @@ function ModalApp(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  useEffect(() => {
-    handleClose();
-  }, []);
-  const { children, onBtnClick, leftIcon } = props;
+
+  const { children, onBtnClick, leftIcon, theme, footerChildren } = props;
   return (
     <>
       <IconButton btnClick={handleShow} leftIcon={leftIcon} variant="light" />
-      <Modal show={show} backdrop="static" keyboard={true}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{children}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button
-            onClick={() => {
-              onBtnClick();
-              setShow(false);
+      <Modal onHide={handleClose} show={show} backdrop="static" keyboard={true}>
+        <Modal.Header
+          style={{
+            backgroundColor: theme === "dark" ? "black" : "white",
+          }}
+        >
+          <Modal.Title
+            style={{
+              color: theme !== "dark" ? "black" : "white",
             }}
-            variant="primary"
           >
-            ok
-          </Button>
+            Save Canvas
+          </Modal.Title>
+          <IconButton
+            btnClick={handleClose}
+            leftIcon={"icon-close"}
+            variant="light"
+          />
+        </Modal.Header>
+        <Modal.Body
+          style={{
+            backgroundColor: theme === "dark" ? "black" : "white",
+          }}
+        >
+          {children}
+        </Modal.Body>
+        <Modal.Footer
+          style={{
+            backgroundColor: theme === "dark" ? "black" : "white",
+          }}
+        >
+          {footerChildren ? (
+            footerChildren
+          ) : (
+            <>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button
+                onClick={() => {
+                  onBtnClick();
+                  setShow(false);
+                }}
+                variant="primary"
+              >
+                ok
+              </Button>
+            </>
+          )}
         </Modal.Footer>
       </Modal>
     </>
