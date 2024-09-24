@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import RangeSlider from "../range-slider";
-import TextInput from "../Input/text-input";
+import TextInput, { NumericInput } from "../Input/text-input";
 import ComboButton from "../Buttons/ButtonGroup";
+import RadioButton from "../radio-button";
+import IconButton from "../Buttons/IconButton";
+import { handleRightPanelUpdates } from "./helper-functions";
+import { ACTIONS } from "./constants";
 
 const SaveModalJsx = ({
   defaultFileName,
@@ -11,12 +15,14 @@ const SaveModalJsx = ({
   ratio,
   canvas,
   theme,
+  self,
 }) => {
   const [fileName, set_fileName] = useState(defaultFileName);
   const [chosenFileType, set_chosenFileType] = useState(defaultFileType);
   const [ImageWidth, set_ImageWidth] = useState(imageWidth);
   const [ImageHeight, set_ImageHeight] = useState(parseInt(imageWidth / ratio));
   const [jpegQuality, set_jpegQuality] = useState(0.9);
+  const [selection, setSelection] = useState("page");
 
   return (
     <>
@@ -46,17 +52,41 @@ const SaveModalJsx = ({
           >
             {fileName}.{chosenFileType}
           </span>
-          <div
-            style={{
-              height: "120px",
-              width: "200px",
-              backgroundImage: `url(${canvas.toDataURL()})`,
-              backgroundSize: "contain",
-              backgroundPosition: "50%",
-              backgroundRepeat: "no-repeat",
-              border: "1px solid #eee",
-            }}
-          ></div>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <div
+              style={{
+                height: "120px",
+                width: "200px",
+                backgroundImage: `url(${
+                  selection === "page"
+                    ? canvas.toDataURL()
+                    : canvas.getActiveObject().toDataURL()
+                })`,
+                backgroundSize: "contain",
+                backgroundPosition: "50%",
+                backgroundRepeat: "no-repeat",
+                border: "1px solid #eee",
+              }}
+            ></div>
+            <RadioButton
+              theme={theme}
+              value={"page"}
+              label={" Full Page"}
+              checked={selection === "page"}
+              onChange={(e) => {
+                setSelection("page");
+              }}
+            />
+            <RadioButton
+              theme={theme}
+              value={"selected"}
+              label={" Selection"}
+              checked={selection === "selected"}
+              onChange={(e) => {
+                setSelection("selected");
+              }}
+            />
+          </div>
           <ComboButton
             theme={theme}
             label="FileType: "
@@ -101,7 +131,7 @@ const SaveModalJsx = ({
             gap: "10px",
           }}
         >
-          <TextInput
+          <NumericInput
             theme={theme}
             autoFocus={true}
             type="number"
@@ -112,7 +142,7 @@ const SaveModalJsx = ({
             }}
             label="Width:"
           />
-          <TextInput
+          <NumericInput
             theme={theme}
             autoFocus={true}
             type="number"
@@ -124,47 +154,24 @@ const SaveModalJsx = ({
             label="Height:"
           />
         </div>
+        {/* <IconButton
+          btnClick={handleShow}
+          btnText={"Save To Library "}
+          rightIcon={"icon-download"}
+          variant="light"
+        /> */}
+        <IconButton
+          btnClick={() => {
+            if (selection === "page")
+              handleRightPanelUpdates(ACTIONS.DOWNLOAD_PAGE, {}, self);
+            if (selection === "selected")
+              handleRightPanelUpdates(ACTIONS.DOWNLOAD_SELECTION, {}, self);
+          }}
+          btnText={"Download "}
+          rightIcon={"icon-download"}
+          variant="light"
+        />
       </div>
-      {/* <div className="modal-footer align-center">
-        <ContainedButton
-          disabled={isSaveDisabled()}
-          btnText="Save to Library"
-          btnContainerClass="mr-10"
-          onBtnClick={(e) => {
-            onBtnClick(
-              "save",
-              fileName,
-              chosenFileType,
-              1,
-              ImageWidth,
-              ImageHeight
-            );
-          }}
-        />
-        {showDownloadBtn ? (
-          <ContainedButton
-            disabled={isDownloadDisabled()}
-            btnText="Download"
-            btnContainerClass="mr-10"
-            onBtnClick={(e) => {
-              onBtnClick(
-                "download",
-                fileName,
-                chosenFileType,
-                jpegQuality,
-                ImageWidth,
-                ImageHeight
-              );
-            }}
-          />
-        ) : null}
-        <OutlinedButton
-          btnText="Cancel"
-          onBtnClick={() => {
-            onBtnClick("cancel");
-          }}
-        />
-      </div> */}
     </>
   );
 };

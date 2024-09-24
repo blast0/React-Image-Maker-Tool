@@ -4,12 +4,15 @@ import { RadioButtonContext } from "../radio-button-group";
 
 const RadioButton = (props) => {
   // excluding `name` from passed props
-  const { name, inline, ...restProps } = props;
+  const { name, inline, theme, ...restProps } = props;
   const parentProps = useContext(RadioButtonContext);
   return (
     <label
       id="radio-button"
       className={`form-radio ${parentProps?.inline ? "form-inline" : null}`}
+      style={{
+        color: theme === "dark" ? "white" : "black",
+      }}
     >
       <input type="radio" name={parentProps?.groupId} {...restProps} />
       <i className="form-icon"></i>

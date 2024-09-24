@@ -279,7 +279,7 @@ class ImageMaker extends Component {
                     gap: "5px",
                   }}
                 >
-                  <DropdownButton
+                  {/* <DropdownButton
                     leftIcon={"icon-add"}
                     variant="light"
                     btnText={""}
@@ -301,7 +301,7 @@ class ImageMaker extends Component {
                     btnClick={() => {
                       handleRightPanelUpdates(ACTIONS.REDO_ACTION, {}, this);
                     }}
-                  />
+                  /> */}
                   <ModalApp
                     leftIcon="icon-save-new"
                     theme={this.props.theme}
@@ -311,6 +311,7 @@ class ImageMaker extends Component {
                     children={
                       <>
                         <SaveModalJsx
+                          self={this}
                           thumbnailUrl={null}
                           canvas={_canvas}
                           theme={this.props.theme}
@@ -321,20 +322,36 @@ class ImageMaker extends Component {
                         />
                       </>
                     }
+                    // footerChildren={
+                    //   <>
+                    //     <IconButton
+                    //       // btnClick={handleShow}
+                    //       btnText={"Save To Library "}
+                    //       rightIcon={"icon-download"}
+                    //       variant="light"
+                    //     />
+                    //     <IconButton
+                    //       // btnClick={handleShow}
+                    //       btnText={"Download "}
+                    //       rightIcon={"icon-download"}
+                    //       variant="light"
+                    //     />
+                    //   </>
+                    // }
                   />
-                  <ModalApp
+                  {/* <ModalApp
                     leftIcon="icon-delete"
                     onBtnClick={(e) => {
                       handleRightPanelUpdates(ACTIONS.CLEAR_PAGE, {}, this);
                     }}
                     children={<>All item(s) in your page will be deleted.</>}
-                  />
+                  /> */}
                 </div>
               </>
             }
             bodyChildren={
               <>
-                <Canvastools
+                {/* <Canvastools
                   onCanvasActive={(isActive) => {
                     if (modalActive) {
                       this.setState({
@@ -362,7 +379,7 @@ class ImageMaker extends Component {
                   handleJsonData={(e) => handleJsonData(e, this)}
                   jsonRef={this.jsonRef}
                   siteColorsSettings={this.props.siteColorsSettings}
-                />
+                /> */}
               </>
             }
           />

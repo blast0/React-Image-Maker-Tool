@@ -12,7 +12,7 @@ function ModalApp(props) {
   const { children, onBtnClick, leftIcon, theme, footerChildren } = props;
   return (
     <>
-      <IconButton btnClick={handleShow} leftIcon={leftIcon} variant="light" />
+      <IconButton btnClick={handleShow} leftIcon={leftIcon} variant={theme} />
       <Modal onHide={handleClose} show={show} backdrop="static" keyboard={true}>
         <Modal.Header
           style={{

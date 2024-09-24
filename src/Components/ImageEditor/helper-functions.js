@@ -16,7 +16,6 @@ import { produce } from "immer";
 import { fabric } from "fabric";
 import { saveAs } from "file-saver";
 import Spinner from "../Spinner/manager";
-// import { inRange } from "lodash";
 var FontFaceObserver = require("fontfaceobserver");
 
 // HANDLE EVENTS ON RIGHT PANEL AND PERFORM ACTIONS ACCORDINGLY
