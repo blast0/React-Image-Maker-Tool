@@ -64,10 +64,10 @@ export const handleRightPanelUpdates = (action, data, self) => {
       resetPage(self);
       break;
     case ACTIONS.DOWNLOAD_PAGE:
-      downloadPage(self);
+      downloadPage(data, self);
       break;
     case ACTIONS.DOWNLOAD_SELECTION:
-      downloadSelection(self);
+      // downloadSelection(self);
       break;
     case ACTIONS.DOWNLOAD_JSON:
       downloadJSON(self);
@@ -197,11 +197,11 @@ export const saveToImageLibrary = (
   const selected = cloneDeep(canvasRef.getActiveObject());
   if (type === ACTIONS.SAVE_SELECTION_TO_LIBRARY && selected) {
     //Selection exist so download selection
-    const fileSVGData2 = selected.toDataURL();
-    var myselectionblob = dataURLtoBlob(fileSVGData2);
+    const canvasDataURL = selected.toDataURL();
+    var myselectionblob = dataURLtoBlob(canvasDataURL);
     self.setState({
       shouldSave: true,
-      thumbnailUrl: fileSVGData2,
+      thumbnailUrl: canvasDataURL,
       fileDimensions: {
         height: parseInt(selected.height),
         width: parseInt(selected.width),
@@ -1594,10 +1594,32 @@ export const tooltipClass = (tooltipDirection) => {
   }
 };
 
-export const downloadPage = (self) => {
+export const downloadPage = (data, self) => {
+  const {
+    fileName,
+    chosenFileType,
+    ImageWidth,
+    ImageHeight,
+    jpegQuality,
+    selection,
+  } = data;
+  console.log(data);
   const canvasRef = Object.values(self.state.canvases)[0];
-  const fileSVGData = canvasRef.toDataURL();
-  saveAs(fileSVGData, "canvas.png");
+  if (selection === "selected") {
+    const selected = cloneDeep(canvasRef.getActiveObject());
+    const canvasDataURL = selected.toDataURL({
+      format: chosenFileType,
+      quality: jpegQuality,
+    });
+    var myblob = dataURLtoBlob(canvasDataURL);
+    saveAs(myblob, fileName + "." + chosenFileType);
+  } else {
+    const fileSVGData = canvasRef.toDataURL({
+      format: chosenFileType,
+      quality: jpegQuality,
+    });
+    saveAs(fileSVGData, fileName + "." + chosenFileType);
+  }
 };
 
 export const handleNameElement = (val, self) => {
@@ -1664,17 +1686,17 @@ export const undoAction = (self) => {
 };
 
 // DOWNLOAD SELECTED OBJECTS/ITEMS
-export const downloadSelection = (self) => {
-  const canvasRef = Object.values(self.state.canvases)[0];
-  const selected = cloneDeep(canvasRef.getActiveObject());
-  if (selected) {
-    const fileSVGData2 = selected.toDataURL();
-    var myblob = dataURLtoBlob(fileSVGData2);
-    saveAs(myblob, "object.png");
-  } else {
-    downloadPage(self);
-  }
-};
+// export const downloadSelection = (self) => {
+//   const canvasRef = Object.values(self.state.canvases)[0];
+//   const selected = cloneDeep(canvasRef.getActiveObject());
+//   if (selected) {
+//     const canvasDataURL = selected.toDataURL();
+//     var myblob = dataURLtoBlob(canvasDataURL);
+//     saveAs(myblob, "object.png");
+//   } else {
+//     downloadPage(self);
+//   }
+// };
 
 export const downloadJSON = (self) => {
   const temp = createJSON(self);

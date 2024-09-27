@@ -97,7 +97,7 @@ const SaveModalJsx = ({
               },
               {
                 btnText: "JPEG",
-                value: "jpg",
+                value: "jpeg",
               },
               {
                 btnText: "WEBP",
@@ -162,10 +162,18 @@ const SaveModalJsx = ({
         /> */}
         <IconButton
           btnClick={() => {
-            if (selection === "page")
-              handleRightPanelUpdates(ACTIONS.DOWNLOAD_PAGE, {}, self);
-            if (selection === "selected")
-              handleRightPanelUpdates(ACTIONS.DOWNLOAD_SELECTION, {}, self);
+            handleRightPanelUpdates(
+              ACTIONS.DOWNLOAD_PAGE,
+              {
+                fileName,
+                chosenFileType,
+                ImageWidth,
+                ImageHeight,
+                jpegQuality,
+                selection,
+              },
+              self
+            );
           }}
           btnText={"Download "}
           rightIcon={"icon-download"}
