@@ -39,14 +39,14 @@ function ModalApp(props) {
         >
           {children}
         </Modal.Body>
-        <Modal.Footer
-          style={{
-            backgroundColor: theme === "dark" ? "black" : "white",
-          }}
-        >
-          {footerChildren ? (
-            footerChildren
-          ) : (
+        {footerChildren ? (
+          footerChildren
+        ) : (
+          <Modal.Footer
+            style={{
+              backgroundColor: theme === "dark" ? "black" : "white",
+            }}
+          >
             <>
               <Button variant="secondary" onClick={handleClose}>
                 Close
@@ -61,8 +61,8 @@ function ModalApp(props) {
                 ok
               </Button>
             </>
-          )}
-        </Modal.Footer>
+          </Modal.Footer>
+        )}
       </Modal>
     </>
   );

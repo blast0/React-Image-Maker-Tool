@@ -1603,7 +1603,6 @@ export const downloadPage = (data, self) => {
     jpegQuality,
     selection,
   } = data;
-  console.log(data);
   const canvasRef = Object.values(self.state.canvases)[0];
   if (selection === "selected") {
     const selected = cloneDeep(canvasRef.getActiveObject());

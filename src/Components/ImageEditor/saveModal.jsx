@@ -42,6 +42,7 @@ const SaveModalJsx = ({
             display: "flex",
             justifyContent: "space-between",
             flexDirection: "column",
+            marginTop: "10px",
           }}
         >
           <span
@@ -62,6 +63,7 @@ const SaveModalJsx = ({
                     ? canvas.toDataURL()
                     : canvas.getActiveObject().toDataURL()
                 })`,
+                backgroundColor: "#fff",
                 backgroundSize: "contain",
                 backgroundPosition: "50%",
                 backgroundRepeat: "no-repeat",
@@ -80,55 +82,69 @@ const SaveModalJsx = ({
             <RadioButton
               theme={theme}
               value={"selected"}
-              label={" Selection"}
+              label={"Selected Element"}
               checked={selection === "selected"}
               onChange={(e) => {
                 setSelection("selected");
               }}
             />
           </div>
-          <ComboButton
-            theme={theme}
-            label="FileType: "
-            buttons={[
-              {
-                btnText: "PNG",
-                value: "png",
-              },
-              {
-                btnText: "JPEG",
-                value: "jpeg",
-              },
-              {
-                btnText: "WEBP",
-                value: "webp",
-              },
-              {
-                btnText: "SVG",
-                value: "svg",
-              },
-            ]}
-            onBtnClick={(btn) => {
-              set_chosenFileType(btn.value);
+          <div
+            style={{
+              marginTop: "10px",
             }}
-          />
+          >
+            <ComboButton
+              theme={theme}
+              label="FileType: "
+              buttons={[
+                {
+                  btnText: "PNG",
+                  value: "png",
+                },
+                {
+                  btnText: "JPEG",
+                  value: "jpeg",
+                },
+                {
+                  btnText: "WEBP",
+                  value: "webp",
+                },
+                {
+                  btnText: "SVG",
+                  value: "svg",
+                },
+              ]}
+              onBtnClick={(btn) => {
+                set_chosenFileType(btn.value);
+              }}
+            />
+          </div>
         </div>
         {chosenFileType === "jpeg" ? (
-          <RangeSlider
-            label={"JPEG quality:"}
-            min={0}
-            max={1}
-            step={0.1}
-            value={jpegQuality}
-            updateRangeSliderValue={async (e) => {
-              set_jpegQuality(e.target.value);
+          <div
+            style={{
+              marginTop: "10px",
             }}
-          />
+          >
+            <RangeSlider
+              theme={theme}
+              label={"Image Quality:"}
+              min={0}
+              max={1}
+              step={0.1}
+              value={jpegQuality}
+              updateRangeSliderValue={async (e) => {
+                set_jpegQuality(e.target.value);
+              }}
+            />
+          </div>
         ) : null}
         <div
           style={{
             display: "flex",
             gap: "10px",
+            flexWrap: "wrap",
           }}
         >
           <NumericInput
@@ -153,32 +169,32 @@ const SaveModalJsx = ({
             }}
             label="Height:"
           />
+          <IconButton
+            btnClick={() => {
+              handleRightPanelUpdates(
+                ACTIONS.DOWNLOAD_PAGE,
+                {
+                  fileName,
+                  chosenFileType,
+                  ImageWidth,
+                  ImageHeight,
+                  jpegQuality,
+                  selection,
+                },
+                self
+              );
+            }}
+            btnText={"Download "}
+            rightIcon={"icon-download"}
+            variant="light"
+          />
+          <IconButton
+            // btnClick={handleShow}
+            btnText={"Save To Library "}
+            rightIcon={"icon-save"}
+            variant="light"
+          />
         </div>
-        {/* <IconButton
-          btnClick={handleShow}
-          btnText={"Save To Library "}
-          rightIcon={"icon-download"}
-          variant="light"
-        /> */}
-        <IconButton
-          btnClick={() => {
-            handleRightPanelUpdates(
-              ACTIONS.DOWNLOAD_PAGE,
-              {
-                fileName,
-                chosenFileType,
-                ImageWidth,
-                ImageHeight,
-                jpegQuality,
-                selection,
-              },
-              self
-            );
-          }}
-          btnText={"Download "}
-          rightIcon={"icon-download"}
-          variant="light"
-        />
       </div>
     </>
   );

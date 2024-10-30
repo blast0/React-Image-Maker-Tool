@@ -26,12 +26,18 @@ class RangeSlider extends Component {
       updateRangeSliderValue,
       showValue,
       topRightValue,
+      theme,
       ...inputProps
     } = this.props;
     return (
       <div className="range-slider">
         {label ? (
-          <div className={error ? `error-label` : `range-label`}>
+          <div
+            className={error ? `error-label` : `range-label`}
+            style={{
+              color: theme === "dark" ? "#fff" : "#000",
+            }}
+          >
             {label ? <div>{label}</div> : null}
             {showValue && topRightValue ? (
               <div className="value-right">

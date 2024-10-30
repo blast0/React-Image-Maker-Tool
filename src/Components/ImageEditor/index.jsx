@@ -322,6 +322,7 @@ class ImageMaker extends Component {
                         />
                       </>
                     }
+                    footerChildren={<></>}
                   />
                   <ModalApp
                     leftIcon="icon-delete"
