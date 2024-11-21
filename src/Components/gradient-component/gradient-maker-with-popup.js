@@ -1,8 +1,8 @@
 import { noop, orderBy } from "lodash";
 import React, { useRef, useState } from "react";
-import GradientMaker from "./gradient-component";
+import GradientMaker from ".";
 import withPopup from "./withPopup";
-import { convertGradientToConfig } from "./utilities";
+import { convertGradientToConfig } from "../utilities";
 import PropTypes from "prop-types";
 
 const GradientPopup = withPopup(GradientMaker);

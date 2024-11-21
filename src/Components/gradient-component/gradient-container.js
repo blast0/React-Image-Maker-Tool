@@ -1,8 +1,8 @@
 import React, { memo } from "react";
 import { isEqual } from "lodash";
 import PropTypes from "prop-types";
-import GradientMaker from "./gradient-component/index";
-import { convertGradientToConfig } from "./utilities";
+import GradientMaker from "./index";
+import { convertGradientToConfig } from "../utilities";
 
 const GradientContainer = ({
   showInPopup = true,

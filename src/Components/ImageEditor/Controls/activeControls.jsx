@@ -50,7 +50,7 @@ import {
 } from "./activeElementHandlers";
 import ComboButton from "../../Buttons/ButtonGroup";
 import ColorSelectorButton from "../../Buttons/ColorSelectorBtn";
-import GradientContainer from "../../gradient-container";
+import GradientContainer from "../../gradient-component/gradient-container";
 // CSS
 
 class ActiveElementControls extends Component {

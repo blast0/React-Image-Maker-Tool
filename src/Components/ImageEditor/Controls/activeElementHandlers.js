@@ -1,6 +1,34 @@
 import { ACTIONS, ARROW_HEAD, CANVAS_CUSTOM_FONTS } from "../constants";
 import Spinner from "../../Spinner/manager";
-import { loadGoogleFont } from "../helper-functions";
+var FontFaceObserver = require("fontfaceobserver");
+
+// This function loads a Google Font using the FontFaceObserver library.
+// It returns a Promise that resolves when the font is successfully loaded, and rejects if there is an error.
+export const loadGoogleFont = (fontName) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      // Create a new FontFaceObserver instance for the specified font name.
+      // FontFaceObserver is a library that helps to monitor the loading of a web font.
+      var myfont = new FontFaceObserver(fontName);
+
+      // Show a loading spinner while the font is being loaded.
+      // This provides a visual indication that the font is loading.
+      Spinner.showSpinner();
+
+      // Attempt to load the font asynchronously using the load method from FontFaceObserver.
+      // If the font is loaded successfully, resolve the promise with the result.
+      const fontLoaded = await myfont.load();
+
+      // Once the font is loaded, resolve the promise and hide the spinner.
+      resolve(fontLoaded);
+      Spinner.hideSpinner();
+    } catch (err) {
+      // If an error occurs during font loading, log the error and reject the promise with the error.
+      console.log("font loading failed ", err);
+      reject(err);
+    }
+  });
+};
 
 export const handleSelectedTool = (selectedTool, activeElement, self) => {
   if (!selectedTool) return;

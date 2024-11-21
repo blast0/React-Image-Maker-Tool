@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import TextInput from "../Components/Input/text-input";
+import TextInput from "../Input/text-input";
 import { useState } from "react";
-import { convertGradientToConfig } from "./utilities";
+import { convertGradientToConfig } from "../utilities";
 import GradientMakerWithPopup from "./gradient-maker-with-popup";
 const GradientMakerWithInput = ({
   label,
