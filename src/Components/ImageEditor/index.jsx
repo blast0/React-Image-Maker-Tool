@@ -68,6 +68,8 @@ class ImageMaker extends Component {
       blob: null,
       modalActive: false,
       loadingImage: false,
+      elemWidth: null,
+      elemHeight: null,
     };
     this.patternSourceCanvas = null;
     this.designer = React.createRef();
@@ -114,6 +116,8 @@ class ImageMaker extends Component {
       selectedElementId,
       activeElementProps,
       pages,
+      elemWidth,
+      elemHeight,
     } = this.state;
     const _canvas = Object.values(this.state.canvases)[0];
     return (
@@ -358,6 +362,8 @@ class ImageMaker extends Component {
                   showStyleEditor={showStyleEditor}
                   selectedElementName={selectedElementName}
                   activeElementProps={activeElementProps}
+                  elemWidth={elemWidth}
+                  elemHeight={elemHeight}
                   onChange={(action, data) =>
                     handleRightPanelUpdates(action, data, this)
                   }

@@ -26,19 +26,21 @@ class Canvastools extends Component {
 
   render() {
     const {
-      activeElementProps,
-      showStyleEditor,
-      onChange,
-      onCanvasActive,
-      elementIds,
+      theme,
       canvas,
+      jsonRef,
+      onChange,
+      pageWidth,
+      elemWidth,
+      pageHeight,
+      elemHeight,
+      elementIds,
+      pageBgColor,
+      onCanvasActive,
+      showStyleEditor,
+      activeElementProps,
       selectedElementName,
       elementsDropDownData,
-      jsonRef,
-      pageWidth,
-      pageHeight,
-      pageBgColor,
-      theme,
     } = this.props;
     const activeElementType = canvas?.getActiveObject()?.type;
     const activeElement = canvas.getActiveObject();
@@ -137,31 +139,40 @@ class Canvastools extends Component {
                   />
                   <NumericInput
                     theme={theme}
-                    value={parseInt(activeElement?.width)}
+                    value={elemWidth}
                     containerClass={"cls number "}
                     label={"Item Width"}
                     onChange={(val) => {
-                      if (val === "")
-                        activeElement.set({
-                          width: 0,
+                      if (val < 1920)
+                        onChange(ACTIONS.CHANGE_ELEMENT_DIMENSIONS, {
+                          name: "width",
+                          val: Number(val),
                         });
-                      else
-                        activeElement.set({
-                          width: Number(val),
+                      else {
+                        onChange(ACTIONS.CHANGE_ELEMENT_DIMENSIONS, {
+                          name: "width",
+                          val: 1920,
                         });
-                      canvas.renderAll();
+                      }
                     }}
                   />
                   <NumericInput
                     theme={theme}
-                    value={parseInt(activeElement?.height)}
+                    value={elemHeight}
                     containerClass={"cls number "}
                     label={"Item Height"}
                     onChange={(val) => {
-                      activeElement.set({
-                        height: Number(val),
-                      });
-                      canvas.renderAll();
+                      if (val < 1080)
+                        onChange(ACTIONS.CHANGE_ELEMENT_DIMENSIONS, {
+                          name: "height",
+                          val: Number(val),
+                        });
+                      else {
+                        onChange(ACTIONS.CHANGE_ELEMENT_DIMENSIONS, {
+                          name: "height",
+                          val: 1080,
+                        });
+                      }
                     }}
                   />
                 </div>

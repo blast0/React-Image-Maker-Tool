@@ -57,6 +57,15 @@ export const handleRightPanelUpdates = (action, data, self) => {
     case ACTIONS.ELEMENT_NAME:
       handleNameElement(data.target.value, self);
       break;
+    case ACTIONS.CHANGE_ELEMENT_DIMENSIONS:
+      elemDimensionChangeHandler(
+        data.name,
+        data.val,
+        self,
+        activeElement,
+        canvasRef
+      );
+      break;
     case ACTIONS.CHANGE_PAGE_DIMENSIONS:
       dimensionChangeHandler(data.name, data.val, self);
       break;
@@ -1196,6 +1205,60 @@ export const resetPage = (self) => {
   });
 };
 
+export const elemDimensionChangeHandler = (
+  key,
+  value,
+  self,
+  activeElement,
+  canvasRef
+) => {
+  console.log(key, value, self, activeElement, canvasRef);
+
+  if (key === "height") {
+    if (inRange(value, 0, 2001)) {
+      activeElement.set({
+        height: value,
+      });
+
+      self.setState({
+        elemHeight: value,
+        error: {
+          elemheight: false,
+        },
+      });
+      canvasRef.requestRenderAll();
+    } else {
+      self.props.toast.error("Error", "Please provide appropriate height");
+      self.setState({
+        error: {
+          elemheight: true,
+        },
+      });
+    }
+  }
+  if (key === "width") {
+    if (inRange(value, 0, 2001)) {
+      activeElement.set({
+        width: value,
+      });
+      self.setState({
+        elemWidth: value,
+        error: {
+          elemwidth: false,
+        },
+      });
+      canvasRef.requestRenderAll();
+    } else {
+      self.props.toast.error("Error", "Please provide appropriate width");
+      self.setState({
+        error: {
+          elemwidth: true,
+        },
+      });
+    }
+  }
+};
+
 // PAGE DIMENSIONS HANDLER
 export const dimensionChangeHandler = (key, value, self) => {
   if (key === "height") {
@@ -1595,14 +1658,7 @@ export const tooltipClass = (tooltipDirection) => {
 };
 
 export const downloadPage = (data, self) => {
-  const {
-    fileName,
-    chosenFileType,
-    ImageWidth,
-    ImageHeight,
-    jpegQuality,
-    selection,
-  } = data;
+  const { fileName, chosenFileType, jpegQuality, selection } = data;
   const canvasRef = Object.values(self.state.canvases)[0];
   if (selection === "selected") {
     const selected = cloneDeep(canvasRef.getActiveObject());
@@ -1613,11 +1669,15 @@ export const downloadPage = (data, self) => {
     var myblob = dataURLtoBlob(canvasDataURL);
     saveAs(myblob, fileName + "." + chosenFileType);
   } else {
-    const fileSVGData = canvasRef.toDataURL({
+    const newSvg = canvasRef.toSVG();
+    const fileSVGData = newSvg.toDataURL({
       format: chosenFileType,
       quality: jpegQuality,
     });
-    saveAs(fileSVGData, fileName + "." + chosenFileType);
+    const myblob = dataURLtoBlob(fileSVGData);
+    // saveAs(fileSVGData, fileName + "." + chosenFileType);
+    saveAs(myblob, fileName + "." + chosenFileType);
+    console.log(myblob);
   }
 };
 

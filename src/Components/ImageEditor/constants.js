@@ -19,6 +19,7 @@ export const ACTIONS = {
   CHANGE_PAGE_BACKGROUND: "change-page-bakground",
   CHANGE_PAGE_BACKGROUND_IMAGE: "change-page-bakground-image",
   CHANGE_PAGE_DIMENSIONS: "change-page-dimensions",
+  CHANGE_ELEMENT_DIMENSIONS: "change-element-dimensions",
   CHANGE_PATTERN_SIZE: "change_pattern_size",
   CHANGE_PATTERN_POSITION: "change_pattern_position",
   CLEAR_PAGE: "clear-page",
